@@ -79,6 +79,11 @@ class RandomUserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Find the user by ID and delete
+        $user = RandomUser::findOrFail($id);
+        $user->delete();
+
+        // You may redirect to a different page or return a response as needed
+        return redirect()->back()->with('success', 'User deleted successfully');
     }
 }

@@ -1,10 +1,3 @@
-<div class="nav-header">
-    <a href="/home" class="brand-logo">
-        <img class="brand-title" src="./admin_assets/images/prayer.jpg" alt="">
-    </a>
-
-  
-</div>
 
 <div class="header">
   <div class="header-content">
