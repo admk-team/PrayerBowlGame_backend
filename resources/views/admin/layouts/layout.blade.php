@@ -39,9 +39,9 @@
           Nav header start
       ***********************************-->
       <div class="nav-header">
-          {{--  <a href="{{ route('home') }}" class="brand-logo">
-            <img class="logo-abbr" src= "{{asset('admin_assets/images/logo.png')}}" alt="">
-          </a>  --}}
+        <a href="/home" class="brand-logo">
+          <img class="brand-title" src="{{asset('admin_assets/images/prayer.jpg')}}" alt="">
+      </a>
 
           <div class="nav-control">
               <div class="hamburger">

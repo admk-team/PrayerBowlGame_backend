@@ -80,6 +80,11 @@ class AddedUserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Find the user by ID and delete
+        $user = AddUser::findOrFail($id);
+        $user->delete();
+
+        // You may redirect to a different page or return a response as needed
+        return redirect()->back()->with('success', 'User deleted successfully');
     }
 }

@@ -28,8 +28,13 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware('admin')->group(function () {
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/added/users', [AddedUserController::class, 'index']);
-Route::get('/random/users', [RandomUserController::class, 'index']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}/',[UserController::class,'destroy'])->name('users.delete');
+    // added user
+    Route::get('/added/users', [AddedUserController::class, 'index']);
+    Route::get('/added/{id}/',[AddedUserController::class,'destroy'])->name('added.delete');
+    // random users
+    Route::get('/random/users', [RandomUserController::class, 'index']);
+    Route::get('/random/{id}/',[RandomUserController::class,'destroy'])->name('random.delete');
 });
