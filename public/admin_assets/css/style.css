@@ -16697,12 +16697,14 @@ button {
 
 .table tbody tr td {
   vertical-align: middle;
-  border-color: #eaeaea; }
+  border-color:  #000000;
+  color: black; }
   [data-theme-version="dark"] .table tbody tr td {
     border-color: #424D63; }
 
 .table:not(.table-bordered) thead th {
-  border-top: none; }
+  border-top: none; 
+  color: black;}
 
 .table .thead-primary th {
   background-color: #593bdb;

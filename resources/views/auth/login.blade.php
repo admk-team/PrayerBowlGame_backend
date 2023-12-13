@@ -138,15 +138,15 @@ body {
 .login__submit {
 	background: #fff;
 	font-size: 14px;
-	margin-top: 30px;
-	padding: 16px 20px;
+	margin-top: 10px;
+	padding: 14px 18px;
 	border-radius: 26px;
 	border: 1px solid #D4D3E8;
 	text-transform: uppercase;
 	font-weight: 700;
 	display: flex;
 	align-items: center;
-	width: 100%;
+	width: 50%;
 	color: #4C489D;
 	box-shadow: 0px 2px 2px #5C5696;
 	cursor: pointer;
@@ -204,7 +204,7 @@ body {
 		<div class="screen__content">
 			<form class="login"  method="POST" action="{{ route('login') }}">
                     @csrf
-					<img class="" src="./admin_assets/images/prayer.jpg" alt="" height="40px" width="120px">
+					<img class="" src="./admin_assets/images/prayer.jpg" alt="" height="50px" width="190px">
 				<div class="login__field">
 					
 					<i class="login__icon fas fa-user"></i>
