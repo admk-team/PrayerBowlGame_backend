@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+	<link rel="icon" href="{{ asset('admin_assets/images/favicon.png') }}">
+    <title>PrayerBowl-Login</title>
 
     <!-- Raleway Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">

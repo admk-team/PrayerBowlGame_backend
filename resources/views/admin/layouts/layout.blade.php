@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>{{ config('app.name') }} - @yield('title')</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin_assets/images/favicon.png') }}">
+
     <link rel="stylesheet" href="{{asset('admin_assets/vendor/jqvmap/css/jqvmap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/css/style.css')}}">
 
