@@ -30,19 +30,18 @@ class RandomUserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
         ]);
-    
+
         $user = new RandomUser();
         $user->user_id = $request->user()->id;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-    
+
         if ($user->save()) {
             return response()->json(['success' => true, 'message' => 'Random User data added successfully.']);
         } else {
@@ -85,5 +84,21 @@ class RandomUserController extends Controller
 
         // You may redirect to a different page or return a response as needed
         return redirect()->back()->with('success', 'User deleted successfully');
+    }
+
+    public function get_random_user(Request $request)
+    {
+        $user = AddUser::inRandomOrder()->first();
+
+        if ($user) {
+            RandomUser::create([
+                'user_id' => $request->user()->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+            ]);
+        }
+
+        return response()->json(['success' => true, 'data' => $user]);
     }
 }

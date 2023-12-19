@@ -30,5 +30,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/add/user', [AddedUserController::class , 'store']); 
     Route::get('/users', [AddedUserController::class , 'get_users']); 
     Route::get('/user/delete/{id}', [AddedUserController::class , 'delete_user']); 
-    Route::post('/random/user', [RandomUserController::class , 'store']);
+    Route::get('/random/user', [RandomUserController::class , 'get_random_user']);
 });
