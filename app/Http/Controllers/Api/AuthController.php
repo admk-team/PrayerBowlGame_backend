@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'=>'required',
+            'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|confirmed'
         ]);
@@ -24,10 +24,10 @@ class AuthController extends Controller
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
             $token = explode('|', $token)[1] ?? '';
-            $data=[
-                'id'=>$data->id,
-                'name'=>$data->name,
-                'email'=>$data->email,
+            $data = [
+                'id' => $data->id,
+                'name' => $data->name,
+                'email' => $data->email,
             ];
             return response()->json(['success' => true, 'token' => $token, 'data' => $data]);
         } else {
@@ -36,7 +36,7 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        $rules=[
+        $rules = [
             'email' => 'required|email',
             'password' => 'required'
         ];
@@ -53,8 +53,8 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'These credentials do not match our records.',
-                'errors'=> [
-                    'email'=> [
+                'errors' => [
+                    'email' => [
                         'These credentials do not match our records.'
                     ]
                 ]
@@ -62,10 +62,10 @@ class AuthController extends Controller
         }
         $token = $user->createToken('login')->plainTextToken;
         $token = explode('|', $token)[1] ?? '';
-        $data=[
-            'id'=>$user->id,
-            'name'=>$user->name,
-            'email'=>$user->email,
+        $data = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
         ];
         return [
             'status' => true,
@@ -77,10 +77,27 @@ class AuthController extends Controller
     public function logout()
     {
         request()->user()->tokens()->delete();
-        
+
         return [
             'status' => true,
         ];
     }
 
+    public function profile_update(Request $request)
+    {
+        $rules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required | email | unique:users',
+        ];
+
+        if ($request->has('password')) {
+            $rules['password'] = 'confirmed';
+            $rules['password_confirmation'] = 'required';
+        }
+
+        $request->validate($rules);
+
+        // if ()
+    }
 }

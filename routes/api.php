@@ -31,4 +31,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [AddedUserController::class , 'get_users']); 
     Route::get('/user/delete/{id}', [AddedUserController::class , 'delete_user']); 
     Route::get('/random/user', [RandomUserController::class , 'get_random_user']);
+    Route::post('/profile/update', [AuthController::class , 'profile_update']);
 });
