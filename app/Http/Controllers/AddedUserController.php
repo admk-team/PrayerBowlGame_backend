@@ -95,11 +95,11 @@ class AddedUserController extends Controller
         return response()->json(['success' => true, 'data' => $user]);
     }
 
-    public function delete_user($id)
+    public function delete_user(Request $request, $id)
     {
         AddUser::findOrFail($id)->delete();
 
-        $users = AddUser::where('user_id', $id)->get();
+        $users = AddUser::where('user_id', $request->user()->id)->get();
 
         return response()->json(['success' => true, 'data' => $users, 'message' => 'User deleted successfully.']);
     }
