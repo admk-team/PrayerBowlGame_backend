@@ -88,7 +88,7 @@ class RandomUserController extends Controller
 
     public function get_random_user(Request $request)
     {
-        $user = AddUser::inRandomOrder()->first();
+        $user = AddUser::where('user_id', $request->user()->id)->inRandomOrder()->first();
 
         if ($user) {
             RandomUser::create([
