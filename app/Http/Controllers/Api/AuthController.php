@@ -85,6 +85,7 @@ class AuthController extends Controller
 
     public function profile_update(Request $request)
     {
+        return 'working';
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
