@@ -85,11 +85,12 @@ class AuthController extends Controller
 
     public function profile_update(Request $request)
     {
-        return 'working';
+        $user = auth()->user();
+
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required | email | unique:users',
+            'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
         if ($request->has('password')) {
@@ -99,6 +100,16 @@ class AuthController extends Controller
 
         $request->validate($rules);
 
-        // if ()
+        $user->update([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+        ]);
+
+        if ($request->has('password')) {
+            $user->update([
+                'password' => bcrypt($request->input('password')),
+            ]);
+        }
     }
 }
