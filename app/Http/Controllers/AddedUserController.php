@@ -15,7 +15,7 @@ class AddedUserController extends Controller
     {
         $users = AddUser::with('user')->latest()->paginate(8);
         return view('admin.added_users.index', compact('users'));
-      
+
     }
 
     /**
@@ -36,20 +36,20 @@ class AddedUserController extends Controller
             'last_name' => 'required',
             'email' => 'required',
         ]);
-    
+
         $user = new AddUser();
         $user->user_id = $request->user()->id;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-    
+
         if ($user->save()) {
             return response()->json(['success' => true, 'message' => 'User data added successfully.']);
         } else {
             return response()->json(['success' => false, 'message' => 'Failed to add user data.']);
         }
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -86,5 +86,12 @@ class AddedUserController extends Controller
 
         // You may redirect to a different page or return a response as needed
         return redirect()->back()->with('success', 'User deleted successfully');
+    }
+
+    public function get_users(Request $request)
+    {
+        $user = AddUser::where('user_id', $request->user()->id)->get();
+
+        return response()->json(['success' => true, 'data' => $user]);
     }
 }

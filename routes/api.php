@@ -27,6 +27,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/add/user' , [AddedUserController::class , 'store']); 
-    Route::post('/random/user' , [RandomUserController::class , 'store']);
+    Route::post('/add/user', [AddedUserController::class , 'store']); 
+    Route::post('/users', [AddedUserController::class , 'get_users']); 
+    Route::post('/random/user', [RandomUserController::class , 'store']);
 });
