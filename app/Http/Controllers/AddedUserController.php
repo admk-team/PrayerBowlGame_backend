@@ -102,7 +102,7 @@ class AddedUserController extends Controller
         $random_users = RandomUser::where('user_id', $request->user()->id)->where('email', $user->email)->get();
         
         $dates = $random_users->map(function($random_user) {
-            return Carbon\Carbon::parse($random_user->createdAt)->format('d-m-y');
+            return \Carbon\Carbon::parse($random_user->createdAt)->format('d-m-y');
         });
 
         return response()->json(['success'=> true,'data'=> ['user' => $user, 'dates' => $dates]]);
