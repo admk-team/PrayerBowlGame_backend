@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AddUser;
 use App\Models\User;
+use App\Models\RandomUser;
 use Illuminate\Http\Request;
 
 class AddedUserController extends Controller
@@ -93,6 +94,18 @@ class AddedUserController extends Controller
         $user = AddUser::where('user_id', $request->user()->id)->get();
 
         return response()->json(['success' => true, 'data' => $user]);
+    }
+
+    public function get_user_details(Request $request, $id)
+    {
+        $user = AddUser::find($id);
+        $random_users = RandomUser::where('user_id', $request->user()->id)->where('email', $user->email)->get();
+        
+        $dates = $random_users->map(function($random_user) {
+            return Carbon\Carbon::parse($random_user->createdAt)->format('d-m-y');
+        });
+
+        return response()->json(['success'=> true,'data'=> ['user' => $user, 'dates' => $dates]]);
     }
 
     public function delete_user(Request $request, $id)
