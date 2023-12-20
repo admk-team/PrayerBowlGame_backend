@@ -105,7 +105,7 @@ class AuthController extends Controller
         }
 
         $user->update([
-            'name' => $request->input('name'),
+            'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
             'email' => $request->input('email'),
         ]);
 
