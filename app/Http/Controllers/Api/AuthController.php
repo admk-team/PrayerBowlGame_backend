@@ -93,7 +93,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
-        if ($request->filled('password')) {
+        if ($request->filled('current_password') || $request->filled('password') || $request->filled('password_confirmation')) {
             $rules['password'] = 'confirmed';
             $rules['password_confirmation'] = 'required';
             $rules['current_password'] = [
