@@ -96,6 +96,14 @@ class AuthController extends Controller
         if ($request->filled('password')) {
             $rules['password'] = 'confirmed';
             $rules['password_confirmation'] = 'required';
+            $rules['current_password'] = [
+                'required',
+                function ($attribute, $value, $fail) use ($user) {
+                    if (!\Hash::check($value, $user->password)) {
+                        $fail(__('The current password is incorrect.'));
+                    }
+                },
+            ];
         }
 
         $validator = Validator::make($request->all(), $rules);
