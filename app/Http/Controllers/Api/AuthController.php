@@ -122,5 +122,7 @@ class AuthController extends Controller
                 'password' => bcrypt($request->input('password')),
             ]);
         }
+
+        return response()->json(['success' => true, 'message' => 'Profile successfully updated.']);
     }
 }
