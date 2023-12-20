@@ -98,7 +98,7 @@ class AuthController extends Controller
             $rules['password_confirmation'] = 'required';
         }
 
-        $request->validate($rules);
+        // $request->validate($rules);
 
         $user->update([
             'first_name' => $request->input('first_name'),
