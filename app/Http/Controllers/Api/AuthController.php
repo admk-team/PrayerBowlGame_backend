@@ -93,7 +93,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
-        if ($request->has('password')) {
+        if ($request->fill('password')) {
             $rules['password'] = 'confirmed';
             $rules['password_confirmation'] = 'required';
         }
@@ -103,13 +103,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'errors' => $validator->errors()]);
         }
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-
-        $request->validate($rules);
 
         $user->update([
             'first_name' => $request->input('first_name'),
