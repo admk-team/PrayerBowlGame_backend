@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AddUser;
 use App\Models\RandomUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PrayerUserMail;
 
 class RandomUserController extends Controller
 {
@@ -100,5 +102,11 @@ class RandomUserController extends Controller
         }
 
         return response()->json(['success' => true, 'data' => $user]);
+    }
+
+    public function test()
+    {
+        Mail::to('user9585497@gmail.com')->send(new PrayerUserMail());
+        return 'email sent';
     }
 }
