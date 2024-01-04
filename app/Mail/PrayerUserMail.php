@@ -37,7 +37,7 @@ class PrayerUserMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.mail.prayer-user',
+            view: 'mail.prayer-user',
         );
     }
 
