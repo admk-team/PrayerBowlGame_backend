@@ -42,6 +42,8 @@ class SendMail implements ShouldQueue
      */
     public function middleware(): array
     {
-        return [new LimitMailJob];
+        return [
+            new \Illuminate\Queue\Middleware\RateLimitedWithRedis(rand()),
+        ];
     }
 }
