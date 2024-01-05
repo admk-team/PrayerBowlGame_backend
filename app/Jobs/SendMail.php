@@ -22,8 +22,8 @@ class SendMail implements ShouldQueue
      */
     public function __construct($recieverEmail, $senderName)
     {
-        $this->$recieverEmail = $recieverEmail;
-        $this->$senderName = $senderName;
+        $this->recieverEmail = $recieverEmail;
+        $this->senderName = $senderName;
     }
 
     /**
@@ -31,7 +31,6 @@ class SendMail implements ShouldQueue
      */
     public function handle()
     {
-        dd($this->recieverEmail);
         Mail::to($this->recieverEmail)->send(new PrayerUserMail($this->senderName));
     }
 }
