@@ -7,6 +7,7 @@ use App\Models\RandomUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PrayerUserMail;
+use App\Jobs\SendMail;
 
 class RandomUserController extends Controller
 {
@@ -106,7 +107,7 @@ class RandomUserController extends Controller
 
     public function test()
     {
-        Mail::to('alikhan9585497@gmail.com')->send(new PrayerUserMail('test user1'));
+        SendMail::dispatch('alikhan9585497@gmail.com', 'marty');
         return 'email sent';
     }
 }
