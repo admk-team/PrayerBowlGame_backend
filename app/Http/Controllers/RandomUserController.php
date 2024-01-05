@@ -108,6 +108,6 @@ class RandomUserController extends Controller
     public function test()
     {
         SendMail::dispatch('alikhan9585497@gmail.com', 'marty');
-        return 'email sent';
+        return 'email sent new';
     }
 }
