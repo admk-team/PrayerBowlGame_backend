@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\Middleware\LimitMailJob;
 use App\Mail\PrayerUserMail;
 
 class SendMail implements ShouldQueue
@@ -32,5 +33,10 @@ class SendMail implements ShouldQueue
     public function handle()
     {
         Mail::to($this->recieverEmail)->send(new PrayerUserMail($this->senderName));
+    }
+
+    public function middleware(): array
+    {
+        return [new LimitMailJob];
     }
 }
