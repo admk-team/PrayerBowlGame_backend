@@ -4,6 +4,7 @@ namespace App\Jobs\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Log;
 
 class LimitMailJob
 {
@@ -21,7 +22,7 @@ class LimitMailJob
                     $next($job);
                 },
                 function () use ($job) {
-                    info('Could not obtain lock for SendMail job.');
+                    Log::error('Could not obtain lock for SendMail job.');
                 }
             );
     }
