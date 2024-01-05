@@ -35,6 +35,11 @@ class SendMail implements ShouldQueue
         Mail::to($this->recieverEmail)->send(new PrayerUserMail($this->senderName));
     }
 
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new LimitMailJob];
