@@ -31,7 +31,7 @@ class SendMail implements ShouldQueue
      */
     public function handle()
     {
-        return $this->recieverEmail;
+        dd($this->recieverEmail);
         Mail::to($this->recieverEmail)->send(new PrayerUserMail($this->senderName));
     }
 }
