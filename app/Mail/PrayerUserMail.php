@@ -30,6 +30,7 @@ class PrayerUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('prayerbowl@mail.com'),
             subject: 'Prayer',
         );
     }
