@@ -29,7 +29,7 @@ class SendMail implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle()
     {
         return $this->recieverEmail;
         Mail::to($this->recieverEmail)->send(new PrayerUserMail($this->senderName));
