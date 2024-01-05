@@ -16,10 +16,13 @@ class LimitMailJob
     {
         Redis::throttle('key')
             ->block(0)->allow(1)->every(4)
-            ->then(function () use ($job, $next) {
-                $next($job);
-            }, function () use ($job) {
-                $job->release(4);
-            });
+            ->then(
+                function () use ($job, $next) {
+                    $next($job);
+                },
+                function () use ($job) {
+                    info('Could not obtain lock for SendMail job.');
+                }
+            );
     }
 }
