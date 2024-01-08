@@ -8,9 +8,14 @@
     @endslot
 
     {{-- Body --}}
-    # Introduction
-    
-    Welcome to our mailing list! Thank you for subscribing.
+    # Dear [Recipient's Name],
+
+    I hope this message finds you in good spirits. We wanted to reach out and share that [Name] is keeping you in their
+    prayers at this very moment.
+    Blessings
+    Prayer Bowl Team
+
+    If you wish to offer prayers for someone special or curate your personalized prayer list, we invite you to download our complimentary Prayer Bowl App, available on both Android and Apple platforms. You can find the download link below.
 
     {{-- Footer --}}
     @slot('footer')
