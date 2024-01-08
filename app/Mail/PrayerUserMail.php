@@ -31,7 +31,7 @@ class PrayerUserMail extends Mailable
     {
         return new Envelope(
             from: new Address('prayerbowl@mail.com', 'PrayerBowl'),
-            subject: 'Prayer',
+            subject: 'Someone is praying for you right now',
         );
     }
 

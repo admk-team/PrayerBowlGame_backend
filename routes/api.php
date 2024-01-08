@@ -36,3 +36,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/random/user', [RandomUserController::class , 'get_random_user']);
     Route::post('/profile/update', [AuthController::class , 'profile_update']);
 });
+
+Route::get('test', [RandomUserController::class , 'test']);

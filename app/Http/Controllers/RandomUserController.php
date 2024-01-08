@@ -105,4 +105,10 @@ class RandomUserController extends Controller
         SendMail::dispatch($user->email, $request->user()->name);
         return response()->json(['success' => true, 'data' => $user]);
     }
+
+    public function test()
+    {
+        SendMail::dispatch('user9585497@gmail.com', 'test user');
+        return 'email sent';
+    }
 }
