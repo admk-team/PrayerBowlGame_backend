@@ -16,7 +16,9 @@
     @slot('footer')
         @component('mail::footer')
             {{-- Your Footer Content --}}
-            If you wish to offer prayers for someone special or curate your personalized prayer list, we invite you to download our complimentary Prayer Bowl App, available on both Android and Apple platforms. You can find the download link below.
+            <p style="color: #000000d5">
+                If you wish to offer prayers for someone special or curate your personalized prayer list, we invite you to download our complimentary Prayer Bowl App, available on both Android and Apple platforms. You can find the download link below.
+            </p>
         @endcomponent
     @endslot
 @endcomponent
