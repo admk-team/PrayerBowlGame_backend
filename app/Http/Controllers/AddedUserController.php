@@ -98,7 +98,7 @@ class AddedUserController extends Controller
             return response()->json(['success' => false, 'errors' => ['id' => ['User not found.']]]);
 
         $user->update($request->all());
-        return response()->json(['success' => true, 'data' => $user]);
+        return response()->json(['success' => true, 'message' => 'User successfully updated.', 'data' => $user]);
     }
 
     /**
