@@ -6,6 +6,7 @@ use App\Models\AddUser;
 use App\Models\User;
 use App\Models\RandomUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AddedUserController extends Controller
 {
@@ -32,11 +33,17 @@ class AddedUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
-        ]);
+        ];
+        if ($request->filled('email'))
+            $rules['email'] = 'email';
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return response()->json(['success' => false, 'errors' => $validator->errors()]);
 
         $user = new AddUser();
         $user->user_id = $request->user()->id;
@@ -65,7 +72,8 @@ class AddedUserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = AddUser::find($id) ?? '';
+        return response()->json(['success' => true, 'data' => $user]);
     }
 
     /**
@@ -73,7 +81,24 @@ class AddedUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $rules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+        ];
+        if ($request->filled('email'))
+            $rules['email'] = 'email';
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return response()->json(['success' => false, 'errors' => $validator->errors()]);
+
+        $user = AddUser::find($id);
+        if ($user == '')
+            return response()->json(['success' => false, 'errors' => ['id' => ['User not found.']]]);
+
+        $user->update($request->all());
+        return response()->json(['success' => true, 'data' => $user]);
     }
 
     /**
@@ -92,7 +117,6 @@ class AddedUserController extends Controller
     public function get_users(Request $request)
     {
         $user = AddUser::where('user_id', $request->user()->id)->get();
-
         return response()->json(['success' => true, 'data' => $user]);
     }
 
@@ -100,12 +124,12 @@ class AddedUserController extends Controller
     {
         $user = AddUser::find($id);
         $random_users = RandomUser::where('user_id', $request->user()->id)->where('email', $user->email)->get();
-        
-        $dates = $random_users->map(function($random_user) {
+
+        $dates = $random_users->map(function ($random_user) {
             return \Carbon\Carbon::parse($random_user->created_at)->format('d-m-Y H:i');
         });
 
-        return response()->json(['success'=> true,'data'=> ['user' => $user, 'dates' => $dates]]);
+        return response()->json(['success' => true, 'data' => ['user' => $user, 'dates' => $dates]]);
     }
 
     public function delete_user(Request $request, $id)

@@ -71,9 +71,9 @@ class RandomUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id = '0')
+    public function update(Request $request, string $id)
     {
-        return $request;
+        //
     }
 
     /**
