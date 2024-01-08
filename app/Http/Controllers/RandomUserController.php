@@ -6,7 +6,6 @@ use App\Models\AddUser;
 use App\Models\RandomUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\PrayerUserMail;
 use App\Jobs\SendMail;
 
 class RandomUserController extends Controller

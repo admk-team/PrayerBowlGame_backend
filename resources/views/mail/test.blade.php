@@ -3,13 +3,13 @@
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
             {{-- Your Logo --}}
-            <img src="{{ asset('path/to/your/logo.png') }}" alt="{{ config('app.name') }}" style="max-width: 150px;">
+            <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" style="max-width: 150px;">
         @endcomponent
     @endslot
 
     {{-- Body --}}
     # Introduction
-
+    
     Welcome to our mailing list! Thank you for subscribing.
 
     {{-- Footer --}}

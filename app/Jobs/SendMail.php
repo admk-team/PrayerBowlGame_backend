@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\Middleware\LimitMailJob;
 use App\Mail\PrayerUserMail;
+use App\Mail\TestMail;
 
 class SendMail implements ShouldQueue
 {
@@ -32,7 +33,7 @@ class SendMail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->recieverEmail)->send(new PrayerUserMail($this->senderName));
+        Mail::to($this->recieverEmail)->send(new TestMail($this->senderName));
     }
 
     /**
