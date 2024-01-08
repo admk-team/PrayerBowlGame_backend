@@ -10,18 +10,13 @@
     {{-- Body --}}
     # Dear [Recipient's Name],
 
-    I hope this message finds you in good spirits. We wanted to reach out and share that [Name] is keeping you in their
-    prayers at this very moment.
-    Blessings
-    Prayer Bowl Team
-
-    If you wish to offer prayers for someone special or curate your personalized prayer list, we invite you to download our complimentary Prayer Bowl App, available on both Android and Apple platforms. You can find the download link below.
+    I hope this message finds you in good spirits. We wanted to reach out and share that [Name] is keeping you in their prayers at this very moment. Blessings Prayer Bowl Team
 
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
             {{-- Your Footer Content --}}
-            © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+            If you wish to offer prayers for someone special or curate your personalized prayer list, we invite you to download our complimentary Prayer Bowl App, available on both Android and Apple platforms. You can find the download link below.
         @endcomponent
     @endslot
 @endcomponent
