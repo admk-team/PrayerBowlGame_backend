@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddedUserController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailSettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,4 +38,6 @@ Route::middleware('admin')->group(function () {
     // random users
     Route::get('/random/users', [RandomUserController::class, 'index']);
     Route::get('/random/{id}/',[RandomUserController::class,'destroy'])->name('random.delete');
+    // Email settings
+    Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
 });
