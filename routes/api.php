@@ -4,6 +4,7 @@ use App\Http\Controllers\AddedUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\RandomUserController;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Auth::routes();
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/password/otp', [PasswordResetController::class, 'sendOtp']);
+Route::post('/password/otp/verify', [PasswordResetController::class, 'verifyOtp']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

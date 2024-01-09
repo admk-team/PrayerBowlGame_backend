@@ -11,8 +11,7 @@
     {{-- Body --}}
     # Dear {{ $recieverName }},
 
-    I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping you
-    in their prayers at this very moment.
+    I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping you in their prayers at this very moment.
 
     Blessings,
     Prayer Bowl Team
