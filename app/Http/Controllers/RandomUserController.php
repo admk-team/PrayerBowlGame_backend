@@ -6,6 +6,7 @@ use App\Models\AddUser;
 use App\Models\RandomUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Artisan;
 use App\Jobs\SendMail;
 
 class RandomUserController extends Controller
@@ -101,7 +102,9 @@ class RandomUserController extends Controller
             ]);
         }
 
+        $this->handleQueueWorker();
         SendMail::dispatch($user->email, $request->user()->name);
+        
         return response()->json(['success' => true, 'data' => $user]);
     }
 
@@ -109,5 +112,14 @@ class RandomUserController extends Controller
     {
         SendMail::dispatch('user9585497@gmail.com', 'test user');
         return 'email sent';
+    }
+
+    private function handleQueueWorker()
+    {
+        $queueIsRunning = Artisan::call('queue:status') === 0;
+
+        if (!$queueIsRunning) {
+            Artisan::call('queue:work', ['--daemon' => true]);
+        }
     }
 }
