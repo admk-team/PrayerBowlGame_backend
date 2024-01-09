@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\AddUser;
 use App\Models\RandomUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Artisan;
 use App\Jobs\SendMail;
 
@@ -81,11 +80,9 @@ class RandomUserController extends Controller
      */
     public function destroy(string $id)
     {
-        // Find the user by ID and delete
         $user = RandomUser::findOrFail($id);
         $user->delete();
 
-        // You may redirect to a different page or return a response as needed
         return redirect()->back()->with('success', 'User deleted successfully');
     }
 
@@ -102,9 +99,8 @@ class RandomUserController extends Controller
             ]);
         }
 
-        $this->handleQueueWorker();
         SendMail::dispatch($user->email, $request->user()->name);
-        
+
         return response()->json(['success' => true, 'data' => $user]);
     }
 
@@ -112,14 +108,5 @@ class RandomUserController extends Controller
     {
         SendMail::dispatch('user9585497@gmail.com', 'test user');
         return 'email sent';
-    }
-
-    private function handleQueueWorker()
-    {
-        $queueIsRunning = Artisan::call('queue:status') === 0;
-
-        if (!$queueIsRunning) {
-            Artisan::call('queue:work', ['--daemon' => true]);
-        }
     }
 }
