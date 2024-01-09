@@ -30,12 +30,12 @@
                 @endif
             </p>
             @if ($iosLink != '')
-                <a href="{{ $iosLink }}">
+                <a href="{{ $iosLink }}" style="text-decoration: none;">
                     <img src="{{ asset('images/applestore.png') }}" alt="playstore" style="max-width: 146px;">
                 </a>
             @endif
             @if ($androidLink != '')
-                <a href="{{ $androidLink }}">
+                <a href="{{ $androidLink }}" style="text-decoration: none;">
                     <img src="{{ asset('images/playstore.png') }}" alt="playstore" style="max-width: 160px;">
                 </a>
             @endif
