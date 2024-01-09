@@ -40,4 +40,5 @@ Route::middleware('admin')->group(function () {
     Route::get('/random/{id}/',[RandomUserController::class,'destroy'])->name('random.delete');
     // Email settings
     Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
+    Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
 });

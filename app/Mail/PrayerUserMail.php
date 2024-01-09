@@ -8,18 +8,26 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\EmailSetting;
 
 class PrayerUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $senderName, $recieverName;
+    public $senderName, $recieverName, $message, $androidLink, $iosLink;
 
     /**
      * Create a new message instance.
      */
     public function __construct($senderName, $recieverName)
     {
+        $emailSettings = EmailSetting::first();
+
+        if ($emailSettings != '') {
+            $this->message = $emailSettings->message;
+            $this->androidLink = $emailSettings->androidLink;
+            $this->iosLink = $emailSettings->iosLink;
+        }
         $this->senderName = $senderName;
         $this->recieverName = $recieverName;
     }
