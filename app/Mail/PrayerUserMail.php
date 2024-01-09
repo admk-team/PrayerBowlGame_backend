@@ -7,21 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class PrayerUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $senderName;
+    public $senderName, $recieverName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($senderName)
+    public function __construct($senderName, $recieverName)
     {
         $this->senderName = $senderName;
+        $this->recieverName = $recieverName;
     }
 
     /**
@@ -30,8 +30,7 @@ class PrayerUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('prayerbowl@mail.com', 'PrayerBowl'),
-            subject: 'Someone is praying for you right now',
+            subject: 'Prayer User Mail',
         );
     }
 
@@ -41,7 +40,7 @@ class PrayerUserMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.prayer-user',
+            markdown: 'mail.prayer-user-mail',
         );
     }
 

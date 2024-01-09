@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\AddUser;
 use App\Models\RandomUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
-use App\Jobs\SendMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
+use App\Mail\PrayerUserMail;
 
 class RandomUserController extends Controller
 {
@@ -99,14 +100,13 @@ class RandomUserController extends Controller
             ]);
         }
 
-        SendMail::dispatch($user->email, $request->user()->name);
-
+        Mail::to($user->email)->send(new TestMail($request->user()->name, $user->first_name . ' ' . $user->last_name));
         return response()->json(['success' => true, 'data' => $user]);
     }
 
     public function test()
     {
-        SendMail::dispatch('user9585497@gmail.com', 'test user');
+        Mail::to('user9585497@gmail.com')->send(new PrayerUserMail('sender', 'reciever'));
         return 'email sent';
     }
 }
