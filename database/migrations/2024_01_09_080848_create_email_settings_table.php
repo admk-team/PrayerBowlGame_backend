@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('androidLink')->nullable();
             $table->string('iosLink')->nullable();
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
