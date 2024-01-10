@@ -99,10 +99,12 @@ class RandomUserController extends Controller
                 'last_name' => $user->last_name,
                 'email' => $user->email,
             ]);
+
+            Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name));
+            return response()->json(['success' => true, 'data' => $user]);
         }
 
-        Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name));
-        return response()->json(['success' => true, 'data' => $user]);
+        return response()->json(['success' => false, 'message' => 'Please add names to your list.']);
     }
 
     public function test()
