@@ -27,6 +27,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/password/otp', [PasswordResetController::class, 'sendOtp']);
 Route::post('/password/otp/verify', [PasswordResetController::class, 'verifyOtp']);
+Route::post('/password/update', [PasswordResetController::class, 'updatePassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Otp;
+use App\Mail\OtpMail;
 
 class PasswordResetController extends Controller
 {
@@ -35,12 +37,21 @@ class PasswordResetController extends Controller
             'code' => $code
         ]);
 
+        $user = User::where('email', $request->email)->first();
+        $codeStr = (string) $code;
+        $codeArr = str_split($codeStr);
+        $formattedCode = '';
+
+        foreach ($codeArr as $key => $value) {
+            $formattedCode .= $value;
+            if ($key != (sizeof($codeArr) - 1))
+                $formattedCode .= ' ';
+        }
+        Mail::to($request->email)->send(new OtpMail($user->name, $formattedCode));
+
         return response()->json([
             'success' => true,
             'message' => 'An OTP code has been sent to your email.',
-            'data' => [
-                'code' => $code,
-            ]
         ]);
     }
 
@@ -53,7 +64,7 @@ class PasswordResetController extends Controller
                 function ($attribute, $value, $fail) use ($request) {
                     $otpEntry = Otp::where('email', $request->email)->first();
                     if ($otpEntry == '' || $otpEntry->code != $request->code)
-                        $fail(__('Otp code is expired or invalid.'));
+                        $fail(__('Otp code is either invalid or expired.'));
                 }
             ]
         ];
@@ -90,6 +101,37 @@ class PasswordResetController extends Controller
             'data' => [
                 'token' => $token
             ]
-        ]);
+        ], 200);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $rules = [
+            'token' => 'required | exists:password_reset_tokens',
+            'password' => 'required | confirmed',
+            'password_confirmation' => 'required'
+        ];
+        $messages = [
+            'token.exists' => 'Invalid authentication token.',
+            'password.confirmed' => 'Password confirmation does not match.',
+            'password_confirmation.required' => 'Please confirm your password.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails())
+            return response()->json(['success' => false, 'message' => $validator->errors()], 401);
+
+        $tokenData = DB::table('password_reset_tokens')
+            ->where('token', $request->token)
+            ->first();
+
+        $user = User::where('email', $tokenData->email)->first();
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        DB::table('password_reset_tokens')
+            ->where('token', $request->token)
+            ->delete();
+        return response()->json(['success' => true, 'message' => 'Password successfully updated.'], 200);
     }
 }

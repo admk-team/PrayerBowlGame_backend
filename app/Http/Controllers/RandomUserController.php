@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Mail\PrayerUserMail;
+use App\Mail\OtpMail;
 
 class RandomUserController extends Controller
 {
@@ -106,7 +107,8 @@ class RandomUserController extends Controller
 
     public function test()
     {
-        Mail::to('user9585497@gmail.com')->send(new PrayerUserMail('sender', 'reciever'));
+        // return (new OtpMail('sender', 'reciever'))->render();
+        Mail::to('user9585497@gmail.com')->send(new OtpMail('sender', 'reciever'));
         return 'email sent';
     }
 }
