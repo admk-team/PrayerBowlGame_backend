@@ -50,7 +50,7 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Registred User</div>
+                                    <div class="stat-text">Registered User</div>
                                     <div class="stat-digit"> 
                                          {{ $userCount }}</div>
                                 </div>
@@ -62,7 +62,7 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Added Users</div>
+                                    <div class="stat-text">Added Names</div>
                                     <div class="stat-digit"> 
                                          {{ $adduser }}</div>
                                 </div>
@@ -74,7 +74,7 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Random User</div>
+                                    <div class="stat-text">Names Selected for Prayer</div>
                                     <div class="stat-digit"> 
                                          {{ $random_user }}</div>
                                 </div>
