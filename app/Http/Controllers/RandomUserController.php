@@ -109,8 +109,7 @@ class RandomUserController extends Controller
 
     public function test()
     {
-        // return (new OtpMail('sender', 'reciever'))->render();
-        Mail::to('user9585497@gmail.com')->send(new OtpMail('sender', 'reciever'));
+        Mail::to('alikhan9585497@gmail.com')->send(new PrayerUserMail('sender', 'reciever'));
         return 'email sent';
     }
 }
