@@ -8,10 +8,10 @@
                           class="nav-text">Registered User</span></a>
               </li>
               <li><a href="/added/users" aria-expanded="false"><i class="icon icon-single-04"></i><span
-                          class="nav-text">Add Users</span></a>
+                          class="nav-text">Added Names</span></a>
               </li>
               <li><a href="/random/users" aria-expanded="false"><i class="icon icon-single-04"></i><span
-                          class="nav-text">Random Users</span></a>
+                          class="nav-text">Names Selected for Prayer</span></a>
               </li>
               <li><a href="/email-settings" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Email Settings</span></a>

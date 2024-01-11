@@ -15,7 +15,7 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Random Users</h4>
+                <h4 class="card-title">Names Selected for Prayer</h4>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
