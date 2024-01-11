@@ -109,6 +109,7 @@ class RandomUserController extends Controller
 
     public function test()
     {
+        // return (new PrayerUserMail('sender', 'reciever'))->render();
         Mail::to('alikhan9585497@gmail.com')->send(new PrayerUserMail('sender', 'reciever'));
         return 'email sent';
     }
