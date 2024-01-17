@@ -124,4 +124,13 @@ class AuthController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Profile successfully updated.']);
     }
+    public function destory()
+    {
+        $user = auth()->user();
+        $user->delete();
+        return [
+            'message' => 'Account Deleted',
+            'status' =>  true,
+        ];
+    }
 }
