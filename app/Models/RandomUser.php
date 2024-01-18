@@ -13,8 +13,10 @@ class RandomUser extends Model
         'first_name',
         'last_name',
         'email',
+        'registered_user'
     ];
-    public function user(){
-        return $this->belongsTo(User::class,'user_id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

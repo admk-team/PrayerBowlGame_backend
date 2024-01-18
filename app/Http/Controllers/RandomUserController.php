@@ -45,7 +45,6 @@ class RandomUserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-
         if ($user->save()) {
             return response()->json(['success' => true, 'message' => 'Random User data added successfully.']);
         } else {
@@ -91,13 +90,13 @@ class RandomUserController extends Controller
     public function get_random_user(Request $request)
     {
         $user = AddUser::where('user_id', $request->user()->id)->inRandomOrder()->first();
-
         if ($user) {
             RandomUser::create([
                 'user_id' => $request->user()->id,
                 'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
+                'registered_user' => $request->user()->name
             ]);
 
             Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name));

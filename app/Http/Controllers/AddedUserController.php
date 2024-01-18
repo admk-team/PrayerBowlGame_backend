@@ -17,7 +17,6 @@ class AddedUserController extends Controller
     {
         $users = AddUser::with('user')->latest()->paginate(8);
         return view('admin.added_users.index', compact('users'));
-
     }
 
     /**
@@ -50,6 +49,7 @@ class AddedUserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
+        $user->registered_user = $request->user()->name;
 
         if ($user->save()) {
             return response()->json(['success' => true, 'message' => 'User data added successfully.']);

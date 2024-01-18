@@ -124,7 +124,7 @@ class AuthController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Profile successfully updated.']);
     }
-    public function destory()
+    public function destroy()
     {
         $user = auth()->user();
         $user->delete();

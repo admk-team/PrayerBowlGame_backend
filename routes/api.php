@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/delete/{id}', [AddedUserController::class, 'delete_user']);
     Route::get('/random/user', [RandomUserController::class, 'get_random_user']);
     Route::post('/profile/update', [AuthController::class, 'profile_update']);
-    Route::post('/destory', [AuthController::class, 'destory']);
+    Route::post('/destroy', [AuthController::class, 'destroy']);
 });
 
 Route::get('test', [RandomUserController::class, 'test']);
