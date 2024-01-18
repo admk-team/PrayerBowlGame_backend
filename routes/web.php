@@ -27,17 +27,21 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::view('/terms-and-conditions', 'pages.terms-and-conditions');
+Route::view('/privacy-policy', 'pages.privacy-policy');
+Route::view('/about-us', 'pages.about');
+
 Auth::routes();
 Route::middleware('admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{id}/',[UserController::class,'destroy'])->name('users.delete');
+    Route::get('/users/{id}/', [UserController::class, 'destroy'])->name('users.delete');
     // added user
     Route::get('/added/users', [AddedUserController::class, 'index']);
-    Route::get('/added/{id}/',[AddedUserController::class,'destroy'])->name('added.delete');
+    Route::get('/added/{id}/', [AddedUserController::class, 'destroy'])->name('added.delete');
     // random users
     Route::get('/random/users', [RandomUserController::class, 'index']);
-    Route::get('/random/{id}/',[RandomUserController::class,'destroy'])->name('random.delete');
+    Route::get('/random/{id}/', [RandomUserController::class, 'destroy'])->name('random.delete');
     // Email settings
     Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
