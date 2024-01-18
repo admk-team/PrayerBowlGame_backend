@@ -4,6 +4,7 @@ use App\Http\Controllers\AddedUserController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailSettingsController;
+use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,11 @@ Route::get('/', function () {
 Route::view('/terms-and-conditions', 'pages.terms-and-conditions');
 Route::view('/privacy-policy', 'pages.privacy-policy');
 Route::view('/about-us', 'pages.about');
-
+//account delete request routes
+Route::view('/account-delete', 'pages.account-delete');
+Route::post('user/mail', [FrontController::class, 'handleMailForm'])->name('mail');
+Route::get('/delete-account/{userId}', [FrontController::class, 'confirmAccountDeletion'])
+    ->name('confirm.account.deletion');
 Auth::routes();
 Route::middleware('admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

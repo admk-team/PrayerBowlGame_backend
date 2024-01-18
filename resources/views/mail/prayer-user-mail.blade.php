@@ -10,13 +10,14 @@
 
     {{-- Body --}}
     @component('mail::layout')
-    # Dear {{ $recieverName }},
-   <p>
-        I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping you in their prayers at this very moment.
-    </p>
-    Blessings,
-    <br>
-    Prayer Bowl Team
+        # Dear {{ $recieverName }},
+        <p>
+            I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping
+            you in their prayers at this very moment.
+        </p>
+        Blessings,
+        <br>
+        Prayer Bowl Team
     @endcomponent
 
     {{-- Footer --}}
