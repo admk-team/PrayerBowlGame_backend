@@ -79,9 +79,8 @@
     <script src="{{asset('admin_assets/vendor/global/global.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/quixnav-init.js')}}"></script>
     <script src="{{asset('admin_assets/js/custom.min.js')}}"></script>
-
-    
     <script src="{{asset('admin_assets/js/dashboard/dashboard-1.js')}}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
 @yield('scripts')
 </body>

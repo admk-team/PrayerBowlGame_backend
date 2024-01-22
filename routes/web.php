@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddedUserController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MinistryPartnerController;
 use App\Http\Controllers\EmailSettingsController;
 use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Auth;
@@ -50,11 +51,10 @@ Route::middleware('admin')->group(function () {
     // Email settings
     Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
-
+    
     // Ministry Parters Route
-    Route::get('/ministry-parters', [EmailSettingsController::class, 'index'])->name('ministry-parters');
-
-    // Ministry Parters Route
-    Route::get('/ministry-parters', [EmailSettingsController::class, 'index'])->name('ministry-parters');
+    Route::resource('ministryPartners', MinistryPartnerController::class); 
 
 });
+
+
