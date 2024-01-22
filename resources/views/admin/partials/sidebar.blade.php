@@ -17,17 +17,17 @@
                           class="nav-text">Email Settings</span></a>
               </li>
 
-              <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
+              <li><a href="/ministryPartners" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Ministry Parters</span></a>
               </li>
 
-              <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
+              <!-- <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Supporters</span></a>
-              </li>
+              </li> -->
 
-              <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
+              <!-- <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Donate</span></a>
-              </li>
+              </li> -->
 
           </ul>
       </div>
