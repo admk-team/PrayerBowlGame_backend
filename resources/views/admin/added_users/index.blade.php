@@ -12,7 +12,7 @@
         <div class="content-body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-10">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Added Names</h4>

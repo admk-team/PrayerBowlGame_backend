@@ -17,7 +17,7 @@ class RandomUserController extends Controller
      */
     public function index()
     {
-        $users = RandomUser::with('user')->latest()->paginate(8);
+        $users = RandomUser::with('user')->orderBy('id','asc')->paginate(8);
         return view('admin.random_users.index', compact('users'));
     }
 

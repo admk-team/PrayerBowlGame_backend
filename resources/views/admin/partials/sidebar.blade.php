@@ -16,6 +16,19 @@
               <li><a href="/email-settings" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Email Settings</span></a>
               </li>
+
+              <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
+                          class="nav-text">Ministry Parters</span></a>
+              </li>
+
+              <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
+                          class="nav-text">Supporters</span></a>
+              </li>
+
+              <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
+                          class="nav-text">Donate</span></a>
+              </li>
+
           </ul>
       </div>
   </div>
