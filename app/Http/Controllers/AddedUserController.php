@@ -15,9 +15,10 @@ class AddedUserController extends Controller
      */
     public function index()
     {
-        $users = AddUser::with('user')->latest()->paginate(8);
+        $users = AddUser::with('user')->orderBy('id','asc')->paginate(8);
         return view('admin.added_users.index', compact('users'));
     }
+
 
     /**
      * Show the form for creating a new resource.

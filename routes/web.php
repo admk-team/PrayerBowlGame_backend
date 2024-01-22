@@ -50,4 +50,11 @@ Route::middleware('admin')->group(function () {
     // Email settings
     Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
+
+    // Ministry Parters Route
+    Route::get('/ministry-parters', [EmailSettingsController::class, 'index'])->name('ministry-parters');
+
+    // Ministry Parters Route
+    Route::get('/ministry-parters', [EmailSettingsController::class, 'index'])->name('ministry-parters');
+
 });

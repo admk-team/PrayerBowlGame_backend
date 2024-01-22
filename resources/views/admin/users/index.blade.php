@@ -12,7 +12,7 @@
     <div class="content-body">
         <div class="container-fluid">
     <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Registered Users</h4>
@@ -25,6 +25,8 @@
                                 <th>#</th>
                                 <th>User Name</th>
                                 <th>Email</th>
+                                <th>Country</th>
+                                <th>Language</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -35,6 +37,12 @@
                                     <td>{{ $item->name }}</td>
                                     <td>
                                         <p>{{ $item->email }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ $item->country }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ $item->language }}</p>
                                     </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal d-flex gap-3">
