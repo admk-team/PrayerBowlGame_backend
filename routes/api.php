@@ -9,6 +9,7 @@ use App\Http\Controllers\RandomUserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\MinistryPartnerController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

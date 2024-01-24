@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MinistryPartner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class MinistryPartnerController extends Controller
 {
@@ -85,17 +86,11 @@ class MinistryPartnerController extends Controller
         return response()->json(['message' => 'Ministry Partner deleted successfully']);
     }
 
-    public function saveSortOrder(Request $request)
+     public function saveSortOrder(Request $request)
     {
         $order = json_decode($request->order, true);
         foreach ($order as $itemOrder => $itemId) {
-            // Retrieve the associated data by ID
-            $ministryPartner = MinistryPartner::find($itemId);
-            // Update the order for the retrieved data
-            if ($ministryPartner) 
-            {
-                $ministryPartner->update(['order' => $itemOrder]);
-            }
+            DB::table('ministry_partners')->whereId($itemId)->update(['order' => $itemOrder]);
         }
         return response()->json(['message' => 'Sorting Saved'], 200);
     }
