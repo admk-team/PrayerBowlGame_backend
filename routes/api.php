@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\RandomUserController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\MinistryPartnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/random/user', [RandomUserController::class, 'get_random_user']);
     Route::post('/profile/update', [AuthController::class, 'profile_update']);
     Route::post('/destroy', [AuthController::class, 'destroy']);
+
+    // Ministry Parters Route
+    Route::apiResource('ministryPartners', MinistryPartnerController::class);
+    Route::post('ministryPartners/saveministrypartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
 });
 
 Route::get('test', [RandomUserController::class, 'test']);

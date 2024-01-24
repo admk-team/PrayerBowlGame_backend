@@ -18,20 +18,21 @@
                             <h4 class="card-title">Add Ministry Partner</h4>
                             <a href="{{ route('ministryPartners.index') }}" class="btn btn-primary btn-sm float-right">Back to List</a>
                         </div>
-
                         <div class="card-body">
                             <form action="{{ route('ministryPartners.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Ministry Partner Name:</label>
-                                    <input type="text" name="name" id="name" class="form-control" required>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Please provide the Ministry Partner">
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="link">Link:</label>
+                                    <input type="text" name="link" id="link" class="form-control" placeholder="Please provide the link">
+                                </div>
                                 <div class="form-group">
                                     <label for="logo">Logo:</label>
                                     <input type="file" name="logo" id="logo" class="form-control-file">
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">Add Ministry Partner</button>
                             </form>
                         </div>

@@ -5,9 +5,9 @@
 @section('content')
 <div class="container-fluid">
     @if (session()->has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
     @endif
     <div class="content-body">
         <div class="container-fluid">
@@ -30,10 +30,16 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="link">Link:</label>
+                                    <input type="url" name="link" id="link" class="form-control" value="{{ $ministryPartner->link }}" required>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="logo">Logo:</label>
-                                    <input type="file" name="logo" id="logo" class="form-control-file">
-                                    <!-- Display existing logo -->
-                                    <!-- <img src="{{ asset('storage/admin_assets/images/' . $ministryPartner->logo) }}" alt="Existing Logo" style="max-width: 50px; max-height: 50px;"> -->
+                                    <input type="file" name="logo" id="logo" class="form-control" value="{{ basename($ministryPartner->logo) }}" required>
+                                    @if($ministryPartner->logo)
+                                        <img src="{{ asset($ministryPartner->logo) }}" alt="Current Logo" class="img-thumbnail mt-2" style="max-width: 150px;">
+                                    @endif
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Update Ministry Partner</button>
@@ -45,4 +51,5 @@
         </div>
     </div>
 </div>
+
 @endsection
