@@ -37,6 +37,7 @@ class AuthController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to register']);
         }
     }
+    
     public function login(Request $request)
     {
         $rules = [

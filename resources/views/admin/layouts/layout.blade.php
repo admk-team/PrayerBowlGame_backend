@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,6 +12,7 @@
 
     <link rel="stylesheet" href="{{asset('admin_assets/vendor/jqvmap/css/jqvmap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/css/style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
   @yield('head')
 </head>
@@ -80,7 +82,6 @@
     <script src="{{asset('admin_assets/js/quixnav-init.js')}}"></script>
     <script src="{{asset('admin_assets/js/custom.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/dashboard/dashboard-1.js')}}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
 @yield('scripts')
 </body>
