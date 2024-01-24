@@ -54,6 +54,9 @@ Route::middleware('admin')->group(function () {
 
     // Ministry Parters Route
     Route::resource('ministryPartners', MinistryPartnerController::class);
-    Route::post('saveministrypartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
-    
+    Route::post('saveministryPartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
+
+    // Supporters Routers with Donation 
+
+
 });
