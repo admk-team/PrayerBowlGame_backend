@@ -42,7 +42,7 @@ class MinistryPartnerController extends Controller
     public function create(Request $request)
     {
         $ministryPartners = MinistryPartner::all();
-        return view('admin.ministryPartner.create', compact('ministryPartners'));
+        return view('admin.ministrypartner.create', compact('ministryPartners'));
     }
 
     public function store(Request $request)
@@ -74,7 +74,7 @@ class MinistryPartnerController extends Controller
 
     public function edit(MinistryPartner $ministryPartner)
     {
-        return view('admin.ministryPartner.edit', compact('ministryPartner'));
+        return view('admin.ministrypartner.edit', compact('ministryPartner'));
     }
 
     public function update(Request $request, MinistryPartner $ministryPartner)
