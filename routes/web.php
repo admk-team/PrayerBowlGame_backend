@@ -53,8 +53,8 @@ Route::middleware('admin')->group(function () {
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
 
     // Ministry Parters Route
-    Route::resource('ministryPartners', MinistryPartnerController::class);
-    Route::post('saveministryPartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
+    Route::resource('ministryPartners',MinistryPartnerController::class);
+    Route::post('saveministryPartner',[MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
 
     // Supporters Routers with Donation 
 

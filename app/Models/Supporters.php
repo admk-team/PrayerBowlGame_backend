@@ -12,6 +12,7 @@ class Supporters extends Model
     protected $fillable = [
         'name',
         'country',
+        'email',
         'Payment ID',
         'Amount',
         'Status',
