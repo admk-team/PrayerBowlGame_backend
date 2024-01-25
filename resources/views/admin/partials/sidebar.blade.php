@@ -21,7 +21,7 @@
                           class="nav-text">Ministry Parters</span></a>
               </li>
 
-              <li><a href="/Supporters" aria-expanded="false"><i class="icon icon-settings"></i><span
+              <li><a href="/supporters" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Supporters</span></a>
               </li>
 

@@ -13,9 +13,9 @@ class Supporters extends Model
         'name',
         'country',
         'email',
-        'Payment ID',
-        'Amount',
-        'Status',
-        'Date'
+        'payment_id',
+        'amount',
+        'status',
+        'date'
     ];
 }
