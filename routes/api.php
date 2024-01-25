@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\RandomUserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\MinistryPartnerController;
+use App\Http\Controllers\Api\SupportersApiController;
 
 
 /*
@@ -48,6 +49,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/ministrypartners', [MinistryPartnerController::class, 'index']);
     // Route::post('/storepartners', [MinistryPartnerController::class, 'store']);
     // Route::post('ministryPartners/saveministrypartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
+
+    // Supporters Router
+    Route::get('/supporters', [SupportersApiController::class, 'index']);
+    // Route::get('/supportershow', [SupportersApiController::class, 'show'])->name('supporters.show');
+    Route::post('/supporterstore', [SupportersApiController::class, 'store']);
+
 });
 
 Route::get('test', [RandomUserController::class, 'test']);

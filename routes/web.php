@@ -8,6 +8,7 @@ use App\Http\Controllers\EmailSettingsController;
 use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SupportersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,10 +54,12 @@ Route::middleware('admin')->group(function () {
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
 
     // Ministry Parters Route
-    Route::resource('ministryPartners',MinistryPartnerController::class);
-    Route::post('saveministryPartner',[MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
+    Route::resource('ministryPartners', MinistryPartnerController::class);
+    Route::post('saveministryPartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
 
     // Supporters Routers with Donation 
-
+    Route::get('/supporters', [SupportersController::class, 'index'])->name('supporters.index');
+    // Route::get('/supporters/show', [SupportersController::class, 'show'])->name('supporters.show');
+    Route::post('/supporters/store', [SupportersController::class, 'store'])->name('supporters.store');
 
 });

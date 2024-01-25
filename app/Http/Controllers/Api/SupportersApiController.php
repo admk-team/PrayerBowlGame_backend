@@ -1,22 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Supporters;
+use Illuminate\Support\Facades\Validator;
 
-class SupportersController extends Controller
+class SupportersApiController extends Controller
 {
     public function index()
     {
-        $supporters = Supporters::orderBy('id', 'DESC')->paginate(10);
-        return view('admin.supporters.index', compact('supporters'));
-    }
-
-    public function show()
-    {
         $supporters = Supporters::orderBy('id', 'DESC')->get();
-        return view('admin.supporters.show', compact('supporters'));
+        return response()->json(['supporters' => $supporters]);
     }
 
     public function store(Request $request)
@@ -31,9 +27,8 @@ class SupportersController extends Controller
             'date' => 'required|date',
         ]);
 
-        Supporters::create($request->all());
+        $supporter = Supporters::create($request->all());
 
-        return redirect()->route('supporters.index')
-            ->with('success', 'Supporter added successfully');
+        return response()->json(['message' => 'Supporter added successfully', 'supporter' => $supporter], 200);
     }
 }

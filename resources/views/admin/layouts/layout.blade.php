@@ -10,9 +10,12 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin_assets/images/favicon.png') }}">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-GLhlTQ8iGG9JhzCu8r+STmpOJT61S7GGD9xyA6z3fxi6gT2tYUyD4jC4QApB4EZh" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('admin_assets/vendor/jqvmap/css/jqvmap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/css/style.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+   
+
 
   @yield('head')
 </head>
