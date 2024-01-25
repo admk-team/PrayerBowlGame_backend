@@ -23,11 +23,15 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Ministry Partner Name:</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Please provide the Ministry Partner">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Please Provide the Ministry Partner">
                                 </div>
                                 <div class="form-group">
                                     <label for="link">Link:</label>
-                                    <input type="text" name="link" id="link" class="form-control" placeholder="Please provide the link">
+                                    <input type="text" name="link" id="link" class="form-control" placeholder="Please Provide the link">
+                                </div>
+                                <div class="form-group">
+                                    <label for="link">Order:</label>
+                                    <input type="number" name="order" id="order" class="form-control" placeholder="Please Provide the Sorting Order">
                                 </div>
                                 <div class="form-group">
                                     <label for="logo">Logo:</label>

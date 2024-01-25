@@ -92,6 +92,42 @@
         },
     })
 
+    // function updateOrder(newOrder) {
+    //     let action_url = "{{ route('ministrypartner.reorder') }}";
+    //     let formdata = new FormData();
+    //     formdata.append('order', JSON.stringify(newOrder));
+    //     $('.result').html("");
+    //     $.ajax({
+    //         url: action_url,
+    //         method: "POST",
+    //         data: formdata,
+    //         headers: {
+    //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+    //         },
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+    //         dataType: "json",
+    //         success: function(data) {
+    //             var html = '';
+    //             if (data.message) {
+    //                 html = '<div class="alert alert-success">' + data.message +
+    //                     '</div>';
+    //             }
+    //             $('.result').append(html);
+    //         },
+    //         error: function(data) 
+    //         {
+    //             if (data.responseJSON.message) 
+    //             {
+    //                 html = '<div class="alert alert-danger">';
+    //                 html += '<span>' + data.responseJSON.message + '</span>'
+    //                 html += '</div>';
+    //                 $('.result').append(html);
+    //             }
+    //         }
+    //     });
+    // }
     function updateOrder(newOrder) {
         let action_url = "{{ route('ministrypartner.reorder') }}";
         let formdata = new FormData();
@@ -115,11 +151,12 @@
                         '</div>';
                 }
                 $('.result').append(html);
+
+                // Reload the page after sorting
+                location.reload();
             },
-            error: function(data) 
-            {
-                if (data.responseJSON.message) 
-                {
+            error: function(data) {
+                if (data.responseJSON.message) {
                     html = '<div class="alert alert-danger">';
                     html += '<span>' + data.responseJSON.message + '</span>'
                     html += '</div>';

@@ -35,6 +35,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="link">Order:</label>
+                                    <input type="number" name="order" id="order" class="form-control" value="{{ $ministryPartner->order }}" required>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="logo">Logo:</label>
                                     <input type="file" name="logo" id="logo" class="form-control" value="{{ basename($ministryPartner->logo) }}" required>
                                     @if($ministryPartner->logo)

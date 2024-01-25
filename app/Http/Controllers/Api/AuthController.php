@@ -33,7 +33,8 @@ class AuthController extends Controller
                 'language' => $data->language,
             ];
             return response()->json(['success' => true, 'token' => $token, 'data' => $data]);
-        } else {
+        } else 
+        {
             return response()->json(['success' => false, 'message' => 'Failed to register']);
         }
     }
@@ -130,7 +131,7 @@ class AuthController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Profile successfully updated.']);
     }
-    
+
     public function destroy()
     {
         $user = auth()->user();

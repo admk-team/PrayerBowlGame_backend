@@ -33,7 +33,7 @@ class MinistryPartnerController extends Controller
             // Update the order for the retrieved data
             if ($ministryPartner) 
             {
-                $ministryPartner->update(['order' => $itemOrder]);
+                $ministryPartner->update(['order' => $itemOrder + 1]);
             }
         }
         return response()->json(['message' => 'Sorting Saved'], 200);
@@ -51,11 +51,15 @@ class MinistryPartnerController extends Controller
             'name' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
+            'order' => 'required',
         ]);
 
         $ministryPartner = new MinistryPartner();
         $ministryPartner->name = $request->input('name');
         $ministryPartner->link = $request->input('link');
+        $ministryPartner->order = $request->input('order');
+        // $ministryPartner->order= '0';
+
 
         if ($request->hasFile('logo')) {
             $logoOriginalName = $request->file('logo')->getClientOriginalName();
@@ -79,11 +83,13 @@ class MinistryPartnerController extends Controller
             'name' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
+            'order' => 'required',
         ]);
 
         $ministryPartner->update([
             'name' => $request->input('name'),
             'link' => $request->input('link'),
+            'order' => $request->input('order'),
         ]);
 
         if ($request->hasFile('logo')) {

@@ -44,8 +44,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/destroy', [AuthController::class, 'destroy']);
 
     // Ministry Parters Route
-    Route::apiResource('ministryPartners', MinistryPartnerController::class);
-    Route::post('ministryPartners/saveministrypartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
+    // Route::apiResource('ministryPartners',MinistryPartnerController::class);
+    Route::get('/ministrypartners', [MinistryPartnerController::class, 'index']);
+    // Route::post('/storepartners', [MinistryPartnerController::class, 'store']);
+    // Route::post('ministryPartners/saveministrypartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
 });
 
 Route::get('test', [RandomUserController::class, 'test']);
