@@ -9,7 +9,8 @@ use App\Http\Controllers\RandomUserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\MinistryPartnerController;
 use App\Http\Controllers\Api\SupportersApiController;
-
+use App\Http\Controllers\Api\StripeController;
+use App\Http\Controllers\Api\DonationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/supporters', [SupportersApiController::class, 'index']);
     // Route::get('/supportershow', [SupportersApiController::class, 'show'])->name('supporters.show');
     Route::post('/supporterstore', [SupportersApiController::class, 'store']);
+
+    // stripe intregation 
+    Route::post('/process-payment', [StripeController::class, 'processPayment']);
+
+    // Donation 
+    Route::post('/donations', [DonationController::class, 'create']);
+
+
 
 });
 

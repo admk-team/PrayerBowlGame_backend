@@ -59,7 +59,6 @@ Route::middleware('admin')->group(function () {
 
     // Supporters Routers with Donation 
     Route::get('/supporters', [SupportersController::class, 'index'])->name('supporters.index');
-    // Route::get('/supporters/show', [SupportersController::class, 'show'])->name('supporters.show');
+    Route::get('/supporters/{id}', [SupportersController::class, 'show'])->name('supporters.show');
     Route::post('/supporters/store', [SupportersController::class, 'store'])->name('supporters.store');
-
 });
