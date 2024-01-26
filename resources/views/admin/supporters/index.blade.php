@@ -45,8 +45,13 @@
                                             <td>{{ $supporter->amount }}</td>
                                             <td>{{ $supporter->status }}</td>
                                             <td>{{ \Carbon\Carbon::parse($supporter->date)->format('d F Y') }}</td>
-                                            <td>
+                                            <!-- <td>
                                                 <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#supporterModal">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </td> -->
+                                            <td>
+                                                <button class="btn btn-sm btn-info view-supporter" data-toggle="modal" data-target="#supporterModal" data-supporter-id="{{ $supporter->id }}">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                             </td>
@@ -61,7 +66,7 @@
 
                                 <!-- Modal Eye Button -->
                                 <div class="modal fade" id="supporterModal" tabindex="-1" role="dialog" aria-labelledby="supporterModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-dialog modal-xl" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="supporterModalLabel">Supporter Details</h5>
@@ -130,41 +135,66 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
-<script>
+<!-- <script>
     $(document).ready(function() {
-        $('.btn-info').on('click', function() 
-        {
+        $('.btn-info').on('click', function() {
             var supporterDetails = $(this).closest('tr').find('.supporter-details').html();
             $('#supporterModal .modal-body').html(supporterDetails);
         });
     });
-</script>
+</script> -->
+
+
 <!-- <script>
     $(document).ready(function() {
         $('.btn-info').on('click', function() {
             // Clear previous data when the modal is opened
             $('#modalSupportersBody').html('');
-            $('#modalPagination').html('');
 
-            // Fetch paginated data using AJAX
-            var supporterId = $(this).data('supporter-id');
-            $.ajax({
-                url: '/supporters/' + supporterId + '/paginate', // Adjust the URL based on your route
-                method: 'GET',
-                success: function(response) {
-                    // Populate modal body with paginated data
-                    $('#modalSupportersBody').html(response.data);
-
-                    // Populate pagination links
-                    $('#modalPagination').html(response.links);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+            // Find the closest row and get the data
+            var supporterDetails = $(this).closest('tr').html();
+            $('#modalSupportersBody').html(supporterDetails);
         });
     });
 </script> -->
 
+<script>
+    $(document).ready(function() {
+        $('.view-supporter').on('click', function() 
+        {
+            $('#modalSupportersBody').html('');
+
+            var supporterId = $(this).data('supporter-id');
+            $.ajax({
+                url: '/supporters/' + supporterId, 
+                method: 'GET',
+                dataType: 'json', 
+                success: function(response) {
+                    if (response && response.data) {
+                        var supporter = response.data;
+                        var supporterHtml = `
+                            <tr>
+                                <td>${supporter.id}</td>
+                                <td>${supporter.name}</td>
+                                <td>${supporter.country}</td>
+                                <td>${supporter.email}</td>
+                                <td>${supporter.payment_id}</td>
+                                <td>${supporter.amount}</td>
+                                <td>${supporter.status}</td>
+                                <td>${supporter.date}</td>
+                            </tr>
+                        `;
+                        $('#modalSupportersBody').html(supporterHtml);
+                    } else {
+                        console.error('Invalid response format');
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

@@ -12,11 +12,11 @@ class SupportersController extends Controller
         $supporters = Supporters::orderBy('id', 'DESC')->paginate(10);
         return view('admin.supporters.index', compact('supporters'));
     }
-
-    public function show()
+   
+    public function show($id)
     {
-        $supporters = Supporters::orderBy('id', 'DESC')->get();
-        return view('admin.supporters.show', compact('supporters'));
+        $supporter = Supporters::findOrFail($id);
+        return response()->json(['data' => $supporter]);
     }
 
     public function store(Request $request)
