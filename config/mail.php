@@ -33,13 +33,26 @@ return [
     |
     */
 
+    // 'mailers' => [
+    //     'smtp' => [
+    //         'transport' => 'smtp',
+    //         'url' => env('MAIL_URL'),
+    //         'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    //         'port' => env('MAIL_PORT', 587),
+    //         'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+    //         'username' => env('MAIL_USERNAME'),
+    //         'password' => env('MAIL_PASSWORD'),
+    //         'timeout' => null,
+    //         'local_domain' => env('MAIL_EHLO_DOMAIN'),
+    //     ],
+   
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+            'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
+            'port' => env('MAIL_PORT', 2525),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
@@ -86,6 +99,7 @@ return [
                 'log',
             ],
         ],
+        
     ],
 
     /*
@@ -115,12 +129,21 @@ return [
     |
     */
 
+    // 'markdown' => [
+    //     'theme' => 'default',
+
+    //     'paths' => [
+    //         // resource_path('views/vendor/mail'),
+    //         resource_path('views/mail'),
+    //     ],
+    // ],
     'markdown' => [
         'theme' => 'default',
-
+    
         'paths' => [
-            resource_path('views/vendor/mail'),
+            resource_path('views/mail'),
         ],
     ],
+    
 
 ];

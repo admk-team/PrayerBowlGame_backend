@@ -56,14 +56,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::get('/supportershow', [SupportersApiController::class, 'show'])->name('supporters.show');
     Route::post('/supporterstore', [SupportersApiController::class, 'store']);
 
-    // stripe intregation 
-    Route::post('/process-payment', [StripeController::class, 'processPayment']);
-
-    // Donation 
-    Route::post('/donations', [DonationController::class, 'create']);
-
-
-
+    // Donation Routes
+    Route::post('/donations', [DonationController::class, 'store']);
+    Route::get('/donationshow/{id}', [DonationController::class, 'show']);
 });
 
 Route::get('test', [RandomUserController::class, 'test']);

@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\AddedUserController;
-use App\Http\Controllers\RandomUserController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MinistryPartnerController;
-use App\Http\Controllers\EmailSettingsController;
-use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\AddedUserController;
+use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\SupportersController;
+use App\Http\Controllers\EmailSettingsController;
+use App\Http\Controllers\MinistryPartnerController;
+use App\Http\Controllers\StripeSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,5 @@ Route::middleware('admin')->group(function () {
     Route::get('/supporters', [SupportersController::class, 'index'])->name('supporters.index');
     Route::get('/supporters/{id}', [SupportersController::class, 'show'])->name('supporters.show');
     Route::post('/supporters/store', [SupportersController::class, 'store'])->name('supporters.store');
+
 });
