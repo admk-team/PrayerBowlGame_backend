@@ -18,6 +18,7 @@ class Donation extends Model
         'country',
         'donation_amount',
         'donation_type',
+        'email',
     ];
 
 }

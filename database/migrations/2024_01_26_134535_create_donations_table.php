@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('name_on_card');
             $table->string('expiry_date');
             $table->string('cvv');
-            $table->string('supporter_name');
-            $table->string('country');
+            $table->string('supporter_name')->nullable()->default(null);
+            $table->string('country')->nullable()->default(null);
             $table->decimal('donation_amount', 8, 2);
             $table->string('donation_type');
+            $table->string('email');
             $table->timestamps();
         });
     }
