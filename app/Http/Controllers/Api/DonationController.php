@@ -10,6 +10,7 @@ use App\Models\Donation;
 use Stripe\StripeClient;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -20,13 +21,9 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'card_number' => 'required|numeric',
-            'name_on_card' => 'required|string',
-            'expiry_date' => 'required|string',
-            'cvv' => 'required|numeric',
             'show_supporter_name' => 'required|boolean',
-            'donation_amount' => 'required|numeric',
-            'donation_type' => 'required|in:one_time,weekly,monthly,annually',
+            'amount' => 'required|numeric',
+            'subscription' => 'required|in:one_time,weekly,monthly,annually',
             'email' => 'required|string',
         ]);
 
@@ -48,19 +45,15 @@ class DonationController extends Controller
             'stripe_version' => '2023-10-16',
         ]);
         $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => $request->input('donation_amount') * 100,
+            'amount' => $request->input('amount') * 100,
             'currency' => config('cashier.currency'),
             'customer' => $customer->id,
             'payment_method_types' => ['card'], 
         ]);
 
         $donation = new Donation();
-        $donation->card_number = $request->input('card_number');
-        $donation->name_on_card = $request->input('name_on_card');
-        $donation->expiry_date = $request->input('expiry_date');
-        $donation->cvv = $request->input('cvv');
-        $donation->donation_amount = $request->input('donation_amount');
-        $donation->donation_type = $request->input('donation_type');
+        $donation->donation_amount = $request->input('amount');
+        $donation->donation_type = $request->input('subscription');
         $donation->email = $request->input('email');
         // save supporter_name and country based on show_supporter_name
         if ($request->input('show_supporter_name')) {
@@ -103,5 +96,6 @@ class DonationController extends Controller
         // Send email to the super admin
         Mail::to('admin@gmail.com')->send(new StripEmail($donation));
     }
+
 }
 
