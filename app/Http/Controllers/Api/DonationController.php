@@ -10,14 +10,13 @@ use App\Models\Donation;
 use Stripe\StripeClient;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 class DonationController extends Controller
 {
-    public function store(Request $request)
+    public function donation(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'show_supporter_name' => 'required|boolean',
@@ -68,7 +67,7 @@ class DonationController extends Controller
         $donation->save();
 
         // Send thank-you email to donor
-        // $this->sendThankYouEmail($donation);
+        $this->sendThankYouEmail($donation);
 
         return response()->json([
             'donation' => $donation,

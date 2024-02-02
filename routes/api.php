@@ -57,8 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/supporterstore', [SupportersApiController::class, 'store']);
 
     // Donation Routes
-    Route::post('/donation', [DonationController::class, 'store']);
-
+    Route::post('/donation', [DonationController::class, 'donation']);
     Route::get('/donationshow/{id}', [DonationController::class, 'show']);
 });
 
