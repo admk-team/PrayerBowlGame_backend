@@ -10,10 +10,13 @@ use App\Models\Donation;
 use Stripe\StripeClient;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
+use Laravel\Cashier\Console\WebhookCommand;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+
+
 class DonationController extends Controller
 {
     public function donation(Request $request)
@@ -31,7 +34,7 @@ class DonationController extends Controller
         }
 
         // Retrieve the authenticated user
-        $user = Auth::user();
+        // $user = Auth::user();
 
         // Create a customer in Stripe if not exists
         $stripe = new StripeClient(config('services.stripe.secret'));
