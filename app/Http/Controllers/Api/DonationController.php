@@ -4,11 +4,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Mail\StripEmail;
 use App\Models\User;
+use App\Mail\StripEmail;
 use App\Models\Donation;
+use Stripe\StripeClient;
 use Illuminate\Http\Request;
+use Laravel\Cashier\Cashier;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +34,26 @@ class DonationController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
+        // Retrieve the authenticated user
+        $user = Auth::user();
+
+        // Create a customer in Stripe if not exists
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
+        // Use an existing Customer ID if this is a returning customer.
+        $customer = $stripe->customers->create();
+        $ephemeralKey = $stripe->ephemeralKeys->create([
+            'customer' => $customer->id,
+        ], [
+            'stripe_version' => '2023-10-16',
+        ]);
+        $paymentIntent = $stripe->paymentIntents->create([
+            'amount' => $request->input('donation_amount') * 100,
+            'currency' => config('cashier.currency'),
+            'customer' => $customer->id,
+            'payment_method_types' => ['card'], 
+        ]);
+
         $donation = new Donation();
         $donation->card_number = $request->input('card_number');
         $donation->name_on_card = $request->input('name_on_card');
@@ -47,11 +70,20 @@ class DonationController extends Controller
 
         $donation->save();
 
-        // Send thank-you email to donor
-        $this->sendThankYouEmail($donation);
+        // You may want to store $ephemeralKey->secret in your database for future reference
+        $donation->payment_intent_id = $paymentIntent->client_secret;
+        $donation->save();
 
-        return response()->json($donation);
-        // return response()->json(['message' => 'Donation data received and saved successfully']);
+        // Send thank-you email to donor
+        // $this->sendThankYouEmail($donation);
+
+        return response()->json([
+            'donation' => $donation,
+            'payment_intent_id' => $paymentIntent->client_secret,
+            'ephemeralKey' => $ephemeralKey->secret,
+            'customer' => $customer->id,
+            'publishableKey' => config('services.stripe.key'),
+        ]);
     }
 
     public function show($id)
@@ -72,3 +104,4 @@ class DonationController extends Controller
         Mail::to('admin@gmail.com')->send(new StripEmail($donation));
     }
 }
+
