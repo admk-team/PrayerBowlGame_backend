@@ -15,7 +15,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-
 class DonationController extends Controller
 {
     public function store(Request $request)
@@ -27,7 +26,8 @@ class DonationController extends Controller
             'email' => 'required|string',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails()) 
+        {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
@@ -92,7 +92,6 @@ class DonationController extends Controller
     {
         // Send email to the donor
         Mail::to($donation->email)->send(new StripEmail($donation));
-
         // Send email to the super admin
         Mail::to('admin@gmail.com')->send(new StripEmail($donation));
     }
