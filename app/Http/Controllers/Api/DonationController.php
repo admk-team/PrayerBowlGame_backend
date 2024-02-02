@@ -37,7 +37,9 @@ class DonationController extends Controller
         // $user = Auth::user();
 
         // Create a customer in Stripe if not exists
-        $stripe = new StripeClient(config('services.stripe.secret'));
+        // $stripe = new StripeClient(config('services.stripe.secret'));
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+
 
         // Use an existing Customer ID if this is a returning customer.
         $customer = $stripe->customers->create();
