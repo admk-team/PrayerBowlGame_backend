@@ -17,7 +17,8 @@ class EmailSettingsController extends Controller
     {
         $emailSettings = EmailSetting::first();
 
-        if ($emailSettings == '') {
+        if ($emailSettings == '') 
+        {
             $emailSettings = new EmailSetting;
         }
         $emailSettings->androidLink = $request->androidLink ?? '';

@@ -55,6 +55,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
 
+    
+
+
     // Ministry Parters Route
     Route::resource('ministryPartners', MinistryPartnerController::class);
     Route::post('saveministryPartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
@@ -68,19 +71,10 @@ Route::middleware('admin')->group(function () {
     // Banner add Route 
     // Show all banners
     Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
-
-    // Show the form for creating a new banner
     Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
-
-    // Store a newly created banner
     Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
-
-    // Show the form for editing the specified banner
     Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
-
-    // Update the specified banner
     Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
-
-    // Remove the specified banner
     Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
+
 });
