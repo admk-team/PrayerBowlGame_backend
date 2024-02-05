@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('banner')->nullable();
             $table->text('content');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            // $table->dateTime('start_date');
+            // $table->dateTime('end_date');
+            $table->timestamp('start_date')->nullable()->default(now());
+            $table->timestamp('end_date')->nullable()->default(now());
             $table->integer('views')->default(0);
             $table->integer('clicks')->default(0);
             $table->integer('max_views')->nullable();

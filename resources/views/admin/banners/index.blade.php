@@ -26,7 +26,6 @@
                                             <th>ID</th>
                                             <th>Banner Name</th>
                                             <th>Banner</th>
-                                            <th>Content</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Actions</th>
@@ -34,15 +33,30 @@
                                     </thead>
                                     <tbody>
                                         @forelse ($banners as $banner)
-                                        <tr class="sortable-row" style="cursor: grab" data-id="{{ $ministryPartner->id }}">
+                                        <tr>
                                             <td>{{ $banner->id }}</td>
                                             <td>{{ $banner->company_name }}</td>
                                             <td>
-                                                <img src="{{ asset('' . $banner->banner) }}" alt="Logo" style="max-width: 50px; max-height: 50px;">
+                                                @if($banner->banner)
+                                                <img src="{{ asset('admin_assets/banner_ad/' . $banner->banner) }}" alt="Banner Image" style="max-width: 50px; max-height: 50px;">
+                                                @else
+                                                No Image
+                                                @endif
                                             </td>
-                                            <td>{{ $banner->content }}</td>
-                                            <td>{{ $banner->start_date }}</td>
-                                            <td>{{ $banner->end_date }}</td>
+                                            <td>
+                                                @if($banner->start_date)
+                                                {{ \Carbon\Carbon::parse($banner->start_date)->format('d-m-Y') }}
+                                                @else
+                                                No Start Date
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($banner->end_date)
+                                                {{ \Carbon\Carbon::parse($banner->end_date)->format('d-m-Y') }}
+                                                @else
+                                                No End Date
+                                                @endif
+                                            </td>
                                             <td class="border-bottom-0">
                                                 <a href="{{ route('banners.edit', $banner->id) }}" class="btn btn-sm">
                                                     <i class="edit ri-pencil-line text-info m-2"></i>
@@ -78,60 +92,4 @@
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.1/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-<script>
-    var el = document.getElementById('sortable-ministrypartner');
-    var sortable = new Sortable(el, {
-        onUpdate: function(evt) {
-            var newOrder = [];
-            var rows = el.getElementsByClassName('sortable-row');
-            for (var i = 0; i < rows.length; i++) {
-                newOrder.push(rows[i].getAttribute('data-id'));
-            }
-            updateOrder(newOrder);
-        },
-    })
-
-    function updateOrder(newOrder) {
-        let action_url = "{{ route('ministrypartner.reorder') }}";
-        let formdata = new FormData();
-        formdata.append('order', JSON.stringify(newOrder));
-        $('.result').html("");
-        $.ajax({
-            url: action_url,
-            method: "POST",
-            data: formdata,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function(data) {
-                var html = '';
-                if (data.message) {
-                    html = '<div class="alert alert-success">' + data.message +
-                        '</div>';
-                }
-                $('.result').append(html);
-
-                // Reload the page after sorting
-                location.reload();
-            },
-            error: function(data) {
-                if (data.responseJSON.message) {
-                    html = '<div class="alert alert-danger">';
-                    html += '<span>' + data.responseJSON.message + '</span>'
-                    html += '</div>';
-                    $('.result').append(html);
-                }
-            }
-        });
-    }
-</script>
 @endsection
