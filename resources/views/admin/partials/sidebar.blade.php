@@ -25,6 +25,10 @@
                           class="nav-text">Supporters</span></a>
               </li>
 
+              <li><a href="/banners" aria-expanded="false"><i class="icon icon-settings"></i><span
+                          class="nav-text">Banner Ad</span></a>
+              </li>
+
               <!-- <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Donate</span></a>
               </li> -->
