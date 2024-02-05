@@ -23,8 +23,8 @@ class DonationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'show_supporter_name' => 'required|boolean',
-            'amount' => 'required|numeric',
-            'subscription' => 'required|in:one_time,weekly,monthly,annually',
+            'donation_amount' => 'required|numeric',
+            'donation_type' => 'required|in:one_time,weekly,monthly,annually',
             'email' => 'required|string',
         ]);
 
@@ -34,11 +34,11 @@ class DonationController extends Controller
         }
 
         // Retrieve the authenticated user
-        // $user = Auth::user();
+        $user = Auth::user();
 
         // Create a customer in Stripe if not exists
-        // $stripe = new StripeClient(config('services.stripe.secret'));
-        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $stripe = new StripeClient(config('services.stripe.secret'));
+        // $stripe = new StripeClient(env('STRIPE_SECRET'));
 
 
         // Use an existing Customer ID if this is a returning customer.
@@ -49,15 +49,15 @@ class DonationController extends Controller
             'stripe_version' => '2023-10-16',
         ]);
         $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => $request->input('amount') * 100,
+            'amount' => $request->input('donation_amount') * 100,
             'currency' => config('cashier.currency'),
             'customer' => $customer->id,
             'payment_method_types' => ['card'], 
         ]);
 
         $donation = new Donation();
-        $donation->donation_amount = $request->input('amount');
-        $donation->donation_type = $request->input('subscription');
+        $donation->donation_amount = $request->input('donation_amount');
+        $donation->donation_type = $request->input('donation_type');
         $donation->email = $request->input('email');
         // save supporter_name and country based on show_supporter_name
         if ($request->input('show_supporter_name')) {
@@ -72,7 +72,7 @@ class DonationController extends Controller
         $donation->save();
 
         // Send thank-you email to donor
-        $this->sendThankYouEmail($donation);
+        // $this->sendThankYouEmail($donation);
 
         return response()->json([
             'donation' => $donation,

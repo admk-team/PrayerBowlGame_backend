@@ -7,6 +7,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\AddedUserController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\SupportersController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\EmailSettingsController;
 use App\Http\Controllers\MinistryPartnerController;
 use App\Http\Controllers\StripeSubscriptionController;
@@ -63,4 +64,23 @@ Route::middleware('admin')->group(function () {
     Route::get('/supporters/{id}', [SupportersController::class, 'show'])->name('supporters.show');
     Route::post('/supporters/store', [SupportersController::class, 'store'])->name('supporters.store');
 
+
+    // Banner add Route 
+    // Show all banners
+    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+
+    // Show the form for creating a new banner
+    Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
+
+    // Store a newly created banner
+    Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
+
+    // Show the form for editing the specified banner
+    Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
+
+    // Update the specified banner
+    Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
+
+    // Remove the specified banner
+    Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
 });
