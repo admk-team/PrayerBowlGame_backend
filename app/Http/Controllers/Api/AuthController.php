@@ -15,8 +15,8 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'country' => 'required',
-            'language' => 'required',
+            'country' => 'nullable',
+            'language' => 'nullable',
             'password' => 'required|confirmed'
         ]);
 
@@ -99,7 +99,8 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
-        if ($request->filled('current_password') || $request->filled('password') || $request->filled('password_confirmation')) {
+        if ($request->filled('current_password') || $request->filled('password') || $request->filled('password_confirmation')) 
+        {
             $rules['password'] = 'confirmed';
             $rules['password_confirmation'] = 'required';
             $rules['current_password'] = [
