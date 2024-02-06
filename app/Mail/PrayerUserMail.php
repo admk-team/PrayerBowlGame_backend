@@ -15,22 +15,25 @@ class PrayerUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $senderName, $recieverName, $message, $androidLink, $iosLink;
+    public $senderName, $recieverName, $message, $androidLink, $iosLink, $banner, $content;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($senderName, $recieverName)
+    public function __construct($senderName, $recieverName, $banner, $content)
     {
         $emailSettings = EmailSetting::first();
 
-        if ($emailSettings != '') {
+        if ($emailSettings != '') 
+        {
             $this->message = $emailSettings->message;
             $this->androidLink = $emailSettings->androidLink;
             $this->iosLink = $emailSettings->iosLink;
         }
         $this->senderName = $senderName;
         $this->recieverName = $recieverName;
+        $this->banner = $banner;
+        $this->content = $content;
     }
 
     /**

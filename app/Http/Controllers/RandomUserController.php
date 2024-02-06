@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AddUser;
 use App\Models\RandomUser;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -17,7 +18,7 @@ class RandomUserController extends Controller
      */
     public function index()
     {
-        $users = RandomUser::with('user')->orderBy('id','asc')->paginate(8);
+        $users = RandomUser::with('user')->orderBy('id', 'asc')->paginate(8);
         return view('admin.random_users.index', compact('users'));
     }
 
@@ -90,7 +91,11 @@ class RandomUserController extends Controller
     public function get_random_user(Request $request)
     {
         $user = AddUser::where('user_id', $request->user()->id)->inRandomOrder()->first();
-        if ($user) {
+
+        if ($user) 
+        {
+            $randomBanner = Banner::inRandomOrder()->first(['banner', 'content']);
+
             RandomUser::create([
                 'user_id' => $request->user()->id,
                 'first_name' => $user->first_name,
@@ -99,7 +104,8 @@ class RandomUserController extends Controller
                 'registered_user' => $request->user()->name
             ]);
 
-            Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name));
+            Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner, $randomBanner->content));
+
             return response()->json(['success' => true, 'data' => $user]);
         }
 
