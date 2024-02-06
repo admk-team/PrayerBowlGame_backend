@@ -52,6 +52,12 @@ class PrayerUserMail extends Mailable
     {
         return new Content(
             markdown: 'mail.prayer-user-mail',
+            with: [
+                'senderName' => $this->senderName,
+                'recieverName' => $this->recieverName,
+                'banner' => $this->banner,
+                'content' => $this->content,
+            ],
         );
     }
 
