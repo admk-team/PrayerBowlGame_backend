@@ -9,20 +9,20 @@
 
     {{-- Body --}}
     @component('mail::layout')
-        # Dear {{ $receiverName }},
-        
+        # Dear {{ $recieverName }},
+
         <p style="font-size: 15px;">
             I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping
             you in their prayers at this very moment.
         </p>
 
         {{-- Display Banner --}}
-        @if($banner)
+        @if ($banner)
             <img src="{{ asset('admin_assets/banner_ad/' . $banner) }}" alt="Banner" style="max-width: 100%; height: auto;">
         @endif
 
         {{-- Display Content --}}
-        @if($content)
+        @if ($content)
             <p style="font-size: 15px;">{{ $content }}</p>
         @endif
 

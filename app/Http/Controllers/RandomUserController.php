@@ -92,8 +92,7 @@ class RandomUserController extends Controller
     {
         $user = AddUser::where('user_id', $request->user()->id)->inRandomOrder()->first();
 
-        if ($user) 
-        {
+        if ($user) {
             $randomBanner = Banner::inRandomOrder()->first(['banner', 'content']);
 
             RandomUser::create([
@@ -104,7 +103,7 @@ class RandomUserController extends Controller
                 'registered_user' => $request->user()->name
             ]);
 
-            Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner, $randomBanner->content));
+            Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null));
 
             return response()->json(['success' => true, 'data' => $user]);
         }
@@ -112,10 +111,10 @@ class RandomUserController extends Controller
         return response()->json(['success' => false, 'message' => 'Please add names to your list.']);
     }
 
-    public function test()
-    {
-        // return (new PrayerUserMail('sender', 'reciever'))->render();
-        Mail::to('alikhan9585497@gmail.com')->send(new PrayerUserMail('sender', 'reciever'));
-        return 'email sent';
-    }
+    // public function test()
+    // {
+    //     // return (new PrayerUserMail('sender', 'reciever'))->render();
+    //     Mail::to('alikhan9585497@gmail.com')->send(new PrayerUserMail('sender', 'reciever'));
+    //     return 'email sent';
+    // }
 }
