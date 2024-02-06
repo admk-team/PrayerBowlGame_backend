@@ -72,7 +72,7 @@ class DonationController extends Controller
         $donation->save();
 
         // Send thank-you email to donor
-        // $this->sendThankYouEmail($donation);
+        $this->sendThankYouEmail($donation);
 
         return response()->json([
             'donation' => $donation,
