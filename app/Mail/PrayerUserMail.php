@@ -24,8 +24,7 @@ class PrayerUserMail extends Mailable
     {
         $emailSettings = EmailSetting::first();
 
-        if ($emailSettings != '') 
-        {
+        if ($emailSettings != '') {
             $this->message = $emailSettings->message;
             $this->androidLink = $emailSettings->androidLink;
             $this->iosLink = $emailSettings->iosLink;
@@ -42,7 +41,6 @@ class PrayerUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('pray@myprayerbowl.org', 'Prayer Bowl'),
             subject: 'Someone is Praying for your right now',
         );
     }

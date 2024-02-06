@@ -179,7 +179,7 @@
             the
             Prayer Bowl app, you agree to these Terms and Conditions. If you have any questions or concerns, please
             contact
-            us at pray@myprayerbowl.org.</span></p>
+            us at info@myprayerbowl.org.</span></p>
 
 </body>
 
