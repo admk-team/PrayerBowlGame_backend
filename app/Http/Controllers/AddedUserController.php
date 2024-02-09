@@ -125,11 +125,13 @@ class AddedUserController extends Controller
     {
         $user = AddUser::find($id);
         $random_users = RandomUser::where('user_id', $request->user()->id)->where(function ($query) use ($user) {
-            $query->where('email', $user->email)
-            ->orWhere(function ($query) use ($user) {
+            if ($user->email !== null) {
+                $query->where('email', $user->email);
+            }
+            else {
                 $query->where('first_name', $user->first_name)
-                ->where('last_name', $user->last_name);
-            });
+                    ->where('last_name', $user->last_name);
+            }
         })->get();
 
         $dates = $random_users->map(function ($random_user) {
