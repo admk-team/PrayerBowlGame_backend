@@ -103,7 +103,10 @@ class RandomUserController extends Controller
                 'registered_user' => $request->user()->name
             ]);
 
-            Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null));
+            try {
+                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null));
+            } catch (\Exception $e) {
+            }
 
             return response()->json(['success' => true, 'data' => $user]);
         }
