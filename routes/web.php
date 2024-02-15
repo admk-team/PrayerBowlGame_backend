@@ -40,6 +40,9 @@ Route::view('/account-delete', 'pages.account-delete');
 Route::post('user/mail', [FrontController::class, 'handleMailForm'])->name('mail');
 Route::get('/delete-account/{userId}', [FrontController::class, 'confirmAccountDeletion'])
     ->name('confirm.account.deletion');
+//route for banner redirect
+Route::get('/show/banner/{Id}', [FrontController::class, 'showBanner'])
+    ->name('show.banner');
 Auth::routes();
 Route::middleware('admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -55,7 +58,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/email-settings', [EmailSettingsController::class, 'index'])->name('email-settings');
     Route::post('/email-settings', [EmailSettingsController::class, 'update'])->name('email-settings');
 
-    
+
 
 
     // Ministry Parters Route
@@ -76,5 +79,4 @@ Route::middleware('admin')->group(function () {
     Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
     Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
     Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
-
 });

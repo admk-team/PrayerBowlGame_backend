@@ -15,12 +15,12 @@ class PrayerUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $senderName, $recieverName, $message, $androidLink, $iosLink, $banner, $content;
+    public $senderName, $recieverName, $message, $androidLink, $iosLink, $banner, $content, $bannerUrl;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($senderName, $recieverName, $banner, $content)
+    public function __construct($senderName, $recieverName, $banner, $content, $bannerUrl)
     {
         $emailSettings = EmailSetting::first();
 
@@ -33,6 +33,7 @@ class PrayerUserMail extends Mailable
         $this->recieverName = $recieverName;
         $this->banner = $banner;
         $this->content = $content;
+        $this->bannerUrl = $bannerUrl;
     }
 
     /**
@@ -57,6 +58,7 @@ class PrayerUserMail extends Mailable
                 'recieverName' => $this->recieverName,
                 'banner' => $this->banner,
                 'content' => $this->content,
+                'bannerUrl' => $this->bannerUrl,
             ],
         );
     }

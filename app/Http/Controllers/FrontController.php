@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DeleteAccount;
+use App\Models\Banner;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -41,5 +42,13 @@ class FrontController extends Controller
             $user->delete();
         }, 1);
         return redirect('/');
+    }
+    public function showBanner($Id)
+    {
+        $data = Banner::findOrFail($Id);
+        $data->increment('views');
+        $data->increment('clicks');
+        $data->save();
+        return view('pages.showbanner', compact('data'));
     }
 }

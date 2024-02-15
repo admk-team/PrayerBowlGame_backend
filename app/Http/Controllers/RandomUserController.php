@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Mail\PrayerUserMail;
 use App\Mail\OtpMail;
-
+use Illuminate\Support\Facades\DB;
 class RandomUserController extends Controller
 {
     /**
@@ -93,8 +93,20 @@ class RandomUserController extends Controller
         $user = AddUser::where('user_id', $request->user()->id)->inRandomOrder()->first();
 
         if ($user) {
-            $randomBanner = Banner::inRandomOrder()->first(['banner', 'content']);
+            $now = \Carbon\Carbon::now();
 
+            $randomBanner = Banner::where(function ($query) use ($now) {
+                $query->whereNull('start_date')
+                      ->orWhere('start_date', '<=', $now);
+            })
+            ->where(function ($query) use ($now) {
+                $query->whereNull('end_date')
+                      ->orWhere('end_date', '>=', $now);
+            })
+            ->where('views', '<', \Illuminate\Support\Facades\DB::raw('max_views'))
+            ->where('clicks', '<', \Illuminate\Support\Facades\DB::raw('max_clicks'))
+            ->first();
+            $bannerUrl = route('show.banner', ['Id' => $randomBanner->id]);
             RandomUser::create([
                 'user_id' => $request->user()->id,
                 'first_name' => $user->first_name,
@@ -103,7 +115,7 @@ class RandomUserController extends Controller
                 'registered_user' => $request->user()->name
             ]);
             try {
-                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null));
+                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
             } catch (\Exception $e) {
             }
 

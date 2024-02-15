@@ -28,6 +28,7 @@
                                             <th>Banner</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
+                                            {{--  <th>Status</th>  --}}
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -45,18 +46,45 @@
                                             </td>
                                             <td>
                                                 @if($banner->start_date)
-                                                {{ \Carbon\Carbon::parse($banner->start_date)->format('d-m-Y') }}
+                                                    {{ \Carbon\Carbon::parse($banner->start_date)->format('Y-m-d H:i:s') }}
                                                 @else
-                                                No Start Date
+                                                    No Start Date
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($banner->end_date)
-                                                {{ \Carbon\Carbon::parse($banner->end_date)->format('d-m-Y') }}
+                                                    {{ \Carbon\Carbon::parse($banner->end_date)->format('Y-m-d H:i:s') }}
                                                 @else
-                                                No End Date
+                                                    No End Date
                                                 @endif
                                             </td>
+                                            {{--  <td>
+                                                @php
+                                                    $startDateTime = \Carbon\Carbon::parse($banner->start_date);
+                                                    $endDateTime = \Carbon\Carbon::parse($banner->end_date);
+                                                    $now = \Carbon\Carbon::now();
+                                                    $maxViews = $banner->max_views;
+                                                    $maxClicks = $banner->max_clicks;
+                                                    $views = $banner->views;
+                                                    $clicks = $banner->clicks;
+                                                @endphp
+                                            
+                                                @if ($now->eq($startDateTime) || ($now->gt($startDateTime) && $now->lt($endDateTime) && $views < $maxViews && $clicks < $maxClicks))
+                                                    <span class="badge rounded-pill bg-success">
+                                                        Active
+                                                    </span>
+                                                @elseif ($now->lt($startDateTime))
+                                                    <span class="badge rounded-pill bg-warning">
+                                                        Pending
+                                                    </span>
+                                                @else
+                                                    <span class="badge rounded-pill bg-danger">
+                                                        Expired
+                                                    </span>
+                                                @endif
+                                            </td>  --}}
+                                            
+                                          
                                             <td class="border-bottom-0">
                                                 <a href="{{ route('banners.edit', $banner->id) }}" class="btn btn-sm">
                                                     <i class="edit ri-pencil-line text-info m-2"></i>

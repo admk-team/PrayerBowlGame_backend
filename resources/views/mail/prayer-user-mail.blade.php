@@ -15,18 +15,22 @@
 I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping
 you in their prayers at this very moment.
 </p>
-{{-- Display Banner --}}
-@if ($banner)
-<img src="{{ asset('admin_assets/banner_ad/' . $banner) }}" alt="Banner" style="max-width: 100%; height: auto;">
- @endif
 
-    {{-- Display Content --}}
-@if ($content)
-<p style="font-size: 15px;">{{ $content }}</p>
-@endif
+
 Blessings,
 <br>
 Prayer Bowl Team
+<hr style="border-color: rgb(0 0 0 / 8%) !important;">
+{{-- Display Content --}}
+@if ($content)
+<p style="font-size: 15px;">{{ $content }}</p>
+@endif
+{{-- Display Banner --}}
+@if ($banner)
+<a href="{{$bannerUrl}}" target="_blank">
+<img src="{{ asset('admin_assets/banner_ad/' . $banner) }}" alt="Banner" style="max-width: 100%; height: auto;">
+</a>
+@endif
     @endcomponent
 
     {{-- Footer --}}
