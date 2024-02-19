@@ -59,7 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Donation Routes
     Route::post('/donation', [DonationController::class, 'donation']);
-    Route::get('/donationshow/{id}', [DonationController::class, 'show']);
+    // Route::get('/donationshow/{id}', [DonationController::class, 'show']);
     Route::get('/allproducts', [DonationController::class, 'allproducts']);
     //notification
     Route::get('/admin/notification', [NotificationController::class, 'notification']);

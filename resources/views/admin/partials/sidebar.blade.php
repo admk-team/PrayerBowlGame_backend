@@ -17,8 +17,11 @@
                           class="nav-text">Email Settings</span></a>
               </li>
 
-              <li><a href="/ministryPartners" aria-expanded="false"><i class="icon icon-settings"></i><span
-                          class="nav-text">Ministry Parters</span></a>
+              <li><a href="/ministryPartners" aria-expanded="false"><i class="icon icon-settings fas fa-cog"></i>
+                      Ministry Partners</span></a>
+              </li>
+              <li><a href="/donations" aria-expanded="false"><i class="icon icon-settings fas fa-cog"></i>
+                      Donations</span></a>
               </li>
 
               <li><a href="/supporters" aria-expanded="false"><i class="icon icon-settings"></i><span
@@ -29,11 +32,10 @@
                           class="nav-text">Banner Ad</span></a>
               </li>
 
-               <li><a href="/notification" aria-expanded="false"><i class="icon icon-settings"></i><span
+              <li><a href="/notification" aria-expanded="false"><i class="icon icon-settings"></i><span
                           class="nav-text">Notification</span></a>
-              </li> 
+              </li>
 
           </ul>
       </div>
   </div>
-

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\AddedUserController;
+use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\SupportersController;
 use App\Http\Controllers\BannerController;
@@ -83,4 +84,7 @@ Route::middleware('admin')->group(function () {
 
     //notification
     Route::resource('notification', NotificationController::class);
+    //Donation 
+    Route::get('/donations', [DonationController::class, 'index'])->name('supporters.index');
+    Route::get('/supporters/{id}', [DonationController::class, 'show'])->name('supporters.show');
 });

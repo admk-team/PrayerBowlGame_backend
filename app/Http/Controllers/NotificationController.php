@@ -25,7 +25,7 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        return view('admin.notification.createorEdit');
+        return view('admin.notification.createoredit');
     }
 
     /**
@@ -59,7 +59,7 @@ class NotificationController extends Controller
     public function edit($id)
     {
         $data = Notification::findorFail($id);
-        return view('admin.notification.createOrEdit', compact('data'));
+        return view('admin.notification.createoredit', compact('data'));
     }
 
 
