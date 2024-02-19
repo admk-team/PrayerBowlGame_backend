@@ -13,6 +13,7 @@ use App\Mail\OtpMail;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+
 class RandomUserController extends Controller
 {
     /**
@@ -99,16 +100,18 @@ class RandomUserController extends Controller
 
             $randomBanner = Banner::where(function ($query) use ($now) {
                 $query->whereNull('start_date')
-                      ->orWhere('start_date', '<=', $now);
+                    ->orWhere('start_date', '<=', $now);
             })
-            ->where(function ($query) use ($now) {
-                $query->whereNull('end_date')
-                      ->orWhere('end_date', '>=', $now);
-            })
-            ->where('views', '<', \Illuminate\Support\Facades\DB::raw('max_views'))
-            ->where('clicks', '<', \Illuminate\Support\Facades\DB::raw('max_clicks'))
-            ->first();
-            $bannerUrl = route('show.banner', ['Id' => $randomBanner->id]);
+                ->where(function ($query) use ($now) {
+                    $query->whereNull('end_date')
+                        ->orWhere('end_date', '>=', $now);
+                })
+                ->where('views', '<', \Illuminate\Support\Facades\DB::raw('max_views'))
+                ->where('clicks', '<', \Illuminate\Support\Facades\DB::raw('max_clicks'))
+                ->first();
+            if ($randomBanner) {
+                $bannerUrl = route('show.banner', ['Id' => $randomBanner->id]);
+            }
             RandomUser::create([
                 'user_id' => $request->user()->id,
                 'first_name' => $user->first_name,
@@ -116,17 +119,16 @@ class RandomUserController extends Controller
                 'email' => $user->email,
                 'registered_user' => $request->user()->name
             ]);
-            $checkuser = User::where('email',$user->email)->first();
-          
-            if($checkuser)
-            {
+            $checkuser = User::where('email', $user->email)->first();
+
+            if ($checkuser) {
                 Notification::create([
                     'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that is keeping
                     you in their prayers at this very moment.',
-                    'user_id' => $checkuser->id,        
+                    'user_id' => $checkuser->id,
                 ]);
             }
-            
+
 
             try {
                 Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
