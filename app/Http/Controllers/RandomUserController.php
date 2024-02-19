@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Mail\PrayerUserMail;
 use App\Mail\OtpMail;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 class RandomUserController extends Controller
 {
@@ -114,6 +116,18 @@ class RandomUserController extends Controller
                 'email' => $user->email,
                 'registered_user' => $request->user()->name
             ]);
+            $checkuser = User::where('email',$user->email)->first();
+          
+            if($checkuser)
+            {
+                Notification::create([
+                    'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that is keeping
+                    you in their prayers at this very moment.',
+                    'user_id' => $checkuser->id,        
+                ]);
+            }
+            
+
             try {
                 Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
             } catch (\Exception $e) {

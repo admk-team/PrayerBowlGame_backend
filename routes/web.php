@@ -10,6 +10,7 @@ use App\Http\Controllers\SupportersController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\EmailSettingsController;
 use App\Http\Controllers\MinistryPartnerController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StripeSubscriptionController;
 
 /*
@@ -79,4 +80,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
     Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
     Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
+
+    //notification
+    Route::resource('notification', NotificationController::class);
 });

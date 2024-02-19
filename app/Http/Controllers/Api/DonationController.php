@@ -70,6 +70,18 @@ class DonationController extends Controller
                 'cancel_url' => $current_domain . 'stripepayment?canceled=true',
             ]);
 
+            $donation = new Donation();
+            $donation->donation_amount = $request->input('donation_amount');
+            $donation->donation_type = $request->input('donation_type');
+            $donation->email = $request->input('email');
+            // save supporter_name and country based on show_supporter_name
+            if ($request->input('show_supporter_name')) {
+                $donation->supporter_name = $request->input('supporter_name');
+                $donation->country = $request->input('country');
+            }
+
+            $donation->save();
+
             return $checkout_session->url;
             // header("HTTP/1.1 303 See Other");
             // header("Location: " . $checkout_session->url);
@@ -154,5 +166,12 @@ class DonationController extends Controller
             'active' => true
         ]);
         return $stripeProducts;
+    }
+    //Donation details
+    public function getDonationDetails(Request $request)
+    {
+        $donations = Donation::select('supporter_name', 'donation_amount', 'updated_at', 'created_at',)->get();
+
+        return response()->json(['data' => $donations]);
     }
 }

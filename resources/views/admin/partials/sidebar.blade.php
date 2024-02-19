@@ -29,9 +29,9 @@
                           class="nav-text">Banner Ad</span></a>
               </li>
 
-              <!-- <li><a href="" aria-expanded="false"><i class="icon icon-settings"></i><span
-                          class="nav-text">Donate</span></a>
-              </li> -->
+               <li><a href="/notification" aria-expanded="false"><i class="icon icon-settings"></i><span
+                          class="nav-text">Notification</span></a>
+              </li> 
 
           </ul>
       </div>

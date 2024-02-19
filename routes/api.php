@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\MinistryPartnerController;
 use App\Http\Controllers\Api\SupportersApiController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\DonationController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/donation', [DonationController::class, 'donation']);
     Route::get('/donationshow/{id}', [DonationController::class, 'show']);
     Route::get('/allproducts', [DonationController::class, 'allproducts']);
+    //notification
+    Route::get('/admin/notification', [NotificationController::class, 'notification']);
+    //random user notification
+    Route::get('/user/notification', [NotificationController::class, 'random_notification']);
+    //user has view notification
+    Route::post('/view/notification', [NotificationController::class, 'view_notification']);
+    //
+    Route::get('/donations/details', [DonationController::class, 'getDonationDetails']);
 });
 
 Route::get('test', [RandomUserController::class, 'test']);
