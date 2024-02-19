@@ -141,11 +141,7 @@ class DonationController extends Controller
         ]);
     }
 
-    public function show($id)
-    {
-        $supporter = Donation::findOrFail($id);
-        return response()->json(['data' => $supporter]);
-    }
+
 
     public function sendThankYouEmail($donation)
     {
@@ -174,6 +170,11 @@ class DonationController extends Controller
     public function index()
     {
         $supporters = Donation::orderBy('id', 'DESC')->paginate(10);
-        return view('admin.supporters.index', compact('supporters'));
+        return view('admin.donations.index', compact('supporters'));
+    }
+    public function show($id)
+    {
+        $supporter = Donation::findOrFail($id);
+        return response()->json(['data' => $supporter]);
     }
 }

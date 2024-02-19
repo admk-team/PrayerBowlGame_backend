@@ -17,23 +17,35 @@
                           class="nav-text">Email Settings</span></a>
               </li>
 
-              <li><a href="/ministryPartners" aria-expanded="false"><i class="icon icon-settings fas fa-cog"></i>
-                      Ministry Partners</span></a>
-              </li>
-              <li><a href="/donations" aria-expanded="false"><i class="icon icon-settings fas fa-cog"></i>
-                      Donations</span></a>
+              <li><a href="/ministryPartners" aria-expanded="false"><i class="icon icon-settings fas fa-handshake"></i>
+                      Ministry Partners
+                  </a>
               </li>
 
-              <li><a href="/supporters" aria-expanded="false"><i class="icon icon-settings"></i><span
-                          class="nav-text">Supporters</span></a>
+              <li>
+                  <a href="/donations" aria-expanded="false">
+                      <i class="icon icon-settings fas fa-donate"></i>
+                      Donations
+                  </a>
+              </li>
+              <li>
+                  <a href="/supporters" aria-expanded="false">
+                      <i class="icon icon-settings fas fa-heart"></i>
+                      <span class="nav-text">Supporters</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="/banners" aria-expanded="false">
+                      <i class="icon icon-settings fas fa-image"></i>
+                      <span class="nav-text">Banner Ad</span>
+                  </a>
               </li>
 
-              <li><a href="/banners" aria-expanded="false"><i class="icon icon-settings"></i><span
-                          class="nav-text">Banner Ad</span></a>
-              </li>
-
-              <li><a href="/notification" aria-expanded="false"><i class="icon icon-settings"></i><span
-                          class="nav-text">Notification</span></a>
+              <li>
+                  <a href="/notification" aria-expanded="false">
+                      <i class="icon icon-settings fas fa-bell"></i>
+                      <span class="nav-text">Notification</span>
+                  </a>
               </li>
 
           </ul>

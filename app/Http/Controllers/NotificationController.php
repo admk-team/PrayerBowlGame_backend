@@ -89,46 +89,42 @@ class NotificationController extends Controller
         $notification->delete();
         return redirect()->route('notification.index')->with('success', 'Banner deleted successfully!');
     }
-    //admin notification 
+
+    //user random notification with admin notification 
     public function notification()
     {
+        // Get the authenticated user's id
+        $userId = Auth::id();
         $now = now();
-        $data = Notification::where(function ($query) use ($now) {
+        $admin_notification = Notification::where(function ($query) use ($now) {
             $query->where('start_date', '<=', $now);
         })
             ->where(function ($query) use ($now) {
                 $query->where('end_date', '>=', $now);
             })
             ->get();
-        return response()->json(['data' => $data]);
-    }
-    //user random notification 
-    public function random_notification()
-    {
-        // Get the authenticated user's id
-        $userId = Auth::id();
-
         $userdetail = User::findOrFail($userId);
         // Retrieve unviewed notifications for the authenticated user
-        $data = Notification::where('user_id', $userId)
+        $user_notification = Notification::where('user_id', $userId)
             ->where('viewed', 0)
             ->get();
-        return response()->json(['data' => $data, 'user_detail' => $userdetail]);
+
+        return response()->json(['user_notification' => $user_notification, 'admin_notification' => $admin_notification, 'user_detail' => $userdetail]);
     }
     //when user viewed 
-    public function view_notification(Request $request)
+    public function view_notification($id)
     {
-        $userId = Auth::id();
-        // Retrieve the unviewed notification for the authenticated user
-        $notification = Notification::where('user_id', $userId)
+        $notification = Notification::where('user_id', $id)
             ->where('viewed', 0)
             ->first();  // Use first() to get a single model instance
+
         if ($notification) {
             // Update the viewed field to 1
             $notification->viewed = 1;
             $notification->save();
-            // Return both notification and user detail separately
-            return response()->json(['message' => 'Yoh have viewed notifications.']);
+
+            // Return a response indicating that the user has viewed notifications
+            return response()->json(['message' => 'You have viewed notifications.']);
         } else {
             return response()->json(['message' => 'No unviewed notifications found.']);
         }

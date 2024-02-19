@@ -85,6 +85,6 @@ Route::middleware('admin')->group(function () {
     //notification
     Route::resource('notification', NotificationController::class);
     //Donation 
-    Route::get('/donations', [DonationController::class, 'index'])->name('supporters.index');
-    Route::get('/supporters/{id}', [DonationController::class, 'show'])->name('supporters.show');
+    Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
+    Route::get('/donations/{id}', [DonationController::class, 'show'])->name('donations.show');
 });
