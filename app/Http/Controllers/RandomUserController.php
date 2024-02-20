@@ -123,8 +123,7 @@ class RandomUserController extends Controller
 
             if ($checkuser) {
                 Notification::create([
-                    'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that is keeping
-                    you in their prayers at this very moment.',
+                    'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that someone is keeping you in their prayers at this very moment.',
                     'user_id' => $checkuser->id,
                 ]);
             }
