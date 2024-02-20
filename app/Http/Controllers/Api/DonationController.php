@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use Stripe\Checkout\Session;
 use App\Http\Controllers\Controller;
+use App\Mail\AdminDonationEmail;
+use App\Mail\DonationEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -24,6 +26,7 @@ class DonationController extends Controller
 {
     public function donation(Request $request)
     {
+       
         $validator = Validator::make($request->all(), [
             'show_supporter_name' => 'required|boolean',
             'donation_amount' => 'required|numeric',
@@ -31,16 +34,51 @@ class DonationController extends Controller
             'email' => 'required|string',
             'lookup_key' => 'nullable|string',
         ]);
-
+ 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
         if ($request->input('donation_type') === 'one_time') {
             $result = $this->onetimepay($request);
+            //getting amount for emal
+            $amount=$request->input('donation_amount');
+
+             // Get the authenticated user's id
+             $doner= Auth::id();
+             $doner_data=User::where('id', $doner)->first();
+             $doner_email=$doner_data['email'];
+             $admindata=User::where('role', '1')->first();   
+             $admin_email=$admindata->email;
+             try {
+                 Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $amount ?? null));
+             } catch (\Exception $e) {
+             }
+             try {
+                 Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $doner_data ?? null, $amount ?? null));
+             } catch (\Exception $e) {
+             }
             return $result;
         } elseif ($request->input('donation_type') === 'subscription') {
-            return $this->subscription($request);
+            $result=$this->subscription($request);
+              //getting amount for emal
+              $amount=$request->input('donation_amount');
+
+              // Get the authenticated user's id
+              $doner= Auth::id();
+              $doner_data=User::where('id', $doner)->first();
+              $doner_email=$doner_data['email'];
+              $admindata=User::where('role', '1')->first();   
+              $admin_email=$admindata->email;
+              try {
+                  Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $amount ?? null));
+              } catch (\Exception $e) {
+              }
+              try {
+                  Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $doner_data ?? null, $amount ?? null));
+              } catch (\Exception $e) {
+              }
+             return $result;
         }
     }
 
@@ -81,7 +119,8 @@ class DonationController extends Controller
             }
 
             $donation->save();
-
+            dd($donation);
+           
             return $checkout_session->url;
             // header("HTTP/1.1 303 See Other");
             // header("Location: " . $checkout_session->url);

@@ -51,13 +51,13 @@ class MinistryPartnerController extends Controller
             'name' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
-            'order' => 'required',
+            'order' => 'nullable',
         ]);
 
         $ministryPartner = new MinistryPartner();
         $ministryPartner->name = $request->input('name');
         $ministryPartner->link = $request->input('link');
-        $ministryPartner->order = $request->input('order');
+        $ministryPartner->order = $request->input('order')?? '1';
         // $ministryPartner->order= '0';
 
 
@@ -83,13 +83,14 @@ class MinistryPartnerController extends Controller
             'name' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
-            'order' => 'required',
+            'order' => 'nullable',
         ]);
 
         $ministryPartner->update([
             'name' => $request->input('name'),
             'link' => $request->input('link'),
-            'order' => $request->input('order'),
+            'order' => $request->input('order')?? '1',
+         
         ]);
 
         if ($request->hasFile('logo')) {

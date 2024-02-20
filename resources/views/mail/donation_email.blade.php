@@ -10,10 +10,19 @@
 
     {{-- Body --}}
     @component('mail::layout')
-        # Dear {{ $recieverName }},
+        # Dear {{$data->name}},
 <p style="font-size: 15px;">
-I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping
-you in their prayers at this very moment.
+Thank you for your generous donation to Prayer Bowl. We are writing to confirm that we have received your donation of ${{$amount}} on {{ now()->format('d-m-Y') }}.
+</p>
+        
+
+<p style="font-size: 15px;">
+Your contribution is greatly appreciated and will be instrumental in supporting our cause.
+</p>
+
+
+<p style="font-size: 15px;">
+Thank you once again for your support.
 </p>
 
 
@@ -21,18 +30,7 @@ Blessings,
 <br>
 Prayer Bowl Team
 <hr style="border-color: rgb(0 0 0 / 8%) !important;">
-{{-- Display Content --}}
-@if ($content)
-<p style="font-size: 15px;">{{ $content }}</p>
-@endif
-{{-- Display Banner --}}
-@if ($banner)
 
-<a href="{{$bannerUrl}}" target="_blank">
-<img src="{{ asset('admin_assets/banner_ad/' . $banner) }}" alt="Banner" style="width: 1200px; height: 150px;">
-</a>
-
-@endif
     @endcomponent
 
     {{-- Footer --}}
