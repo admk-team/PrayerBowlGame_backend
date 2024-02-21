@@ -115,22 +115,25 @@ class NotificationController extends Controller
 
         return response()->json(['user_notification' => $user_notification, 'admin_notification' => $admin_notification, 'user_detail' => $userdetail]);
     }
-    //when user viewed 
+    
     public function view_notification($id)
     {
-        $notification = Notification::where('user_id', $id)
+        $notifications = Notification::where('user_id', $id)
             ->where('viewed', 0)
-            ->first();  // Use first() to get a single model instance
-
-        if ($notification) {
-            // Update the viewed field to 1
-            $notification->viewed = 1;
-            $notification->save();
-
+            ->get();
+    
+        if ($notifications->isNotEmpty()) {
+            // Update the viewed field for each notification in the collection
+            foreach ($notifications as $notification) {
+                $notification->viewed = 1;
+                $notification->save();
+            }
+    
             // Return a response indicating that the user has viewed notifications
             return response()->json(['message' => 'You have viewed notifications.']);
         } else {
             return response()->json(['message' => 'No unviewed notifications found.']);
         }
     }
+    
 }
