@@ -112,22 +112,21 @@ class RandomUserController extends Controller
             if ($randomBanner) {
                 $bannerUrl = route('show.banner', ['Id' => $randomBanner->id]);
             }
-            RandomUser::create([
+            $randomuser=RandomUser::create([
                 'user_id' => $request->user()->id,
                 'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
                 'registered_user' => $request->user()->name
             ]);
-            $checkuser = User::where('email', $user->email)->first();
-
+            $checkuser = User::where('email', $randomuser->email)->first();
             if ($checkuser) {
                 Notification::create([
-                    'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that someone is keeping you in their prayers at this very moment.',
+                    'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that  ' . $request->user()->name . ' is keeping you in their prayers at this very moment.',
                     'user_id' => $checkuser->id,
                 ]);
+                 
             }
-
 
             try {
                 Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));

@@ -48,9 +48,13 @@ class NotificationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Notification $notification)
+    public function show($id)
     {
-        //
+        $data = Notification::where('id', $id)
+        ->where('viewed', 0)
+        ->get();
+
+    return response()->json(['show_notification' => $data]);
     }
 
     /**

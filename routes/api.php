@@ -69,6 +69,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/view/notification/{id}', [NotificationController::class, 'view_notification']);
     //
     Route::get('/donations/details', [DonationController::class, 'getDonationDetails']);
+    //show notification
+    Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
 });
 
 Route::get('test', [RandomUserController::class, 'test']);
