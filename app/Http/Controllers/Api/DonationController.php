@@ -119,7 +119,6 @@ class DonationController extends Controller
             }
 
             $donation->save();
-            dd($donation);
            
             return $checkout_session->url;
             // header("HTTP/1.1 303 See Other");
