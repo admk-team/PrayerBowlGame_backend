@@ -183,10 +183,11 @@ class DonationController extends Controller
 
     public function sendThankYouEmail($donation)
     {
+        $user = User::where('role', 1)->first();
         // Send email to the donor
         Mail::to($donation->email)->send(new StripEmail($donation));
         // Send email to the super admin
-        Mail::to('admin@gmail.com')->send(new StripEmail($donation));
+        Mail::to($user->email)->send(new StripEmail($donation));
     }
 
     public function allproducts()
