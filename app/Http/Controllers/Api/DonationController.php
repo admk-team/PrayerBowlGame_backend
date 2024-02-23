@@ -31,7 +31,7 @@ class DonationController extends Controller
             'show_supporter_name' => 'required|boolean',
             'donation_amount' => 'required|numeric',
             'donation_type' => 'required|in:one_time,subscription',
-            'email' => 'required|string',
+            'email' => 'nullable|string',
             'lookup_key' => 'nullable|string',
         ]);
  
