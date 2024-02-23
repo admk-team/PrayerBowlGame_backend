@@ -28,12 +28,12 @@
                       Donations
                   </a>
               </li>
-              <li>
+              {{--  <li>
                   <a href="/supporters" aria-expanded="false">
                       <i class="icon icon-settings fas fa-heart"></i>
                       <span class="nav-text">Supporters</span>
                   </a>
-              </li>
+              </li>  --}}
               <li>
                   <a href="/banners" aria-expanded="false">
                       <i class="icon icon-settings fas fa-image"></i>

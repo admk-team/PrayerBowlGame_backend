@@ -15,12 +15,12 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            // 'country' => 'nullable',
+             'country' => 'nullable',
             // 'language' => 'nullable',
             'password' => 'required|confirmed'
         ]);
 
-        $data = User::create($request->only(['name','email','password']));
+        $data = User::create($request->only(['name','email','password','country']));
 
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
@@ -29,7 +29,7 @@ class AuthController extends Controller
                 'id' => $data->id,
                 'name' => $data->name,
                 'email' => $data->email,
-                // 'country' => $data->country,
+                'country' => $data->country,
                 // 'language' => $data->language,
             ];
             return response()->json(['success' => true, 'token' => $token, 'data' => $data]);
