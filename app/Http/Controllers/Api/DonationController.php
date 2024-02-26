@@ -41,23 +41,7 @@ class DonationController extends Controller
 
         if ($request->input('donation_type') === 'one_time') {
             $result = $this->onetimepay($request);
-            //getting amount for emal
-            $amount = $request->input('donation_amount');
 
-            // Get the authenticated user's id
-            $doner = Auth::id();
-            $doner_data = User::where('id', $doner)->first();
-            $doner_email = $doner_data['email'];
-            $admindata = User::where('role', '1')->first();
-            $admin_email = $admindata->email;
-            try {
-                Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $amount ?? null));
-            } catch (\Exception $e) {
-            }
-            try {
-                Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $doner_data ?? null, $amount ?? null));
-            } catch (\Exception $e) {
-            }
             return $result;
         } elseif ($request->input('donation_type') === 'subscription') {
             $result = $this->subscription($request);
@@ -87,8 +71,8 @@ class DonationController extends Controller
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $current_domain . 'stripepayment?success=true&session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => $current_domain . 'stripepayment?canceled=true',
+                'success_url' => $current_domain . '/stripepayment?success=true&session_id={CHECKOUT_SESSION_ID}' . '&user_id=' . auth()->user()->id,
+                'cancel_url' => $current_domain . '/stripepayment?canceled=true',
             ]);
 
             $donation = new Donation();
@@ -152,9 +136,6 @@ class DonationController extends Controller
         $donation->payment_intent_id = $paymentIntent->client_secret;
         $donation->save();
 
-        // Send thank-you email to donor
-        $this->sendThankYouEmail($donation);
-
         return response()->json([
             'donation' => $donation,
             'payment_intent_id' => $paymentIntent->client_secret,
@@ -166,13 +147,22 @@ class DonationController extends Controller
 
 
 
-    public function sendThankYouEmail($donation)
+    public function sendThankYouEmail($id)
     {
-        $user = User::where('role', 1)->first();
-        // Send email to the donor
-        Mail::to($donation->email)->send(new StripEmail($donation));
-        // Send email to the super admin
-        Mail::to($user->email)->send(new StripEmail($donation));
+        $doner_data = Donation::findOrFail($id);
+        $doner_email = $doner_data['email'];
+        $admindata = User::where('role', '1')->first();
+        $admin_email = $admindata->email;
+        try {
+            $test = Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $doner_data->donation_amount  ?? null));
+        } catch (\Exception $e) {
+        }
+        try {
+            $test2 =  Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $doner_data ?? null, $doner_data->donation_amount ?? null));
+        } catch (\Exception $e) {
+        }
+
+        return response()->json(['success' => 'true']);
     }
 
     public function allproducts()
@@ -217,7 +207,7 @@ class DonationController extends Controller
         // $doner_data = User::where('id', $doner)->first();
         // $doner_email = $doner_data['email'];
 
-        $donarData = Donation::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+        $donarData = Donation::where('user_id', $request->user_id)->orderBy('created_at', 'DESC')->first();
 
 
         $admindata = User::where('role', '1')->first();

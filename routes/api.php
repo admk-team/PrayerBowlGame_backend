@@ -74,3 +74,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('test', [RandomUserController::class, 'test']);
+
+Route::get('/paymentonetime/{id}', [DonationController::class, 'sendThankYouEmail'])->name('donations.onetime.success');

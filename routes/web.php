@@ -87,5 +87,6 @@ Route::middleware('admin')->group(function () {
     //Donation
     Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
     Route::get('/donations/{id}', [DonationController::class, 'show'])->name('donations.show');
-    Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');
 });
+
+Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');

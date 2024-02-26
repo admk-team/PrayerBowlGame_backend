@@ -10,11 +10,11 @@
 
     {{-- Body --}}
     @component('mail::layout')
-        # Dear {{$data->name}},
+        # Dear {{$data->supporter_name}},
 <p style="font-size: 15px;">
 Thank you for your generous donation to Prayer Bowl. We are writing to confirm that we have received your donation of ${{$amount}} on {{ now()->format('d-m-Y') }}.
 </p>
-        
+
 
 <p style="font-size: 15px;">
 Your contribution is greatly appreciated and will be instrumental in supporting our cause.
