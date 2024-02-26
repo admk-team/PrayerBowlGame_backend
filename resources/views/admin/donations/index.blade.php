@@ -35,7 +35,11 @@
                                             @forelse ($supporters as $supporter)
                                                 <tr>
                                                     <td>{{ $supporter->id }}</td>
-                                                    <td>{{ $supporter->supporter_name }}</td>
+                                                    @if ($supporter->supporter_name)
+                                                        <td>{{ $supporter->supporter_name }}</td>
+                                                    @else
+                                                        <td>Hidden Name</td>
+                                                    @endif
                                                     <td>{{ $supporter->donation_type }}</td>
                                                     <td>{{ $supporter->donation_amount }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($supporter->date)->format('d F Y') }}</td>
@@ -162,15 +166,19 @@
                         if (response && response.data) {
                             var supporter = response.data;
                             var supporterHtml = `
-                            <tr>
-                                <td>${supporter.id}</td>
-                                <td>${supporter.supporter_name}</td>
-                                <td>${supporter.donation_type}</td>
-                                <td>${supporter.donation_amount}</td>
-                                <td>{{ \Carbon\Carbon::parse($supporter->date)->format('d F Y') }}
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td>${supporter.id}</td>
+                                    <td>${supporter.supporter_name ? supporter.supporter_name : 'Hidden name'}</td>
+                                    <td>${supporter.donation_type}</td>
+                                    <td>${supporter.donation_amount}</td>
+                                    <td>${new Date(supporter.date).toLocaleDateString('en-US', { 
+                                            day: 'numeric', 
+                                            month: 'long', 
+                                            year: 'numeric' 
+                                        })}
+                                    </td>
+                                </tr>
+                            `;
                             $('#modalSupportersBody').html(supporterHtml);
                         } else {
                             console.error('Invalid response format');
@@ -183,5 +191,6 @@
             });
         });
     </script>
+
 
 @endsection
