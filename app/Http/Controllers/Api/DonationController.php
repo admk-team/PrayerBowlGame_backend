@@ -61,23 +61,6 @@ class DonationController extends Controller
             return $result;
         } elseif ($request->input('donation_type') === 'subscription') {
             $result = $this->subscription($request);
-            //getting amount for emal
-            $amount = $request->input('donation_amount');
-
-            // Get the authenticated user's id
-            $doner = Auth::id();
-            $doner_data = User::where('id', $doner)->first();
-            $doner_email = $doner_data['email'];
-            $admindata = User::where('role', '1')->first();
-            $admin_email = $admindata->email;
-            try {
-                Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $amount ?? null));
-            } catch (\Exception $e) {
-            }
-            try {
-                Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $doner_data ?? null, $amount ?? null));
-            } catch (\Exception $e) {
-            }
             return $result;
         }
     }
@@ -112,6 +95,7 @@ class DonationController extends Controller
             $donation->donation_amount = $request->input('donation_amount');
             $donation->donation_type = $request->input('donation_type');
             $donation->email = $request->input('email');
+            $donation->user_id = auth()->user()->id;
             // save supporter_name and country based on show_supporter_name
             if ($request->input('show_supporter_name')) {
                 $donation->supporter_name = $request->input('supporter_name');
@@ -154,6 +138,7 @@ class DonationController extends Controller
         $donation = new Donation();
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_type = $request->input('donation_type');
+        $donation->user_id = auth()->user()->id;
         $donation->email = $request->input('email');
         // save supporter_name and country based on show_supporter_name
         if ($request->input('show_supporter_name')) {
@@ -219,5 +204,32 @@ class DonationController extends Controller
     {
         $supporter = Donation::findOrFail($id);
         return response()->json(['data' => $supporter]);
+    }
+
+    public function success(Request $request)
+    {
+
+        //getting amount for emal
+        // $amount = $request->input('donation_amount');
+
+        // Get the authenticated user's id
+        // $doner = Auth::id();
+        // $doner_data = User::where('id', $doner)->first();
+        // $doner_email = $doner_data['email'];
+
+        $donarData = Donation::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+
+
+        $admindata = User::where('role', '1')->first();
+        $admin_email = $admindata->email;
+        try {
+            Mail::to($donarData->email)->send(new DonationEmail($donarData ?? null, $donarData->donation_amount ?? null));
+        } catch (\Exception $e) {
+        }
+        try {
+            Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $donarData ?? null, $donarData->donation_amount ?? null));
+        } catch (\Exception $e) {
+        }
+        return view('payment.success');
     }
 }

@@ -67,13 +67,13 @@ Route::middleware('admin')->group(function () {
     Route::resource('ministryPartners', MinistryPartnerController::class);
     Route::post('saveministryPartner', [MinistryPartnerController::class, 'saveSortOrder'])->name('ministrypartner.reorder');
 
-    // Supporters Routers with Donation 
+    // Supporters Routers with Donation
     Route::get('/supporters', [SupportersController::class, 'index'])->name('supporters.index');
     Route::get('/supporters/{id}', [SupportersController::class, 'show'])->name('supporters.show');
     Route::post('/supporters/store', [SupportersController::class, 'store'])->name('supporters.store');
 
 
-    // Banner add Route 
+    // Banner add Route
     // Show all banners
     Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
     Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
@@ -84,7 +84,8 @@ Route::middleware('admin')->group(function () {
 
     //notification
     Route::resource('notification', NotificationController::class);
-    //Donation 
+    //Donation
     Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
     Route::get('/donations/{id}', [DonationController::class, 'show'])->name('donations.show');
+    Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');
 });
