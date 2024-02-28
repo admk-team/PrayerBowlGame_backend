@@ -45,5 +45,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    // Define the relationship with notifications
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 
+    // Register the deleting event to delete related notifications
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->notifications()->delete();
+        });
+    }
 }

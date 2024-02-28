@@ -15,12 +15,12 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-             'country' => 'nullable',
+            'country' => 'nullable',
             // 'language' => 'nullable',
             'password' => 'required|confirmed'
         ]);
 
-        $data = User::create($request->only(['name','email','password','country']));
+        $data = User::create($request->only(['name', 'email', 'password', 'country']));
 
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
@@ -33,8 +33,7 @@ class AuthController extends Controller
                 // 'language' => $data->language,
             ];
             return response()->json(['success' => true, 'token' => $token, 'data' => $data]);
-        } else 
-        {
+        } else {
             return response()->json(['success' => false, 'message' => 'Failed to register']);
         }
     }
@@ -55,8 +54,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) 
-        {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'These credentials do not match our records.',
                 'errors' => [
@@ -99,8 +97,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
-        if ($request->filled('current_password') || $request->filled('password') || $request->filled('password_confirmation')) 
-        {
+        if ($request->filled('current_password') || $request->filled('password') || $request->filled('password_confirmation')) {
             $rules['password'] = 'confirmed';
             $rules['password_confirmation'] = 'required';
             $rules['current_password'] = [
