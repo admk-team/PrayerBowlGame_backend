@@ -51,10 +51,10 @@ class NotificationController extends Controller
     public function show($id)
     {
         $data = Notification::where('id', $id)
-        ->where('viewed', 0)
-        ->get();
+            ->where('viewed', 0)
+            ->get();
 
-    return response()->json(['show_notification' => $data]);
+        return response()->json(['show_notification' => $data]);
     }
 
     /**
@@ -106,6 +106,7 @@ class NotificationController extends Controller
             ->where(function ($query) use ($now) {
                 $query->where('end_date', '>=', $now);
             })
+            ->latest('id') // Order by id in descending order
             ->get();
         $userdetail = User::findOrFail($userId);
         // Retrieve unviewed notifications for the authenticated user
@@ -115,25 +116,24 @@ class NotificationController extends Controller
 
         return response()->json(['user_notification' => $user_notification, 'admin_notification' => $admin_notification, 'user_detail' => $userdetail]);
     }
-    
+
     public function view_notification($id)
     {
         $notifications = Notification::where('user_id', $id)
             ->where('viewed', 0)
             ->get();
-    
+
         if ($notifications->isNotEmpty()) {
             // Update the viewed field for each notification in the collection
             foreach ($notifications as $notification) {
                 $notification->viewed = 1;
                 $notification->save();
             }
-    
+
             // Return a response indicating that the user has viewed notifications
             return response()->json(['message' => 'You have viewed notifications.']);
         } else {
             return response()->json(['message' => 'No unviewed notifications found.']);
         }
     }
-    
 }
