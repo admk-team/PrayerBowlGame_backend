@@ -171,12 +171,7 @@
                                     <td>${supporter.supporter_name ? supporter.supporter_name : 'Hidden name'}</td>
                                     <td>${supporter.donation_type}</td>
                                     <td>${supporter.donation_amount}</td>
-                                    <td>${new Date(supporter.date).toLocaleDateString('en-US', { 
-                                            day: 'numeric', 
-                                            month: 'long', 
-                                            year: 'numeric' 
-                                        })}
-                                    </td>
+                                    <td>${$supporter->date) }
                                 </tr>
                             `;
                             $('#modalSupportersBody').html(supporterHtml);
