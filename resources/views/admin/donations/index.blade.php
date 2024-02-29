@@ -42,7 +42,8 @@
                                                     @endif
                                                     <td>{{ $supporter->donation_type }}</td>
                                                     <td>{{ $supporter->donation_amount }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($supporter->created_at)->format('d F Y') }}
+                                                    <td>{{ $supporter->created_at->format('d/m/Y') }}</td>
+
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-sm btn-info view-supporter"
@@ -91,7 +92,7 @@
                                                                     <td>{{ $supporter->supporter_name }}</td>
                                                                     <td>{{ $supporter->donation_type }}</td>
                                                                     <td>{{ $supporter->donation_amount }}</td>
-                                                                    <td>{{ \Carbon\Carbon::parse($supporter->created_at)->format('d F Y') }}
+                                                                    <td>{{ $supporter->created_at->format('d/m/Y') }}
                                                                     </td>
                                                                 </tr>
                                                             @empty
@@ -172,7 +173,7 @@
                                     <td>${supporter.supporter_name ? supporter.supporter_name : 'Hidden name'}</td>
                                     <td>${supporter.donation_type}</td>
                                     <td>${supporter.donation_amount}</td>
-                                    <td>${$supporter->created_at) }
+                                    <td>${new Date(supporter.created_at).toLocaleDateString('en-GB')}</td>
                                 </tr>
                             `;
                             $('#modalSupportersBody').html(supporterHtml);
