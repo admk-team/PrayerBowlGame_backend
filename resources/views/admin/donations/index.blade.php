@@ -42,7 +42,8 @@
                                                     @endif
                                                     <td>{{ $supporter->donation_type }}</td>
                                                     <td>{{ $supporter->donation_amount }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($supporter->date)->format('d F Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($supporter->created_at)->format('d F Y') }}
+                                                    </td>
                                                     <td>
                                                         <button class="btn btn-sm btn-info view-supporter"
                                                             data-toggle="modal" data-target="#supporterModal"
@@ -90,7 +91,7 @@
                                                                     <td>{{ $supporter->supporter_name }}</td>
                                                                     <td>{{ $supporter->donation_type }}</td>
                                                                     <td>{{ $supporter->donation_amount }}</td>
-                                                                    <td>{{ \Carbon\Carbon::parse($supporter->date)->format('d F Y') }}
+                                                                    <td>{{ \Carbon\Carbon::parse($supporter->created_at)->format('d F Y') }}
                                                                     </td>
                                                                 </tr>
                                                             @empty
@@ -171,7 +172,7 @@
                                     <td>${supporter.supporter_name ? supporter.supporter_name : 'Hidden name'}</td>
                                     <td>${supporter.donation_type}</td>
                                     <td>${supporter.donation_amount}</td>
-                                    <td>${$supporter->date) }
+                                    <td>${$supporter->created_at) }
                                 </tr>
                             `;
                             $('#modalSupportersBody').html(supporterHtml);

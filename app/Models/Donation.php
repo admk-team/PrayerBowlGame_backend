@@ -19,6 +19,6 @@ class Donation extends Model
         'donation_amount',
         'donation_type',
         'email',
+        'created_at',
     ];
-
 }
