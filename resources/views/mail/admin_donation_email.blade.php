@@ -15,10 +15,6 @@
 We wanted to inform you that a donation has been made to Prayer Bowl. {{$doner_data->supporter_name ? $doner_data->supporter_name : 'Someone' }} has generously contributed ${{$amount}} on {{ now()->format('d-m-Y') }}.
 </p>
 
-<p style="font-size: 15px;">
-Thank you for your attention to this matter.
-</p>
-
 
 Blessings,
 <br>
