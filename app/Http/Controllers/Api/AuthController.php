@@ -20,7 +20,7 @@ class AuthController extends Controller
             'password' => 'required|confirmed'
         ]);
 
-        $data = User::create($request->only(['name', 'email', 'password', 'country' ,'language']));
+        $data = User::create($request->only(['name', 'email', 'password', 'country', 'language']));
 
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
@@ -53,7 +53,6 @@ class AuthController extends Controller
 
 
         $user = User::where('email', $request->email)->first();
-
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'These credentials do not match our records.',
@@ -81,7 +80,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        request()->user()->tokens()->delete();
+        request()->user()->tokens()->where('id', request()->user()->currentAccessToken()->id)->delete();
 
         return [
             'status' => true,
