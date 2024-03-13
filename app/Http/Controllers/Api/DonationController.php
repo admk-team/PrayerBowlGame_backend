@@ -169,7 +169,7 @@ class DonationController extends Controller
     {
         $stripe = new StripeClient(config('services.stripe.secret'));
         $stripeProducts = $stripe->prices->all([
-            'product' => 'prod_PVqAanfceEzbeX',
+            'product' => 'prod_PjCxafEzM2f6tU',
             'active' => true
         ]);
         return $stripeProducts;
