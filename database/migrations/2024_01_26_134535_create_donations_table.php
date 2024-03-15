@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('country')->nullable()->default(null);
             $table->decimal('donation_amount', 8, 2);
             $table->string('donation_type');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
