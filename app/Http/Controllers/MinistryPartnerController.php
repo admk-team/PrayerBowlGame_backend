@@ -31,8 +31,7 @@ class MinistryPartnerController extends Controller
             // Retrieve the associated data by ID
             $ministryPartner = MinistryPartner::find($itemId);
             // Update the order for the retrieved data
-            if ($ministryPartner) 
-            {
+            if ($ministryPartner) {
                 $ministryPartner->update(['order' => $itemOrder + 1]);
             }
         }
@@ -52,12 +51,19 @@ class MinistryPartnerController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
             'order' => 'nullable',
+            'media_links' => 'nullable',
+            'media_icon' => 'nullable',
+            'email' => 'nullable',
+            'phone' => 'nullable',
         ]);
 
         $ministryPartner = new MinistryPartner();
         $ministryPartner->name = $request->input('name');
         $ministryPartner->link = $request->input('link');
-        $ministryPartner->order = $request->input('order')?? '1';
+        $ministryPartner->order = $request->input('order') ?? '1';
+        $ministryPartner->media_links = $request->input('media_links');
+        $ministryPartner->email = $request->input('email');
+        $ministryPartner->phone = $request->input('phone');
         // $ministryPartner->order= '0';
 
 
@@ -65,6 +71,12 @@ class MinistryPartnerController extends Controller
             $logoOriginalName = $request->file('logo')->getClientOriginalName();
             $request->file('logo')->move(public_path('admin_assets/images'), $logoOriginalName);
             $ministryPartner->logo = 'admin_assets/images/' . $logoOriginalName;
+        }
+
+        if ($request->hasFile('media_icon')) {
+            $logoOriginalName1 = $request->file('media_icon')->getClientOriginalName();
+            $request->file('media_icon')->move(public_path('admin_assets/images/social_icon'), $logoOriginalName1);
+            $ministryPartner->media_icon = 'admin_assets/images/social_icon/' . $logoOriginalName1;
         }
 
         $ministryPartner->save();
@@ -84,19 +96,31 @@ class MinistryPartnerController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
             'order' => 'nullable',
+            'media_links' => 'nullable',
+            'media_icon' => 'nullable',
+            'email' => 'nullable',
+            'phone' => 'nullable',
         ]);
 
         $ministryPartner->update([
             'name' => $request->input('name'),
             'link' => $request->input('link'),
-            'order' => $request->input('order')?? '1',
-         
+            'order' => $request->input('order') ?? '1',
+            'media_links' => $request->input('media_links'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
         ]);
 
         if ($request->hasFile('logo')) {
             $logoOriginalName = $request->file('logo')->getClientOriginalName();
             $request->file('logo')->move(public_path('admin_assets/images'), $logoOriginalName);
             $ministryPartner->update(['logo' => 'admin_assets/images/' . $logoOriginalName]);
+        }
+
+        if ($request->hasFile('media_icon')) {
+            $logoOriginalName1 = $request->file('media_icon')->getClientOriginalName();
+            $request->file('media_icon')->move(public_path('admin_assets/images/social_icon'), $logoOriginalName1);
+            $ministryPartner->update(['media_icon' => 'admin_assets/images/social_icon/' . $logoOriginalName1]);
         }
 
         return redirect()->route('ministryPartners.index')->with('success', 'Ministry Partner updated successfully');
