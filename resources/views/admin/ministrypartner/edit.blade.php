@@ -73,13 +73,11 @@
                                         <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <label for="media_links">Social Media link:</label>
-                                                    <input type="text" name="media_links" id="media_links"
-                                                        class="form-control"
-                                                        placeholder="Please Provide the Social Media link"
-                                                        value="{{ $ministryPartner->media_links }}">
+                                                    <label for="email">Email:</label>
+                                                    <input type="email" name="email" id="email" class="form-control"
+                                                        placeholder="Please Provide the Email"
+                                                        value="{{ $ministryPartner->email }}">
                                                 </div>
-
                                                 <div class="col-lg-6">
                                                     <label for="phone">Phone:</label>
                                                     <input type="number" name="phone" id="phone" class="form-control"
@@ -93,21 +91,73 @@
                                         <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <label for="email">Email:</label>
-                                                    <input type="email" name="email" id="email" class="form-control"
-                                                        placeholder="Please Provide the Email"
-                                                        value="{{ $ministryPartner->email }}">
+                                                    <label for="facebook">Facebook link:</label>
+                                                    <input type="text" name="facebook" id="facebook"
+                                                        class="form-control" placeholder="Please Provide the Facebook link"
+                                                        value="{{ $ministryPartner->facebook }}">
                                                 </div>
-                                                <div class="col-lg-6 mt-2">
-                                                    <label for="media_icon">Social Media Icon:</label>
-                                                    <input type="file" name="media_icon" id="media_icon"
-                                                        class="form-control-file"
-                                                        value="{{ basename($ministryPartner->media_icon) }}">
-                                                    @if ($ministryPartner->media_icon)
-                                                        <img src="{{ asset($ministryPartner->media_icon) }}"
-                                                            alt="Current Icon" class="img-thumbnail mt-2"
-                                                            style="max-width: 150px;">
-                                                    @endif
+                                                <div class="col-lg-6">
+                                                    <label for="instagram">Instagram link:</label>
+                                                    <input type="text" name="instagram" id="instagram"
+                                                        class="form-control" placeholder="Please Provide the Instagram link"
+                                                        value="{{ $ministryPartner->instagram }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label for="twitter">Twitter link:</label>
+                                                    <input type="text" name="twitter" id="twitter"
+                                                        class="form-control" placeholder="Please Provide the Twitter link"
+                                                        value="{{ $ministryPartner->twitter }}">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label for="youtube">YouTube link:</label>
+                                                    <input type="text" name="youtube" id="youtube"
+                                                        class="form-control" placeholder="Please Provide the YouTube link"
+                                                        value="{{ $ministryPartner->youtube }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label for="whatsApp">WhatsApp link:</label>
+                                                    <input type="text" name="whatsApp" id="whatsApp"
+                                                        class="form-control"
+                                                        placeholder="Please Provide the WhatsApp link"
+                                                        value="{{ $ministryPartner->whatsApp }}">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label for="tik_tok">TikTok link:</label>
+                                                    <input type="text" name="tik_tok" id="tik_tok"
+                                                        class="form-control" placeholder="Please Provide the TikTok link"
+                                                        value="{{ $ministryPartner->tik_tok }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label for="linked_in">LinkedIn link:</label>
+                                                    <input type="text" name="linked_in" id="linked_in"
+                                                        class="form-control"
+                                                        placeholder="Please Provide the LinkedIn link"
+                                                        value="{{ $ministryPartner->linked_in }}">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label for="christian_circle">Christian Circle link:</label>
+                                                    <input type="text" name="christian_circle" id="christian_circle"
+                                                        class="form-control"
+                                                        placeholder="Please Provide the Christian Circle link"
+                                                        value="{{ $ministryPartner->christian_circle }}">
                                                 </div>
                                             </div>
                                         </div>

@@ -13,9 +13,15 @@ class MinistryPartner extends Model
         'logo',
         'order',
         'link',
-        'media_links',
-        'media_icon',
         'email',
         'phone',
+        'facebook',
+        'instagram',
+        'twitter',
+        'youtube',
+        'whatsApp',
+        'tik_tok',
+        'linked_in',
+        'christian_circle',
     ];
 }

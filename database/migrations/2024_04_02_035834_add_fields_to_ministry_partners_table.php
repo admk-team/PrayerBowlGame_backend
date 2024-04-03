@@ -9,20 +9,30 @@ class AddFieldsToMinistryPartnersTable extends Migration
     public function up()
     {
         Schema::table('ministry_partners', function (Blueprint $table) {
-            $table->string('media_links')->nullable();
-            $table->string('media_icon')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('email')->nullable()->after('link');
+            $table->string('phone')->nullable()->after('email');
+            $table->string('facebook')->nullable()->after('phone');
+            $table->string('instagram')->nullable()->after('facebook');
+            $table->string('twitter')->nullable()->after('instagram');
+            $table->string('youtube')->nullable()->after('twitter');
+            $table->string('whatsApp')->nullable()->after('youtube');
+            $table->string('tik_tok')->nullable()->after('whatsApp');
+            $table->string('linked_in')->nullable()->after('tik_tok');
+            $table->string('christian_circle')->nullable()->after('linked_in');
         });
     }
 
     public function down()
     {
         Schema::table('ministry_partners', function (Blueprint $table) {
-            $table->dropColumn('media_links');
-            $table->dropColumn('media_icon');
-            $table->dropColumn('email');
-            $table->dropColumn('phone');
+            $table->dropColumn('facebook');
+            $table->dropColumn('instagram');
+            $table->dropColumn('twitter');
+            $table->dropColumn('youtube');
+            $table->dropColumn('whatsApp');
+            $table->dropColumn('tik_tok');
+            $table->dropColumn('linked_in');
+            $table->dropColumn('christian_circle');
         });
     }
 }
