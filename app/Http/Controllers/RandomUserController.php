@@ -11,6 +11,7 @@ use App\Mail\TestMail;
 use App\Mail\PrayerUserMail;
 use App\Mail\OtpMail;
 use App\Models\Notification;
+use App\Models\TopWarrior;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -112,7 +113,7 @@ class RandomUserController extends Controller
             if ($randomBanner) {
                 $bannerUrl = route('show.banner', ['Id' => $randomBanner->id]);
             }
-            $randomuser=RandomUser::create([
+            $randomuser = RandomUser::create([
                 'user_id' => $request->user()->id,
                 'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
@@ -125,13 +126,28 @@ class RandomUserController extends Controller
                     'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that  ' . $request->user()->name . ' is keeping you in their prayers at this very moment.',
                     'user_id' => $checkuser->id,
                 ]);
-                 
+            }
+
+            $logineduser = auth()->user();
+            if ($logineduser) {
+                $topwarrior = TopWarrior::where('user_id', $logineduser->id)->first();
+                if ($topwarrior) {
+                    if ($topwarrior->count > 0) {
+                        $topwarrior->update(['count' => $topwarrior->count + 1]);
+                    } else {
+                        $topwarrior->update(['count' => 1]);
+                    }
+                } else {
+                    $createdwarrior = TopWarrior::create(['user_id' => $logineduser->id, 'count' => 1]);
+                }
             }
 
             try {
                 Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
             } catch (\Exception $e) {
             }
+
+
 
             return response()->json(['success' => true, 'data' => $user]);
         }

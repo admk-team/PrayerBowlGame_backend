@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Supporters;
+use App\Models\TopWarrior;
 use Illuminate\Support\Facades\Validator;
 
 class SupportersApiController extends Controller
@@ -30,5 +31,11 @@ class SupportersApiController extends Controller
         $supporter = Supporters::create($request->all());
 
         return response()->json(['message' => 'Supporter added successfully', 'supporter' => $supporter], 200);
+    }
+
+    public function topwarriors()
+    {
+        $data = TopWarrior::orderBy('count', 'desc')->take(25)->get();
+        return response()->json(['data' => $data]);
     }
 }

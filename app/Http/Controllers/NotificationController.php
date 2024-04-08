@@ -52,6 +52,7 @@ class NotificationController extends Controller
     {
         $data = Notification::where('id', $id)
             ->where('viewed', 0)
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json(['show_notification' => $data]);
@@ -94,7 +95,7 @@ class NotificationController extends Controller
         return redirect()->route('notification.index')->with('success', 'Banner deleted successfully!');
     }
 
-    //user random notification with admin notification 
+    //user random notification with admin notification
     public function notification()
     {
         // Get the authenticated user's id
