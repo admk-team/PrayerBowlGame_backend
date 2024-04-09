@@ -13,4 +13,9 @@ class TopWarrior extends Model
         'user_id',
         'count',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id');
+    }
 }

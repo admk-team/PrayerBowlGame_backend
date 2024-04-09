@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+    public function topwarrior()
+    {
+        return $this->belongsTo(TopWarrior::class);
+    }
+
     // Register the deleting event to delete related notifications
     protected static function boot()
     {

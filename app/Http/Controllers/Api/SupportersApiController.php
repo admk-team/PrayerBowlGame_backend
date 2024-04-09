@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TopWarriorResource;
 use Illuminate\Http\Request;
 use App\Models\Supporters;
 use App\Models\TopWarrior;
@@ -35,7 +36,8 @@ class SupportersApiController extends Controller
 
     public function topwarriors()
     {
-        $data = TopWarrior::orderBy('count', 'desc')->take(25)->get();
-        return response()->json(['data' => $data]);
+        $data = TopWarrior::orderBy('count', 'desc')->with('user')->take(25)->get();
+
+        return TopWarriorResource::collection($data);
     }
 }

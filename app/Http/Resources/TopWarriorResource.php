@@ -14,6 +14,10 @@ class TopWarriorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'count' => $this->count,
+        ];
     }
 }
