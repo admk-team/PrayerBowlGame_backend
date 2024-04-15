@@ -4,6 +4,7 @@ use App\Http\Controllers\AddedUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ContactMessageController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\RandomUserController;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +72,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/donations/details', [DonationController::class, 'getDonationDetails']);
     //show notification
     Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
+
 });
+
+Route::post('/contact', [ContactMessageController::class, 'store']);
 
 Route::get('test', [RandomUserController::class, 'test']);
 Route::get('topwarriors', [SupportersApiController::class, 'topwarriors']);

@@ -34,6 +34,9 @@
                                                     <input type="text" name="name" id="name" class="form-control"
                                                         placeholder="Please Provide the Ministry Partner"
                                                         value="{{ $ministryPartner->name }}">
+                                                    @error('name')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="link">Link:</label>

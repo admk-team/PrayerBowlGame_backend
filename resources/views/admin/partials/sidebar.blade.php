@@ -48,6 +48,13 @@
                   </a>
               </li>
 
+              <li>
+                <a href="/contact-messages" aria-expanded="false">
+                    <i class="icon icon-settings fa fa-envelope"></i>
+                    <span class="nav-text">Contact Messages</span>
+                </a>
+            </li>
+
           </ul>
       </div>
   </div>

@@ -47,7 +47,7 @@ class MinistryPartnerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:65',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
             'order' => 'nullable',
@@ -97,7 +97,7 @@ class MinistryPartnerController extends Controller
     public function update(Request $request, MinistryPartner $ministryPartner)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:65',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
             'order' => 'nullable',
