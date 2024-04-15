@@ -41,7 +41,7 @@ class SendContactMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Contact Message',
+            subject: "Contact message from" . $this->contactMessage->first_name . " " . $this->contactMessage->first_name,
         );
     }
 
