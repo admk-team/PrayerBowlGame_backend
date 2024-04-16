@@ -53,7 +53,14 @@
                     <i class="icon icon-settings fa fa-envelope"></i>
                     <span class="nav-text">Contact Messages</span>
                 </a>
-            </li>
+              </li>
+
+              <li>
+                <a href="/faqs" aria-expanded="false">
+                    <i class="icon icon-settings fa fa-question-circle"></i>
+                    <span class="nav-text">Frequetly Asked Questions</span>
+                </a>
+              </li>
 
           </ul>
       </div>

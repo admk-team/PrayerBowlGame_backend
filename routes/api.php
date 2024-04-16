@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\MinistryPartnerController;
 use App\Http\Controllers\Api\SupportersApiController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\DonationController;
+use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\NotificationController;
 
 /*
@@ -74,6 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
 
 });
+Route::get('/faqs', [FaqController::class, 'index']);
 
 Route::post('/contact', [ContactMessageController::class, 'store']);
 

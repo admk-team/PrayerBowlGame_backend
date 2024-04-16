@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ config('app.name') }} - @yield('title')</title>
+  @yield('meta')
   <!-- Favicon icon -->
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin_assets/images/favicon.png') }}">
 
