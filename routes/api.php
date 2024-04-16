@@ -74,8 +74,8 @@ Route::middleware('auth:sanctum')->group(function () {
     //show notification
     Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
 
+    Route::get('/faqs', [FaqController::class, 'index']);
 });
-Route::get('/faqs', [FaqController::class, 'index']);
 
 Route::post('/contact', [ContactMessageController::class, 'store']);
 
