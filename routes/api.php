@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,10 +74,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/donations/details', [DonationController::class, 'getDonationDetails']);
     //show notification
     Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
-
+    //faq
     Route::get('/faqs', [FaqController::class, 'index']);
+    
 });
-
+//page
+Route::get('/pages', [PageController::class, 'pages']);
 Route::post('/contact', [ContactMessageController::class, 'store']);
 
 Route::get('test', [RandomUserController::class, 'test']);
