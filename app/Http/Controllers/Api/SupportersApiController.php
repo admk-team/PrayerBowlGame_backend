@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\TopWarriorResource;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Supporters;
 use App\Models\TopWarrior;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\TopWarriorResource;
 
 class SupportersApiController extends Controller
 {
@@ -34,9 +35,23 @@ class SupportersApiController extends Controller
         return response()->json(['message' => 'Supporter added successfully', 'supporter' => $supporter], 200);
     }
 
-    public function topwarriors()
+    public function topwarriors(Request $request)
     {
-        $data = TopWarrior::orderBy('count', 'desc')->with('user')->take(25)->get();
+        $duration = $request->duration;
+        $data = TopWarrior::when($duration === 'monthly', function ($q) {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+            $q->whereBetween('created_at', [$startDate, $endDate]);
+        })->when($duration === 'weekly', function ($q) {
+            $startDate = Carbon::now()->startOfWeek();
+            $endDate = Carbon::now()->endOfWeek();
+            $q->whereBetween('created_at', [$startDate, $endDate]);
+        })->when($duration === 'daily', function ($q) {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+            $q->whereBetween('created_at', [$startDate, $endDate]);
+        })
+            ->orderBy('count', 'desc')->with('user')->take(25)->get();
 
         return TopWarriorResource::collection($data);
     }
