@@ -76,10 +76,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
     //faq
     Route::get('/faqs', [FaqController::class, 'index']);
-    //page
-    Route::get('/pages', [PageController::class, 'pages']);
+    
 });
-
+//page
+Route::get('/pages', [PageController::class, 'pages']);
 Route::post('/contact', [ContactMessageController::class, 'store']);
 
 Route::get('test', [RandomUserController::class, 'test']);
