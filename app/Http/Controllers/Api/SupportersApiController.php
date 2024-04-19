@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TopWarriorResource;
+use Illuminate\Http\Request;
 use App\Models\Supporters;
 use App\Models\TopWarrior;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\TopWarriorResource;
 
 class SupportersApiController extends Controller
 {
@@ -37,19 +37,18 @@ class SupportersApiController extends Controller
 
     public function topwarriors(Request $request)
     {
-        $duration = $request->duration;
-        $data = TopWarrior::when($duration === 'monthly', function ($q) {
-            $startDate = Carbon::now()->startOfMonth();
-            $endDate = Carbon::now()->endOfMonth();
-            $q->whereBetween('created_at', [$startDate, $endDate]);
-        })->when($duration === 'weekly', function ($q) {
-            $startDate = Carbon::now()->startOfWeek();
-            $endDate = Carbon::now()->endOfWeek();
-            $q->whereBetween('created_at', [$startDate, $endDate]);
-        })->when($duration === 'daily', function ($q) {
-            $startDate = Carbon::now()->startOfDay();
-            $endDate = Carbon::now()->endOfDay();
-            $q->whereBetween('created_at', [$startDate, $endDate]);
+        $time = $request->duration;
+        // dd($time);
+        $data = TopWarrior::when($time === 'monthly', function ($q) {
+            $from = Carbon::now()->startOfMonth();
+            $to = Carbon::now()->endOfMonth();
+            $q->whereBetween('updated_at', [$from, $to]);
+        })->when($time === 'daily', function ($q) {
+            $q->whereDate('updated_at', Carbon::today());
+        })->when($time === 'weekly', function ($q) {
+            $from = Carbon::now()->startOfWeek();
+            $to = Carbon::now()->endOfWeek();
+            $q->whereBetween('updated_at', [$from, $to]);
         })
             ->orderBy('count', 'desc')->with('user')->take(25)->get();
 
