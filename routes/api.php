@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show/notification/{id}', [NotificationController::class, 'show']);
     //faq
     Route::get('/faqs', [FaqController::class, 'index']);
+
+    //testimonials
+    Route::post('/testimonial', [TestimonialController::class, 'store']);
+    Route::get('/all/testimonials', [TestimonialController::class, 'allTestimonials']);
     
 });
 //page
