@@ -14,6 +14,7 @@ use App\Http\Controllers\EmailSettingsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\MinistryPartnerController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\StripeSubscriptionController;
 use App\Models\ContactMessage;
 
@@ -90,10 +91,12 @@ Route::middleware('admin')->group(function () {
     //Donation
     Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
     Route::get('/donations/{id}', [DonationController::class, 'show'])->name('donations.show');
-    
+
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'destroy']);
 
     Route::resource('faqs', FaqController::class)->except(['show']);
+
+    Route::resource('page', PageController::class);
 });
 
 Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');
