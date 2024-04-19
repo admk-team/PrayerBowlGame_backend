@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Otp;
+use App\Models\User;
 use App\Mail\OtpMail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class PasswordResetController extends Controller
 {
@@ -47,6 +48,7 @@ class PasswordResetController extends Controller
             if ($key != (sizeof($codeArr) - 1))
                 $formattedCode .= ' ';
         }
+        App::setLocale($user->language);
         Mail::to($request->email)->send(new OtpMail($user->name, $formattedCode));
 
         return response()->json([
