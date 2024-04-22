@@ -10,16 +10,16 @@
 
     {{-- Body --}}
     @component('mail::layout')
-        # Dear {{ $recieverName }},
+        # {{__('Dear') }} {{ $recieverName }},
 <p style="font-size: 15px;">
-I hope this message finds you in good spirits. We wanted to reach out and share that {{ $senderName }} is keeping
-you in their prayers at this very moment.
+{{ __('I hope this message finds you in good spirits. We wanted to reach out and share that') }} {{ $senderName }} {{ __('is keeping
+you in their prayers at this very moment.') }}
 </p>
 
 
-Blessings,
+{{ __('Blessings') }},
 <br>
-Prayer Bowl Team
+{{ __('Prayer Bowl Team') }}
 <hr style="border-color: rgb(0 0 0 / 8%) !important;">
 {{-- Display Content --}}
 @if ($content)
@@ -40,7 +40,7 @@ Prayer Bowl Team
         @component('mail::footer')
             {{-- Your Footer Content --}}
             <p style="color: #000000d5; font-size: 15px; font-weight: 700;">
-                PRAY FOR SOMEONE <br>
+                {{ __('PRAY FOR SOMEONE') }} <br>
                 @if ($message != '')
                     <span style="font-weight: 400; font-size: 13px; line-height: 10px; line-height: 18px; margin-top: 4px;">
                         {{ $message }}

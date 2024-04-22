@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        \Devaslanphp\AutoTranslate\AutoTranslateProvider::class,
 
         /*
          * Application Service Providers...

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Mail\OtpMail;
+use App\Mail\TestMail;
+use App\Models\Banner;
 use App\Models\AddUser;
 use App\Models\RandomUser;
-use App\Models\Banner;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
-use App\Mail\PrayerUserMail;
-use App\Mail\OtpMail;
-use App\Models\Notification;
 use App\Models\TopWarrior;
-use App\Models\User;
+use App\Mail\PrayerUserMail;
+use App\Models\Notification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 
 class RandomUserController extends Controller
 {
@@ -143,6 +144,7 @@ class RandomUserController extends Controller
             }
 
             try {
+                App::setLocale($user->language);
                 Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
             } catch (\Exception $e) {
             }

@@ -10,25 +10,25 @@
 
     {{-- Body --}}
     @component('mail::layout')
-        # Dear {{$data->supporter_name}},
+        # {{ __('Dear') }} {{$data->supporter_name}},
 <p style="font-size: 15px;">
-Thank you for your generous donation to Prayer Bowl. We are writing to confirm that we have received your donation of ${{$amount}} on {{ now()->format('d-m-Y') }}.
+{{ __('Thank you for your generous donation to Prayer Bowl. We are writing to confirm that we have received your donation of') }} ${{$amount}} on {{ now()->format('d-m-Y') }}.
 </p>
 
 
 <p style="font-size: 15px;">
-Your contribution is greatly appreciated and will be instrumental in supporting our cause.
+{{ __('Your contribution is greatly appreciated and will be instrumental in supporting our cause.') }}
 </p>
 
 
 <p style="font-size: 15px;">
-Thank you once again for your support.
+{{ __('Thank you once again for your support.') }}
 </p>
 
 
-Blessings,
+{{ __('Blessings') }},
 <br>
-Prayer Bowl Team
+{{ __('Prayer Bowl Team') }}
 <hr style="border-color: rgb(0 0 0 / 8%) !important;">
 
     @endcomponent
@@ -38,7 +38,7 @@ Prayer Bowl Team
         @component('mail::footer')
             {{-- Your Footer Content --}}
             <p style="color: #000000d5; font-size: 15px; font-weight: 700;">
-                PRAY FOR SOMEONE <br>
+                {{ __('PRAY FOR SOMEONE') }} <br>
                 @if ($message != '')
                     <span style="font-weight: 400; font-size: 13px; line-height: 10px; line-height: 18px; margin-top: 4px;">
                         {{ $message }}

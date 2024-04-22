@@ -9,13 +9,13 @@
 
     {{-- Panel Content --}}
     @slot('subcopy')
-        Dear {{ $data['name'] }},
+        {{ __('Dear') }} {{ $data['name'] }},
 
-        We have received your request to delete your account. If you initiated this request, please proceed by clicking
-        the button below:
+        {{ __('We have received your request to delete your account. If you initiated this request, please proceed by clicking
+        the button below:') }}
 
         @component('mail::button', ['url' => $deleteAccountUrl])
-            Confirm Account Deletion
+            {{ __('Confirm Account Deletion') }}
         @endcomponent
     @endslot
 
