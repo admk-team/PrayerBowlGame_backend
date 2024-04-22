@@ -67,7 +67,12 @@
                     <span class="nav-text">Pages</span>
                 </a>
               </li>
-
+              <li>
+                <a href="/testimonials" aria-expanded="false">
+                    <i class="icon icon-page  fa fa-file"></i>
+                    <span class="nav-text">Testimonial</span>
+                </a>
+              </li>
           </ul>
       </div>
   </div>

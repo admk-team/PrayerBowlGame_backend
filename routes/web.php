@@ -16,6 +16,7 @@ use App\Http\Controllers\MinistryPartnerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StripeSubscriptionController;
+use App\Http\Controllers\TestimonialController;
 use App\Models\ContactMessage;
 
 /*
@@ -97,6 +98,11 @@ Route::middleware('admin')->group(function () {
     Route::resource('faqs', FaqController::class)->except(['show']);
 
     Route::resource('page', PageController::class);
+
+    //Testimonial
+    Route::resource('testimonials', TestimonialController::class);
+    Route::get('test/{id}', [TestimonialController::class, 'updateStatus'])->name('testimonials.updateStatus');
+
 });
 
 Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');

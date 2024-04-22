@@ -56,13 +56,25 @@ class User extends Authenticatable
         return $this->hasOne(TopWarrior::class, 'topwarrior_id');
     }
 
-    // Register the deleting event to delete related notifications
     protected static function boot()
     {
         parent::boot();
 
+        // Register the deleting event to delete related notifications
         static::deleting(function ($user) {
             $user->notifications()->delete();
         });
+
+        // Define a deleting event listener for deleting related testimonials
+        static::deleting(function ($user) {
+            // Delete related testimonials when the user is deleted
+            $user->testimonials()->delete();
+        });
+    }
+
+    // Define the relationship with testimonials
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
     }
 }
