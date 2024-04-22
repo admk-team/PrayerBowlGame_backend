@@ -61,6 +61,12 @@
                     <span class="nav-text">Frequetly Asked Questions</span>
                 </a>
               </li>
+              <li>
+                <a href="/page" aria-expanded="false">
+                    <i class="icon icon-page  fa fa-file"></i>
+                    <span class="nav-text">Pages</span>
+                </a>
+              </li>
 
           </ul>
       </div>

@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public function topwarrior()
     {
-        return $this->belongsTo(TopWarrior::class);
+        return $this->hasOne(TopWarrior::class, 'topwarrior_id');
     }
 
     // Register the deleting event to delete related notifications

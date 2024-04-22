@@ -10,7 +10,7 @@
     {{-- Body --}}
     @component('mail::panel')
         <span style="display: inline-block; margin-bottom: 10px; color: #000;">
-            Dear {{ $username }}, please use the following OTP code to reset your password
+            {{ __('Dear') }} {{ $username }}, {{ __('please use the following OTP code to reset your password') }}
         </span>
         <br>
         <div
@@ -23,7 +23,7 @@
         @component('mail::footer')
             <p style="color: #000000d5; font-size: 15px; font-weight: 700;">
                 <span style="font-weight: 400; font-size: 13px; line-height: 10px; line-height: 18px; margin-top: 4px;">
-                    © 2024 Prayer Bowl. All rights reserved.
+                    {{ __('© 2024 Prayer Bowl. All rights reserved.') }}
                 </span>
             </p>
         @endcomponent
