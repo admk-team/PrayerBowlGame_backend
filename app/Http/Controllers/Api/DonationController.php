@@ -6,17 +6,20 @@ namespace App\Http\Controllers\Api;
 
 use Exception;
 use Stripe\Price;
+use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\User;
 use App\Mail\StripEmail;
 use App\Models\Donation;
 use Stripe\StripeClient;
+use Stripe\Subscription;
+use App\Mail\DonationEmail;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use Stripe\Checkout\Session;
-use App\Http\Controllers\Controller;
 use App\Mail\AdminDonationEmail;
-use App\Mail\DonationEmail;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -71,7 +74,7 @@ class DonationController extends Controller
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => $current_domain . '/stripepayment?success=true&session_id={CHECKOUT_SESSION_ID}' . '&user_id=' . auth()->user()->id,
+                'success_url' => $current_domain . '/stripepayment?success=true&session_id={CHECKOUT_SESSION_ID}' . '&user_id=' . auth()->user()->id . '&plan=' . $request->input('lookup_key'),
                 'cancel_url' => $current_domain . '/stripepayment?canceled=true',
             ]);
 
@@ -169,7 +172,7 @@ class DonationController extends Controller
     {
         $stripe = new StripeClient(config('services.stripe.secret'));
         $stripeProducts = $stripe->prices->all([
-            'product' => 'prod_PjCxafEzM2f6tU',
+            'product' => 'prod_PydjM8h5sRAXMw',
             'active' => true,
             'limit' => 50,
         ]);
@@ -197,8 +200,26 @@ class DonationController extends Controller
         return response()->json(['data' => $supporter]);
     }
 
+
     public function success(Request $request)
     {
+
+        $stripe = new StripeClient(config('services.stripe.secret'));
+        $data = $stripe->checkout->sessions->retrieve(
+            $request->session_id,
+            []
+        );
+
+        DB::table('subscriptions')->insert([
+            'user_id' => $request->user_id,
+            'type' => $request->plan,
+            'quantity' => 1,
+            'stripe_id' => $data->subscription,
+            'stripe_status' => $data->status,
+            'stripe_price' => $data->amount_total,
+            'trial_ends_at' => Carbon::parse($data->expires_at),
+            'ends_at' => Carbon::parse($data->expires_at),
+        ]);
 
         //getting amount for emal
         // $amount = $request->input('donation_amount');
@@ -222,5 +243,20 @@ class DonationController extends Controller
         } catch (\Exception $e) {
         }
         return view('payment.success');
+    }
+
+    public function canclesubuser($user_id)
+    {
+        $user_data = DB::table('subscriptions')->where('user_id', $user_id)->first();
+        $canclestripe = new StripeClient(config('services.stripe.secret'));
+        $stripecancle = $canclestripe->subscriptions->cancel(
+            $user_data->subscription,
+            []
+        );
+        if ($stripecancle) {
+            return response()->json(['success' => 'Subscription canceled Successfully ']);
+        } else {
+            return response()->json(['success' => 'Subscription canceled Unsuccessfully ']);
+        }
     }
 }
