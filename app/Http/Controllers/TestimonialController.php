@@ -34,12 +34,12 @@ class TestimonialController extends Controller
         $validatedData = $request->validate([
             'testimonial' => 'required',
         ]);
-    
+
         // Add the authenticated user's ID to the validated data
         $validatedData['user_id'] = auth()->id();
         // Create the testimonial
         Testimonial::create($validatedData);
-    
+
         // Send a JSON response
         return response()->json(['success' => true, 'message' => 'Testimonial added successfully.']);
     }
@@ -67,7 +67,7 @@ class TestimonialController extends Controller
     {
         // Find the testimonial by ID
         $testimonial = Testimonial::findOrFail($id);
-        $testimonial->status="approved";
+        $testimonial->status = "approved";
         $testimonial->save();
 
         // Return a response indicating success
@@ -84,7 +84,7 @@ class TestimonialController extends Controller
 
     public function allTestimonials()
     {
-        $data = Testimonial::where('status','approved')->get();
+        $data = Testimonial::where('status', 'approved')->with('user')->orderBy('updated_at', 'DESC')->get();
         return response()->json([
             'status' => true,
             'data' => $data,
