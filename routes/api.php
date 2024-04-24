@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('cancelsubuser/{id}', [DonationController::class, 'canclesubuser']);
     Route::get('getusersubs', [DonationController::class, 'getsubscriptiondata']);
+    Route::get('setuserlanguage/{lang}', [AuthController::class, 'setlanguageuser']);
 
 });
 //page

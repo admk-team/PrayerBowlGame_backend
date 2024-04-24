@@ -139,4 +139,17 @@ class AuthController extends Controller
             'status' =>  true,
         ];
     }
+
+    public function setlanguageuser($lang)
+    {
+        if(auth()->user())
+        {
+            $user = User::findOrFail(auth()->user()->id);
+            $user->update(['language' => $lang]);
+            return response()->json(['success' => 'Language Updated']);
+        }
+        else{
+            return response()->json(['error' => 'User Not Logged in']);
+        }
+    }
 }
