@@ -3,13 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasLocalePreference
 {
     use HasApiTokens, HasFactory, Notifiable, Billable;
 
@@ -76,5 +78,11 @@ class User extends Authenticatable
     public function testimonials()
     {
         return $this->hasMany(Testimonial::class);
+    }
+
+    //user locale
+    public function preferredLocale()
+    {
+        return $this->language;
     }
 }

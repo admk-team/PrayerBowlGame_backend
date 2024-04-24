@@ -85,6 +85,19 @@ return [
 
     'locale' => 'en',
 
+    'supported_locales' => [
+        'ar' => 'arabic',
+        'el' => 'Greek',
+        'es' => 'Spanish',
+        'fr' => 'French',
+        'he' => 'Hebrew',
+        'hi' => 'Hindi',
+        'ht' => 'Haitian',
+        'pt' => 'Portuguese',
+        'ru' => 'Russian',
+        'zh' => 'Chinese',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

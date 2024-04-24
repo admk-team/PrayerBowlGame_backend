@@ -12,8 +12,7 @@
     @component('mail::layout')
         # {{__('Dear') }} {{ $recieverName }},
 <p style="font-size: 15px;">
-{{ __('I hope this message finds you in good spirits. We wanted to reach out and share that') }} {{ $senderName }} {{ __('is keeping
-you in their prayers at this very moment.') }}
+{{ __('I hope this message finds you in good spirits. We wanted to reach out and share that') }} {{ __('is keeping you in their prayers at this very moment.', ['senderName' => $senderName]) }}
 </p>
 
 

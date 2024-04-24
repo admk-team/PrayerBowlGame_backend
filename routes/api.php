@@ -82,7 +82,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/testimonial', [TestimonialController::class, 'store']);
     Route::get('/all/testimonials', [TestimonialController::class, 'allTestimonials']);
 
-    Route::get('cancelsubuser/{user_id}', [DonationController::class, 'canclesubuser']);
+    Route::get('cancelsubuser/{id}', [DonationController::class, 'canclesubuser']);
+    Route::get('getusersubs', [DonationController::class, 'getsubscriptiondata']);
+
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);

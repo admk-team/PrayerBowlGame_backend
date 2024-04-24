@@ -245,18 +245,29 @@ class DonationController extends Controller
         return view('payment.success');
     }
 
-    public function canclesubuser($user_id)
+    public function canclesubuser($id)
     {
-        $user_data = DB::table('subscriptions')->where('user_id', $user_id)->first();
+        $user_data = DB::table('subscriptions')->whereId($id)->where('stripe_status', 'complete')->first();
         $canclestripe = new StripeClient(config('services.stripe.secret'));
-        $stripecancle = $canclestripe->subscriptions->cancel(
-            $user_data->subscription,
-            []
-        );
-        if ($stripecancle) {
-            return response()->json(['success' => 'Subscription canceled Successfully ']);
-        } else {
-            return response()->json(['success' => 'Subscription canceled Unsuccessfully ']);
+        try{
+
+            $stripecancle = $canclestripe->subscriptions->cancel(
+                $user_data->stripe_id,
+                []
+            );
+            DB::table('subscriptions')->whereId($id)->where('status', 'complete')->update(['stripe_status' => 'canceled']);
+            return response()->json(['success' => 'Subscription canceled Successfully']);
         }
+        catch(Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        };
     }
+
+    public function getsubscriptiondata()
+    {
+        $data = DB::table('subscriptions')->where('user_id', auth()->user()->id)->where('stripe_status', 'complete')->orderBy('updated_at', 'DESC')->get();
+        return response()->json(['data' => $data]);
+    }
+
+
 }
