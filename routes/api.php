@@ -71,6 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //user has view notification
     // Route definition
     Route::post('/view/notification/{id}', [NotificationController::class, 'view_notification']);
+    Route::post('/view/user/{id}', [NotificationController::class, 'view_notification_user']);
     //
     Route::get('/donations/details', [DonationController::class, 'getDonationDetails']);
     //show notification

@@ -137,4 +137,22 @@ class NotificationController extends Controller
             return response()->json(['message' => 'No unviewed notifications found.']);
         }
     }
+
+    public function view_notification_user($id)
+    {
+        $notifications = Notification::findOrFail($id);
+
+        if ($notifications->isNotEmpty()) {
+            // Update the viewed field for each notification in the collection
+            foreach ($notifications as $notification) {
+                $notification->viewed = 1;
+                $notification->save();
+            }
+
+            // Return a response indicating that the user has viewed notifications
+            return response()->json(['message' => 'You have viewed notifications.']);
+        } else {
+            return response()->json(['message' => 'No unviewed notifications found.']);
+        }
+    }
 }
