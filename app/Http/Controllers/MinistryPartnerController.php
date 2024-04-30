@@ -46,15 +46,16 @@ class MinistryPartnerController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|max:65',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
             'order' => 'nullable',
+            'about' => 'max:300|nullable',
             'email' => 'nullable',
             'phone' => 'nullable',
         ]);
-
         $ministryPartner = new MinistryPartner();
         $ministryPartner->name = $request->input('name');
         $ministryPartner->link = $request->input('link');
@@ -66,6 +67,7 @@ class MinistryPartnerController extends Controller
         $ministryPartner->whatsApp = $request->input('whatsApp');
         $ministryPartner->tik_tok = $request->input('tik_tok');
         $ministryPartner->linked_in = $request->input('linked_in');
+        $ministryPartner->about = $request->input('about');
         $ministryPartner->christian_circle = $request->input('christian_circle');
         $ministryPartner->email = $request->input('email');
         $ministryPartner->phone = $request->input('phone');
@@ -101,6 +103,7 @@ class MinistryPartnerController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'link' => 'required',
             'order' => 'nullable',
+            'about' => 'nullable|max:300',
             'email' => 'nullable',
             'phone' => 'nullable',
         ]);
@@ -117,6 +120,7 @@ class MinistryPartnerController extends Controller
             'youtube' => $request->input('youtube'),
             'whatsApp' => $request->input('whatsApp'),
             'tik_tok' => $request->input('tik_tok'),
+            'about' => $request->input('about'),
             'linked_in' => $request->input('linked_in'),
             'christian_circle' => $request->input('christian_circle'),
         ]);

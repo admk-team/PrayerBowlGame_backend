@@ -22,6 +22,7 @@ class MinistryPartner extends Model
         'whatsApp',
         'tik_tok',
         'linked_in',
+        'about',
         'christian_circle',
     ];
 }

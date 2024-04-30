@@ -69,6 +69,15 @@
                                                     <input type="email" name="email" id="email" class="form-control"
                                                         placeholder="Please Provide the Email">
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <label for="about">About:</label>
+                                                    <textarea name="about" id="about" class="form-control"
+                                                        placeholder="Please Provide About"
+                                                        ></textarea>
+                                                    @error('about')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <div class="col-lg-6">
                                                     <label for="phone">Phone:</label>
                                                     <input type="number" name="phone" id="phone" class="form-control"
