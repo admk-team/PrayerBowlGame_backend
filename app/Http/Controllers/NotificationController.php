@@ -144,10 +144,10 @@ class NotificationController extends Controller
 
         if ($notifications->isNotEmpty()) {
             // Update the viewed field for each notification in the collection
-            foreach ($notifications as $notification) {
-                $notification->viewed = 1;
-                $notification->save();
-            }
+            // foreach ($notifications as $notification) {
+            $notifications->viewed = 1;
+            $notifications->save();
+            // }
 
             // Return a response indicating that the user has viewed notifications
             return response()->json(['message' => 'You have viewed notifications.']);

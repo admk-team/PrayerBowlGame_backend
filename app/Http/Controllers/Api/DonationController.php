@@ -19,6 +19,7 @@ use Laravel\Cashier\Cashier;
 use Stripe\Checkout\Session;
 use App\Mail\AdminDonationEmail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -230,11 +231,14 @@ class DonationController extends Controller
         // $doner_email = $doner_data['email'];
 
         $donarData = Donation::where('user_id', $request->user_id)->orderBy('created_at', 'DESC')->first();
-
+        $userPersonalData = User::findOrFail($request->user_id);
 
         $admindata = User::where('role', '1')->first();
         $admin_email = $admindata->email;
         try {
+            if ($userPersonalData) {
+                App::setLocale($userPersonalData->language ? $userPersonalData->language : 'en');
+            }
             Mail::to($donarData->email)->send(new DonationEmail($donarData ?? null, $donarData->donation_amount ?? null));
         } catch (\Exception $e) {
         }
@@ -248,8 +252,7 @@ class DonationController extends Controller
     public function canclesubuser($id)
     {
         $user_data = DB::table('subscriptions')->whereId($id)->where('stripe_status', 'complete')->first();
-        if($user_data)
-        {
+        if ($user_data) {
             $canclestripe = new StripeClient(config('services.stripe.secret'));
             try {
 
@@ -263,11 +266,9 @@ class DonationController extends Controller
                 DB::table('subscriptions')->whereId($id)->where('stripe_status', 'complete')->update(['stripe_status' => 'canceled']);
                 return response()->json(['error' => $e->getMessage()]);
             };
-        }
-        else{
+        } else {
             return response()->json(['error' => 'Subscription canceled Already']);
         }
-
     }
 
     public function getsubscriptiondata()
@@ -275,6 +276,4 @@ class DonationController extends Controller
         $data = DB::table('subscriptions')->where('user_id', auth()->user()->id)->where('stripe_status', 'complete')->orderBy('updated_at', 'DESC')->get();
         return response()->json(['data' => $data]);
     }
-
-
 }

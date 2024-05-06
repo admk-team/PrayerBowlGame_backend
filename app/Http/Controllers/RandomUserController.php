@@ -144,7 +144,10 @@ class RandomUserController extends Controller
             }
 
             try {
-                App::setLocale($logineduser->language);
+                $usermailsend = User::where('email', $user->email)->first();
+                if ($usermailsend->language) {
+                    App::setLocale($usermailsend->language ? $usermailsend->language : 'en');
+                }
                 Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
             } catch (\Exception $e) {
             }
