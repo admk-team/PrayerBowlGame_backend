@@ -158,7 +158,11 @@ class DonationController extends Controller
         $admindata = User::where('role', '1')->first();
         $admin_email = $admindata->email;
         try {
-            $test = Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $doner_data->donation_amount  ?? null));
+            $userPersonalData = User::where('email', $doner_email)->first();
+            if ($userPersonalData) {
+                App::setLocale($userPersonalData->language ? $userPersonalData->language : 'en');
+            }
+            Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $doner_data->donation_amount  ?? null));
         } catch (\Exception $e) {
         }
         try {
