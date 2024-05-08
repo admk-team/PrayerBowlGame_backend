@@ -12,7 +12,7 @@
     @component('mail::layout')
         # {{ __('Dear') }} {{$data->supporter_name}},
 <p style="font-size: 15px;">
-{{ __('Thank you for your generous donation to Prayer Bowl. We are writing to confirm that we have received your donation of') }} ${{$amount}} on {{ now()->format('d-m-Y') }}.
+{{ __('Thank you for your generous donation to Prayer Bowl. We are writing to confirm that we have received your donation of') }} ${{$amount}} on {{ now()->toFormattedDateString() }}.
 </p>
 
 

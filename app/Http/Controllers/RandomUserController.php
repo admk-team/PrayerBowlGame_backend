@@ -123,8 +123,9 @@ class RandomUserController extends Controller
             ]);
             $checkuser = User::where('email', $randomuser->email)->first();
             if ($checkuser) {
+                App::setLocale($checkuser->language);
                 Notification::create([
-                    'content' => 'I hope this message finds you in good spirits. We wanted to reach out and share that  ' . $request->user()->name . ' is keeping you in their prayers at this very moment.',
+                    'content' => __('I hope this message finds you in good spirits. We wanted to reach out and share that') . __('is keeping you in their prayers at this very moment.', ['senderName' => $request->user()->name]),
                     'user_id' => $checkuser->id,
                 ]);
             }
