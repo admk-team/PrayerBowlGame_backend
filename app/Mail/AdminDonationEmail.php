@@ -39,11 +39,12 @@ class AdminDonationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Donation Confirmation: ' . $this->doner_data->name . ' Contribution to Prayer Bowl',
+            // subject: 'Donation Confirmation: ' . $this->doner_data->name . ' Contribution to Prayer Bowl',
+            subject: __('Donation Confirmation Contribution to Prayer Bowl', ['name' => $this->doner_data->supporter_name])
         );
     }
-    
-   
+
+
     /**
      * Get the message content definition.
      */
