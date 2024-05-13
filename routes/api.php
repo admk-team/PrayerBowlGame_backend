@@ -71,7 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //user has view notification
     // Route definition
     Route::post('/view/notification/{id}', [NotificationController::class, 'view_notification']);
-    Route::post('/view/user/{id}', [NotificationController::class, 'view_notification_user']);
+    Route::get('/view/user/{id}', [NotificationController::class, 'view_notification_user']);
     //
     Route::get('/donations/details', [DonationController::class, 'getDonationDetails']);
     //show notification
@@ -86,7 +86,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('cancelsubuser/{id}', [DonationController::class, 'canclesubuser']);
     Route::get('getusersubs', [DonationController::class, 'getsubscriptiondata']);
     Route::get('setuserlanguage/{lang}', [AuthController::class, 'setlanguageuser']);
-
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);

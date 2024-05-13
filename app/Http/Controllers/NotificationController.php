@@ -142,14 +142,10 @@ class NotificationController extends Controller
     {
         $notifications = Notification::findOrFail($id);
 
-        if ($notifications->isNotEmpty()) {
-            // Update the viewed field for each notification in the collection
-            // foreach ($notifications as $notification) {
-            $notifications->viewed = 1;
-            $notifications->save();
-            // }
+        if ($notifications->viewed = 1) {
 
-            // Return a response indicating that the user has viewed notifications
+            $notifications->update(['viewed' => 1]);
+
             return response()->json(['message' => 'You have viewed notifications.']);
         } else {
             return response()->json(['message' => 'No unviewed notifications found.']);
