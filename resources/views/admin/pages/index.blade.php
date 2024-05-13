@@ -45,7 +45,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{ Str::limit($item->content, 130, '...') }}
+                                                        {!! Str::limit($item->content, 130, '...') !!}
                                                     </td>
                                                     <td class="border-bottom-0">
                                                         <a href="{{ route('page.edit', $item->id) }}" class="btn btn-sm">

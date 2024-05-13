@@ -17,8 +17,6 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Testimonial</h4>
-                                <a href="{{ route('page.create') }}" class="btn btn-primary btn-sm float-right">Add
-                                    Pages</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">

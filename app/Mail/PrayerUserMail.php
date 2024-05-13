@@ -42,7 +42,7 @@ class PrayerUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Someone is Praying for your right now',
+            subject: __('Someone is Praying for your right now'),
         );
     }
 

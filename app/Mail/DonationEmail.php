@@ -38,7 +38,7 @@ class DonationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Donation Confirmation: Prayer Bowl App',
+            subject: __('Donation Confirmation: Prayer Bowl App'),
         );
     }
 
