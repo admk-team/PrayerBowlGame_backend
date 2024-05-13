@@ -13,7 +13,7 @@ class TestimonialController extends Controller
     public function index()
     {
         // Retrieve testimonials with associated user details
-        $data = Testimonial::with('user')->get();
+        $data = Testimonial::with('user')->orderBy('updated_at', 'DESC')->get();
         return view('admin.testimonials.index', compact('data'));
     }
 
