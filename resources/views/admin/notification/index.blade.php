@@ -4,13 +4,14 @@
 
 @section('content')
     <div class="container-fluid">
-        @if (session()->has('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
+
         <div class="content-body">
             <div class="container-fluid">
+                @if (session()->has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-lg-10">
                         <div class="card">

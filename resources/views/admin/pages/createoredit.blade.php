@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layouts.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('admin_assets/css/style.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-</head>
+@section('title', 'Admin | Pages')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+@section('content')
 
-<body>
     <div class="container-fluid">
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">
@@ -29,8 +22,7 @@
                             </div>
 
                             <div class="card-body">
-                                <form
-                                    action="{{ isset($data) ? route('page.update', $data->id) : route('page.store') }}"
+                                <form action="{{ isset($data) ? route('page.update', $data->id) : route('page.store') }}"
                                     method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @if (isset($data))
@@ -66,9 +58,11 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <label for="content">Content:</label>
-                                                    <div id="editor" class="col-lg-12" style="overflow: hidden">
+                                                    <div id="editor" class="col-lg-12"
+                                                        style="overflow: hidden;
+                                                    color: black;">
                                                     </div>
-                                                    {{-- <textarea name="content" id="content" class="form-control" rows="8" placeholder="Enter the content here">{{ old('content') ?? ($data->content ?? '') }}</textarea> --}}
+                                                    <textarea style="display:none" id="content" name="content"></textarea>
                                                     @error('content')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -88,14 +82,36 @@
             </div>
         </div>
     </div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
-<!-- Initialize Quill editor -->
-<script>
-    const quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-</script>
+    <!-- Initialize Quill editor -->
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow'
+        });
 
-</html>
+        // Get the hidden textarea
+        const contentInput = document.querySelector('#content');
+
+        // Populate the Quill editor with existing content if available
+        var editdata = null;
+        @if (isset($data))
+            editdata = {!! $data !!};
+        @endif
+
+        if (editdata !== null) {
+            @if (isset($data))
+                quill.clipboard.dangerouslyPasteHTML(`{!! str_replace("'", "\\'", $data->content) !!}`);
+            @endif
+        }
+        
+
+        // Update the hidden textarea whenever there's a change in Quill editor
+        quill.on('text-change', function() {
+            contentInput.value = quill.root.innerHTML;
+        });
+    </script>
+
+@endsection

@@ -1,6 +1,6 @@
 @extends('admin.layouts.layout')
 
-@section('title', 'Admin | Users')
+@section('title', 'Admin | Pages')
 
 @section('content')
     <div class="container-fluid">
@@ -45,7 +45,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {!! Str::limit($item->content, 130, '...') !!}
+                                                        {!! Str::limit(strip_tags($item->content), 130, '...') !!}
                                                     </td>
                                                     <td class="border-bottom-0">
                                                         <a href="{{ route('page.edit', $item->id) }}" class="btn btn-sm">
@@ -88,4 +88,7 @@
                         </div>
                     </div>
                 </div>
-            @endsection
+            </div>
+        </div>
+    </div>
+@endsection
