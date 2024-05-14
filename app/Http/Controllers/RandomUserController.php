@@ -10,12 +10,13 @@ use App\Models\AddUser;
 use App\Models\RandomUser;
 use App\Models\TopWarrior;
 use App\Mail\PrayerUserMail;
+use App\Models\EmailSetting;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
-
+use App\Helpers\TranslateTextHelper;
 class RandomUserController extends Controller
 {
     /**
@@ -148,8 +149,15 @@ class RandomUserController extends Controller
                 $usermailsend = User::where('email', $user->email)->first();
                 if ($usermailsend->language) {
                     App::setLocale($usermailsend->language ? $usermailsend->language : 'en');
+                    $emailSettings = EmailSetting::first();
+                    if (!empty($emailSettings->message)) {
+                        TranslateTextHelper::setSource('en')->setTarget($usermailsend->language );
+                        $footertext = TranslateTextHelper::translate($emailSettings->message);
+                        $bannertext= TranslateTextHelper::translate($randomBanner->content);
+                    }
                 }
-                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null));
+              
+                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $bannertext ?? $randomBanner->content, $bannerUrl ?? null,$footertext ?? null));
             } catch (\Exception $e) {
             }
 

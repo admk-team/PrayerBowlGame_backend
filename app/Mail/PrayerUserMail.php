@@ -20,12 +20,12 @@ class PrayerUserMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($senderName, $recieverName, $banner, $content, $bannerUrl)
+    public function __construct($senderName, $recieverName, $banner, $content, $bannerUrl,$footertext)
     {
         $emailSettings = EmailSetting::first();
 
         if ($emailSettings != '') {
-            $this->message = $emailSettings->message;
+            $this->message = $footertext ?? $emailSettings->message;
             $this->androidLink = $emailSettings->androidLink;
             $this->iosLink = $emailSettings->iosLink;
         }

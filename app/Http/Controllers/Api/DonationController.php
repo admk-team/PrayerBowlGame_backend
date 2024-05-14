@@ -4,6 +4,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\TranslateTextHelper;
 use Exception;
 use Stripe\Price;
 use Carbon\Carbon;
@@ -21,6 +22,7 @@ use App\Mail\AdminDonationEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use App\Models\EmailSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -161,8 +163,14 @@ class DonationController extends Controller
             $userPersonalData = User::where('email', $doner_email)->first();
             if ($userPersonalData) {
                 App::setLocale($userPersonalData->language ? $userPersonalData->language : 'en');
+                $emailSettings = EmailSetting::first();
+                if (!empty($emailSettings->message)) {
+                    TranslateTextHelper::setSource('en')->setTarget($userPersonalData->language);
+                    $footertext = TranslateTextHelper::translate($emailSettings->message);
+                }
             }
-            Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $doner_data->donation_amount  ?? null));
+            Mail::to($doner_email)->send(new DonationEmail($doner_data ?? null, $doner_data->donation_amount  ?? null
+            ,$footertext ?? null));
         } catch (\Exception $e) {
         }
         try {
@@ -242,8 +250,13 @@ class DonationController extends Controller
         try {
             if ($userPersonalData) {
                 App::setLocale($userPersonalData->language ? $userPersonalData->language : 'en');
+                $emailSettings = EmailSetting::first();
+                if (!empty($emailSettings->message)) {
+                    TranslateTextHelper::setSource('en')->setTarget($userPersonalData->language);
+                    $footertext = TranslateTextHelper::translate($emailSettings->message);
+                }
             }
-            Mail::to($donarData->email)->send(new DonationEmail($donarData ?? null, $donarData->donation_amount ?? null));
+            Mail::to($donarData->email)->send(new DonationEmail($donarData ?? null, $donarData->donation_amount ?? null, $footertext ?? null));
         } catch (\Exception $e) {
         }
         try {
