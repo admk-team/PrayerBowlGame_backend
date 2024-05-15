@@ -153,11 +153,10 @@ class RandomUserController extends Controller
                     if (!empty($emailSettings->message)) {
                         TranslateTextHelper::setSource('en')->setTarget($usermailsend->language );
                         $footertext = TranslateTextHelper::translate($emailSettings->message);
-                        $bannertext= TranslateTextHelper::translate($randomBanner->content);
                     }
                 }
               
-                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $bannertext ?? $randomBanner->content, $bannerUrl ?? null,$footertext ?? null));
+                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content?? null, $bannerUrl ?? null,$footertext ?? null));
             } catch (\Exception $e) {
             }
 
