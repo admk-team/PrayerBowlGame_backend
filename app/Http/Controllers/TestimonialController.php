@@ -84,7 +84,7 @@ class TestimonialController extends Controller
 
     public function allTestimonials()
     {
-        $data = Testimonial::where('status','approved')->with('user')->get();
+        $data = Testimonial::where('status', 'approved')->with('user')->orderBy('updated_at', 'DESC')->get();
         return response()->json([
             'status' => true,
             'data' => $data,
