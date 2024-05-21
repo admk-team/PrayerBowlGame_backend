@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AddUser;
+use App\Models\Notification;
+use App\Models\Testimonial;
+use App\Models\TopWarrior;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -133,6 +137,10 @@ class AuthController extends Controller
     public function destroy()
     {
         $user = auth()->user();
+        AddUser::where('user_id', $user->id)->delete();
+        Notification::where('user_id', $user->id)->delete();
+        Testimonial::where('user_id', $user->id)->delete();
+        TopWarrior::where('user_id', $user->id)->delete();
         $user->delete();
         return [
             'message' => 'Account Deleted',
@@ -142,13 +150,11 @@ class AuthController extends Controller
 
     public function setlanguageuser($lang)
     {
-        if(auth()->user())
-        {
+        if (auth()->user()) {
             $user = User::findOrFail(auth()->user()->id);
             $user->update(['language' => $lang]);
             return response()->json(['success' => 'Language Updated']);
-        }
-        else{
+        } else {
             return response()->json(['error' => 'User Not Logged in']);
         }
     }
