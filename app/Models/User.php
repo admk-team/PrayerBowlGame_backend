@@ -68,10 +68,10 @@ class User extends Authenticatable implements HasLocalePreference
         });
 
         // Define a deleting event listener for deleting related testimonials
-        static::deleting(function ($user) {
-            // Delete related testimonials when the user is deleted
-            $user->testimonials()->delete();
-        });
+        // static::deleting(function ($user) {
+        //     // Delete related testimonials when the user is deleted
+        //     $user->testimonials()->delete();
+        // });
     }
 
     // Define the relationship with testimonials
