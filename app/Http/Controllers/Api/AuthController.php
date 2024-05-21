@@ -137,15 +137,18 @@ class AuthController extends Controller
     public function destroy()
     {
         $user = auth()->user();
-        $addUser = AddUser::where('user_id', $user->id);
-        if ($addUser) {
-            $addUser->delete();
-        }
-        $notification = Notification::where('user_id', $user->id)->delete();
-        if ($notification) {
-            $notification->delete();
-        }
-
+        // $addUser = AddUser::where('user_id', $user->id)->get();
+        // if ($addUser) {
+        //     foreach ($addUser as $useradded) {
+        //         $useradded->delete();
+        //     }
+        // }
+        // $notification = Notification::where('user_id', $user->id)->get();
+        // if ($notification) {
+        //     foreach ($notification as $notiuser) {
+        //         $notiuser->delete();
+        //     }
+        // }
         $user->delete();
         return [
             'message' => 'Account Deleted',
