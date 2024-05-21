@@ -145,14 +145,7 @@ class AuthController extends Controller
         if ($notification) {
             $notification->delete();
         }
-        // $testimonial = Testimonial::where('user_id', $user->id)->delete();
-        // if ($testimonial) {
-        //     $testimonial->delete();
-        // }
-        // $topwarrior = TopWarrior::where('user_id', $user->id)->delete();
-        // if ($topwarrior) {
-        //     $topwarrior->delete();
-        // }
+
         $user->delete();
         return [
             'message' => 'Account Deleted',
