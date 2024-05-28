@@ -19,5 +19,6 @@ class Banner extends Model
         'clicks',
         'max_views',
         'max_clicks',
+        'link',
     ];
 }

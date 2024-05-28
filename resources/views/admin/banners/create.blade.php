@@ -55,6 +55,10 @@
                                     <input type="number" class="form-control" id="max_clicks" name="max_clicks" min="1">
                                 </div>
                                 <div class="form-group">
+                                    <label for="link">Link</label>
+                                    <input type="text" class="form-control" id="link" name="link" required>
+                                </div>
+                                <div class="form-group">
                                     <label for="banner">Banner</label>
                                     <input type="file" class="form-control" id="banner" name="banner">
                                 </div>

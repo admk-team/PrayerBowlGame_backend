@@ -22,7 +22,7 @@ class BannerController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'company_name' => 'required|string',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'content' => 'required|string',
@@ -30,26 +30,20 @@ class BannerController extends Controller
             'end_date' => 'required|date|after:start_date',
             'max_views' => 'nullable|integer|min:1',
             'max_clicks' => 'nullable|integer|min:1',
+            'link' => 'nullable|string',
         ]);
-
+    
         if ($request->hasFile('banner')) {
             $image = $request->file('banner');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = public_path('admin_assets/banner_ad/' . $imageName);
-
             $image->move(public_path('admin_assets/banner_ad'), $imageName);
+            $validated['banner'] = $imageName;
+        } else {
+            $validated['banner'] = null;
         }
-
-        Banner::create([
-            'company_name' => $request->input('company_name'),
-            'content' => $request->input('content'),
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
-            'max_views' => $request->input('max_views'),
-            'max_clicks' => $request->input('max_clicks'),
-            'banner' => isset($imageName) ? $imageName : null,
-        ]);
-
+    
+        Banner::create($validated);
+    
         return redirect()->route('banners.index')->with('success', 'Banner created successfully!');
     }
 
@@ -58,43 +52,9 @@ class BannerController extends Controller
         return view('admin.banners.edit', compact('banner'));
     }
 
-    // public function update(Request $request, Banner $banner)
-    // {
-    //     $request->validate([
-    //         'company_name' => 'required|string',
-    //         'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //         'content' => 'required|string',
-    //         'start_date' => 'required|date',
-    //         'end_date' => 'required|date|after:start_date',
-    //         'max_views' => 'nullable|integer|min:1',
-    //         'max_clicks' => 'nullable|integer|min:1',
-    //     ]);
-
-    //     if ($request->hasFile('banner')) {
-    //         $image = $request->file('banner');
-    //         $imageName = time() . '_' . $image->getClientOriginalName();
-    //         $imagePath = public_path('admin_assets/banner_ad/' . $imageName);
-
-    //         // Move the new uploaded file to the specified location in the public directory
-    //         $image->move(public_path('admin_assets/banner_ad'), $imageName);
-
-    //         // Delete the old image if it exists
-    //         if ($banner->banner) {
-    //             $oldImagePath = public_path('admin_assets/banner_ad/' . $banner->banner);
-    //             if (file_exists($oldImagePath)) {
-    //                 unlink($oldImagePath);
-    //             }
-    //         }
-    //     }
-
-    //     // Use input directly to update the model
-    //     $banner->update($request->input());
-
-    //     return redirect()->route('banners.index')->with('success', 'Banner updated successfully!');
-    // }
     public function update(Request $request, Banner $banner)
     {
-        $request->validate([
+        $validated = $request->validate([
             'company_name' => 'required|string',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'content' => 'required|string',
@@ -102,15 +62,15 @@ class BannerController extends Controller
             'end_date' => 'required|date|after:start_date',
             'max_views' => 'nullable|integer|min:1',
             'max_clicks' => 'nullable|integer|min:1',
+            'link' => 'nullable|string',
         ]);
-
+    
         if ($request->hasFile('banner')) {
             $image = $request->file('banner');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = public_path('admin_assets/banner_ad/' . $imageName);
-
             $image->move(public_path('admin_assets/banner_ad'), $imageName);
-
+            $validated['banner'] = $imageName;
+    
             if ($banner->banner) {
                 $oldImagePath = public_path('admin_assets/banner_ad/' . $banner->banner);
                 if (file_exists($oldImagePath)) {
@@ -118,19 +78,11 @@ class BannerController extends Controller
                 }
             }
         } else {
-            $imageName = $banner->banner;
+            $validated['banner'] = $banner->banner;
         }
-
-        $banner->update([
-            'company_name' => $request->input('company_name'),
-            'content' => $request->input('content'),
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
-            'max_views' => $request->input('max_views'),
-            'max_clicks' => $request->input('max_clicks'),
-            'banner' => $imageName,
-        ]);
-
+    
+        $banner->update($validated);
+    
         return redirect()->route('banners.index')->with('success', 'Banner updated successfully!');
     }
 

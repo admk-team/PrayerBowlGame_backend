@@ -29,6 +29,7 @@
                                                 <th>Banner</th>
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
+                                                <th>link</th>
                                                 {{--  <th>Status</th>  --}}
                                                 <th>Actions</th>
                                             </tr>
@@ -59,6 +60,13 @@
                                                             {{ \Carbon\Carbon::parse($banner->end_date)->format('Y-m-d H:i:s') }}
                                                         @else
                                                             No End Date
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($banner->link)
+                                                        {{ $banner->link }}
+                                                        @else
+                                                            No Link
                                                         @endif
                                                     </td>
                                                     {{--  <td>

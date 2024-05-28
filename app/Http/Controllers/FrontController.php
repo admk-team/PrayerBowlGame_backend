@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class FrontController extends Controller
 {
@@ -46,9 +47,14 @@ class FrontController extends Controller
     public function showBanner($Id)
     {
         $data = Banner::findOrFail($Id);
+
         $data->increment('views');
         $data->increment('clicks');
         $data->save();
-        return view('pages.showbanner', compact('data'));
+        if ($data->link) {
+            return redirect()->away($data->link);
+        } else {
+            return view('pages.showbanner', compact('data'));
+        }
     }
 }
