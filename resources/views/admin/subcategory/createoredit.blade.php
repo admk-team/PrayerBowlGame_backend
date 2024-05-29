@@ -1,28 +1,29 @@
 @extends('admin.layouts.layout')
 
-@section('title', 'Admin | Pages')
+@section('title', 'Admin | SubCategory')
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
 @section('content')
 
     <div class="container-fluid">
-        @if (session()->has('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
         <div class="content-body">
+            @if (session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">{{ isset($data) ? 'Update ' : 'Add New ' }}Page</h4>
-                                <a href="{{ route('page.index') }}" class="btn btn-primary btn-sm float-right">Back to
-                                    List</a>
+                                <h4 class="card-title">{{ isset($data) ? 'Update ' : 'Add New ' }}SubCategory</h4>
+                                <a href="  {{ route('category.show',  isset($data) ? $data->cat_id : $categoryId ) }}" class="btn btn-primary btn-sm float-right">Back to List</a>
+                              
                             </div>
 
                             <div class="card-body">
-                                <form action="{{ isset($data) ? route('page.update', $data->id) : route('page.store') }}"
+                                <form
+                                    action="{{ isset($data) ? route('subcategory.update', $data->id) : route('subcategory.store') }}"
                                     method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @if (isset($data))
@@ -30,28 +31,13 @@
                                     @endif
 
                                     <div class="form-group">
-                                        <div class="col-lg-12">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <label for="type">Page type:</label>
-                                                    <select name="type" id="type" class="form-control">
-                                                        <option value="about_us"
-                                                            {{ (old('type') ?? ($data->type ?? '')) == 'about_us' ? 'selected' : '' }}>
-                                                            About Us</option>
-                                                        <option value="privacy_policy"
-                                                            {{ (old('type') ?? ($data->type ?? '')) == 'privacy_policy' ? 'selected' : '' }}>
-                                                            Privacy Policy</option>
-                                                        <option value="terms_conditions"
-                                                            {{ (old('type') ?? ($data->type ?? '')) == 'terms_conditions' ? 'selected' : '' }}>
-                                                            Terms and Conditions</option>
-                                                    </select>
-                                                    @error('type')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                        <label for="title">Title</label>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                            value="{{ isset($data) ? $data->title : '' }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" class="form-control" id="image" name="image">
                                     </div>
                                     <div class="form-group mb-4">
                                         <div class="col-lg-12">
@@ -62,7 +48,7 @@
                                                         style="overflow: hidden;
                                                     color: black;">
                                                     </div>
-                                                    <textarea style="display:none" id="content" name="content" value="{{ isset($data) ? $data->content : '' }}" ></textarea>
+                                                    <textarea style="display:none" id="content" name="content" value="{{ isset($data) ? $data->content : '' }}"></textarea>
                                                     @error('content')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -70,6 +56,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="cat_id"
+                                        value="{{ isset($data) ? $data->cat_id : $categoryId }}">
                                     <div class="col-lg-12 mt-4">
                                         <button type="submit"
                                             class="btn btn-primary">{{ isset($data) ? 'Update ' : 'Add New ' }}</button>

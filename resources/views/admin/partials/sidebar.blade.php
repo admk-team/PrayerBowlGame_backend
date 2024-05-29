@@ -73,6 +73,18 @@
                     <span class="nav-text">Testimonial</span>
                 </a>
               </li>
+              <li>
+                <a href="/category" aria-expanded="false">
+                    <i class="icon icon-page  fa fa-file"></i>
+                    <span class="nav-text">Prayer Section</span>
+                </a>
+              </li>
+              <li>
+                <a href="/prayrequest" aria-expanded="false">
+                    <i class="icon icon-page  fa fa-file"></i>
+                    <span class="nav-text">Prayer Request</span>
+                </a>
+              </li>
           </ul>
       </div>
   </div>

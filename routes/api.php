@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\SupportersApiController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\PrayerRequestController;
+use App\Http\Controllers\Api\PrayerSectionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TestimonialController;
@@ -86,6 +88,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('cancelsubuser/{id}', [DonationController::class, 'canclesubuser']);
     Route::get('getusersubs', [DonationController::class, 'getsubscriptiondata']);
     Route::get('setuserlanguage/{lang}', [AuthController::class, 'setlanguageuser']);
+
+    //Prayer Section
+    Route::get('all/categories', [PrayerSectionController::class, 'index']);
+    //Show Prayer Section with subcategories
+    Route::get('/show/category/{id}', [PrayerSectionController::class, 'show']);
+    //Prayer request with user and category
+    Route::post('prayer/request', [PrayerRequestController::class, 'store']);
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);

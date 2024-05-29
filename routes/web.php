@@ -9,13 +9,16 @@ use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\SupportersController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\EmailSettingsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\MinistryPartnerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PrayerRequestController;
 use App\Http\Controllers\StripeSubscriptionController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
 use App\Models\ContactMessage;
 
@@ -102,6 +105,13 @@ Route::middleware('admin')->group(function () {
     //Testimonial
     Route::resource('testimonials', TestimonialController::class);
     Route::get('test/{id}', [TestimonialController::class, 'updateStatus'])->name('testimonials.updateStatus');
+
+    //Prayer Section category
+    Route::resource('category', CategoryController::class);
+    //Prayer Section subcategory
+    Route::resource('subcategory', SubCategoryController::class);
+     //Prayer Request 
+     Route::resource('prayrequest', PrayerRequestController::class);
 
 });
 

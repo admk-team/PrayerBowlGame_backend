@@ -85,4 +85,8 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return $this->language;
     }
+    public function prayerRequests()
+    {
+        return $this->hasMany(PrayerRequest::class);
+    }
 }
