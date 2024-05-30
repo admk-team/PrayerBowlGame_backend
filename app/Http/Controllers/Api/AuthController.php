@@ -136,7 +136,7 @@ class AuthController extends Controller
 
     public function destroy()
     {
-        $user = auth()->user();
+        $user = User::findOrFail(auth()->user()->id);
         // $addUser = AddUser::where('user_id', $user->id)->get();
         // if ($addUser) {
         //     foreach ($addUser as $useradded) {
@@ -149,6 +149,7 @@ class AuthController extends Controller
         //         $notiuser->delete();
         //     }
         // }
+        $user->prayerRequests()->delete();
         $user->delete();
         return [
             'message' => 'Account Deleted',

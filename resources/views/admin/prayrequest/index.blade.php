@@ -17,8 +17,6 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Prayer Request</h4>
-                                {{--  <a href="{{ route('page.create') }}" class="btn btn-primary btn-sm float-right">Add
-                                    Pages</a>  --}}
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -39,20 +37,9 @@
                                                     <td>{{ $item->id }}</td>
                                                     <td>{{ $item->user->name }}</td>
                                                     <td>{{ $item->category->title }}</td>
-                                                    <td>
-                                                        @if ($item->request_type == 1)
-                                                            Private
-                                                        @else
-                                                            Public
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {!! Str::limit(strip_tags($item->message), 100, '...') !!}
-                                                    </td>
+                                                    <td>{{ $item->request_type ? 'Private' : 'Public' }}</td>
+                                                    <td>{!! Str::limit(strip_tags($item->message), 100, '...') !!}</td>
                                                     <td class="border-bottom-0">
-                                                        {{--  <a href="{{ route('page.edit', $item->id) }}" class="btn btn-sm">
-                                                            <i class="edit ri-pencil-line text-info m-2"></i>
-                                                        </a>  --}}
                                                         <button class="btn btn-sm btn-info view-supporter"
                                                             data-toggle="modal" data-target="#supporterModal"
                                                             data-supporter-id="{{ $item->id }}">
@@ -77,20 +64,54 @@
                                                                     <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                                                 </svg>
                                                             </button>
-
                                                         </form>
-
                                                     </td>
-
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="3">No Content found.</td>
+                                                    <td colspan="6">No Content found.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
                                     </table>
-
+                                    <!-- Modal Eye Button -->
+                                    <div class="modal fade" id="supporterModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="supporterModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="supporterModalLabel">Prayer Request Details
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-hover table-responsive-sm sortable"
+                                                        id="supporterTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>User Name</th>
+                                                                <th>Prayer Section</th>
+                                                                <th>Request Type</th>
+                                                                <th>Message</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="modalSupportersBody">
+                                                            <!-- Data will be dynamically loaded here -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal Eye Button -->
                                 </div>
                             </div>
                         </div>
@@ -99,4 +120,44 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.view-supporter').on('click', function() {
+                $('#modalSupportersBody').html('');
+
+                var supporterId = $(this).data('supporter-id');
+                $.ajax({
+                    url: 'prayrequest/' + supporterId,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response && response.data) {
+                            var supporter = response.data;
+                            var supporterHtml = `
+                            <tr>
+                                <td>${supporter.id}</td>
+                                <td>${supporter.user.name}</td>
+                                <td>${supporter.category.title}</td>
+                                <td>${supporter.request_type ? 'Private' : 'Public'}</td>
+                                <td>${supporter.message}</td>
+                            </tr>
+                        `;
+                            $('#modalSupportersBody').html(supporterHtml);
+                        } else {
+                            console.error('Invalid response format');
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

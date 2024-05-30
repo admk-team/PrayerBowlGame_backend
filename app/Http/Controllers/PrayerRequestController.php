@@ -12,6 +12,11 @@ class PrayerRequestController extends Controller
         $data = PrayerRequest::with('category', 'user')->get();
         return view('admin.prayrequest.index', compact('data'));
     }
+    public function show($id)
+    {
+        $prayrequest = PrayerRequest::with(['user', 'category'])->findOrFail($id);
+        return response()->json(['data' => $prayrequest]);
+    }
     public function destroy($id)
     {
         $data = PrayerRequest::findOrFail($id);
