@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('request_type')->default(false);
             $table->text('message')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->timestamps();

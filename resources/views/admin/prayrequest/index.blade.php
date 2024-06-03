@@ -28,6 +28,7 @@
                                                 <th>Prayer Section</th>
                                                 <th>Request Type</th>
                                                 <th>Message</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -39,6 +40,18 @@
                                                     <td>{{ $item->category->title }}</td>
                                                     <td>{{ $item->request_type ? 'Private' : 'Public' }}</td>
                                                     <td>{!! Str::limit(strip_tags($item->message), 100, '...') !!}</td>
+                                                    <td>
+                                                        @if ($item->status == 'pending')
+                                                            <button class="status btn btn-warning btn-sm rounded"
+                                                                data-id="{{ $item->id }}">Pending</button>
+                                                        @elseif ($item->status == 'approved')
+                                                            <button class="status btn btn-success btn-sm rounded"
+                                                                data-id="{{ $item->id }}">Approved</button>
+                                                        @elseif ($item->status == 'rejected')
+                                                            <button class="status btn btn-danger btn-sm rounded"
+                                                                data-id="{{ $item->id }}">Rejected</button>
+                                                        @endif
+                                                    </td>
                                                     <td class="border-bottom-0">
                                                         <button class="btn btn-sm btn-info view-supporter"
                                                             data-toggle="modal" data-target="#supporterModal"
@@ -74,44 +87,6 @@
                                             @endforelse
                                         </tbody>
                                     </table>
-                                    <!-- Modal Eye Button -->
-                                    <div class="modal fade" id="supporterModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="supporterModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-xl" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="supporterModalLabel">Prayer Request Details
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table table-hover table-responsive-sm sortable"
-                                                        id="supporterTable">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>User Name</th>
-                                                                <th>Prayer Section</th>
-                                                                <th>Request Type</th>
-                                                                <th>Message</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="modalSupportersBody">
-                                                            <!-- Data will be dynamically loaded here -->
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Modal Eye Button -->
                                 </div>
                             </div>
                         </div>
@@ -120,6 +95,62 @@
             </div>
         </div>
     </div>
+    <!-- Modal Eye Button -->
+    <div class="modal fade" id="supporterModal" tabindex="-1" role="dialog" aria-labelledby="supporterModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="supporterModalLabel">Prayer Request Details
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-responsive-sm sortable" id="supporterTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>User Name</th>
+                                <th>Prayer Section</th>
+                                <th>Request Type</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalSupportersBody">
+                            <!-- Data will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Eye Button -->
+    <!-- Modal status -->
+    <div id="statusModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title-delete">Confirmation</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 align="center" style="margin:0;">Are you sure you want to change status?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="approve_status" class="btn btn-success">Approve</button>
+                    <button type="button" id="reject_status" class="btn btn-danger">Reject</button>
+                    <button type="button" id="closemybt" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modalstatus  -->
 @endsection
 
 @section('scripts')
@@ -139,15 +170,29 @@
                     success: function(response) {
                         if (response && response.data) {
                             var supporter = response.data;
+                            var statusHtml = '';
+
+                            if (supporter.status === 'pending') {
+                                statusHtml =
+                                    '<button class="status btn btn-warning btn-sm rounded">Pending</button>';
+                            } else if (supporter.status === 'approved') {
+                                statusHtml =
+                                    '<button class="status btn btn-success btn-sm rounded">Approved</button>';
+                            } else if (supporter.status === 'rejected') {
+                                statusHtml =
+                                    '<button class="status btn btn-danger btn-sm rounded">Rejected</button>';
+                            }
+
                             var supporterHtml = `
-                            <tr>
-                                <td>${supporter.id}</td>
-                                <td>${supporter.user.name}</td>
-                                <td>${supporter.category.title}</td>
-                                <td>${supporter.request_type ? 'Private' : 'Public'}</td>
-                                <td>${supporter.message}</td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td>${supporter.id}</td>
+                                    <td>${supporter.user.name}</td>
+                                    <td>${supporter.category.title}</td>
+                                    <td>${supporter.request_type ? 'Private' : 'Public'}</td>
+                                    <td>${supporter.message}</td>
+                                    <td>${statusHtml}</td>
+                                </tr>
+                            `;
                             $('#modalSupportersBody').html(supporterHtml);
                         } else {
                             console.error('Invalid response format');
@@ -158,6 +203,50 @@
                     }
                 });
             });
+
+            var itemId; // Variable to store the item ID
+
+            // Click event for status buttons
+            $(document).on('click', '.status', function() {
+                itemId = $(this).data('id'); // Get the ID of the item
+                $('#statusModal').modal('show');
+                console.log(itemId); // Debugging: Check if itemId is properly set
+            });
+
+            // Click event for Approve button in status modal
+            $('#approve_status').click(function() {
+                updateStatus(itemId, 'approved');
+            });
+
+            // Click event for Reject button in status modal
+            $('#reject_status').click(function() {
+                updateStatus(itemId, 'rejected');
+            });
+
+            // Click event for Cancel button in status modal
+            $('#closemybt').click(function() {
+                $('#statusModal').modal('hide');
+            });
+
+            function updateStatus(id, status) {
+                $.ajax({
+                    url: "prayrstatus/" + id,
+                    type: "GET",
+                    data: {
+                        status: status
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error(xhr.responseText);
+                    }
+                });
+                $('#statusModal').modal('hide');
+            }
+
+
         });
     </script>
 @endsection

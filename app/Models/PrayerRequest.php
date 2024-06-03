@@ -13,6 +13,7 @@ class PrayerRequest extends Model
         'message',
         'user_id',
         'cat_id',
+        'status',
     ];
 
     public function user()

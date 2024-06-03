@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-
+use App\Helpers\TranslateTextHelper;
 class NotificationController extends Controller
 {
     /**
@@ -16,7 +17,7 @@ class NotificationController extends Controller
     {
         $data = Notification::whereNotNull('start_date')
             ->whereNotNull('end_date')
-            ->get();
+            ->latest()->get();
         return view('admin.notification.index', compact('data'));
     }
 
@@ -33,17 +34,38 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
+        $result['success']=null;
+        $result['error']=null;
         // Validation rules can be adjusted based on your requirements
         $validatedData = $request->validate([
             'content' => 'required|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
         ]);
-
-        Notification::create($validatedData);
-
-        return redirect()->route('notification.index')->with('success', 'Notification created successfully');
+    
+        $notification = Notification::create($validatedData);
+        $users = User::where('role', '0')->whereNotNull('sub_id')->get();
+        foreach ($users as $checkuser) {
+            if ($checkuser->sub_id && $checkuser->language) {
+                TranslateTextHelper::setSource('en')->setTarget($checkuser->language );
+                $message = TranslateTextHelper::translate($notification->content);
+                $userIds = [$checkuser->sub_id];
+            } else {
+                $userIds = [];
+                $message=null;
+            }
+         
+            if (!empty($message) && !empty($userIds)) {
+                $result = $this->onesignal($message, $userIds);
+            }
+        }
+        if ($result['success']) {
+            return redirect()->route('notification.index')->with('success', 'Notification created and sent successfully');
+        } else {
+            return redirect()->route('notification.index')->with('success', 'Notification created but failed to send');
+        }
     }
+    
 
     /**
      * Display the specified resource.

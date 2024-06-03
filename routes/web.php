@@ -104,7 +104,7 @@ Route::middleware('admin')->group(function () {
 
     //Testimonial
     Route::resource('testimonials', TestimonialController::class);
-    Route::get('test/{id}', [TestimonialController::class, 'updateStatus'])->name('testimonials.updateStatus');
+    Route::get('testimonial/{id}', [TestimonialController::class, 'updateStatus'])->name('testimonials.updateStatus');
 
     //Prayer Section category
     Route::resource('category', CategoryController::class);
@@ -112,6 +112,7 @@ Route::middleware('admin')->group(function () {
     Route::resource('subcategory', SubCategoryController::class);
      //Prayer Request 
      Route::resource('prayrequest', PrayerRequestController::class);
+     Route::get('prayrstatus/{id}', [PrayerRequestController::class, 'updateStatus'])->name('prayrstatus.updateStatus');
 
 });
 

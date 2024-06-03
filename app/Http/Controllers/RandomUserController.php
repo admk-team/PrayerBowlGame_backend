@@ -124,13 +124,21 @@ class RandomUserController extends Controller
             ]);
             $checkuser = User::where('email', $randomuser->email)->first();
             if ($checkuser) {
+                if ($checkuser->sub_id) {
+                    $userIds = [$checkuser->sub_id];
+                } else {
+                    $userIds = [];
+                }
                 App::setLocale($checkuser->language);
-                Notification::create([
+                $notification = Notification::create([
                     'content' => __('I hope this message finds you in good spirits. We wanted to reach out and share that') . __('is keeping you in their prayers at this very moment.', ['senderName' => $request->user()->name]),
                     'user_id' => $checkuser->id,
                 ]);
+                $message=$notification->content;
+                if (!empty($message) && !empty($userIds)) {
+                    $result = $this->onesignal($message, $userIds);
+                }
             }
-
             $logineduser = auth()->user();
             if ($logineduser) {
                 $topwarrior = TopWarrior::where('user_id', $logineduser->id)->first();

@@ -21,10 +21,11 @@ class AuthController extends Controller
             'email' => 'required|unique:users,email',
             'country' => 'nullable',
             'language' => 'nullable',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'sub_id' => 'nullable'
         ]);
 
-        $data = User::create($request->only(['name', 'email', 'password', 'country', 'language']));
+        $data = User::create($request->only(['name', 'email', 'password', 'country', 'language' , 'sub_id']));
 
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
@@ -35,6 +36,7 @@ class AuthController extends Controller
                 'email' => $data->email,
                 'country' => $data->country,
                 'language' => $data->language,
+                'sub_id' => $data->sub_id,
             ];
             return response()->json(['success' => true, 'token' => $token, 'data' => $data]);
         } else {
@@ -46,7 +48,7 @@ class AuthController extends Controller
     {
         $rules = [
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -67,6 +69,11 @@ class AuthController extends Controller
                 ]
             ], 422);
         }
+        if($request->sub_id){
+            $user['sub_id']=$request->sub_id;
+            $user->save();
+        }
+        
         $token = $user->createToken('login')->plainTextToken;
         $token = explode('|', $token)[1] ?? '';
         $data = [
@@ -74,6 +81,7 @@ class AuthController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'language' => $user->language,
+            'sub_id' => $user->sub_id,
         ];
         return [
             'status' => true,
