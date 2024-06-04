@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\PrayerRequestController;
 use App\Http\Controllers\Api\PrayerSectionController;
+use App\Http\Controllers\Api\StreakController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TestimonialController;
@@ -100,6 +101,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('my/prayer/request', [PrayerRequestController::class, 'myprayer']);
     //Public And Approved Prayer request 
     Route::get('approved/prayer/request', [PrayerRequestController::class, 'approvedprayer']);
+    //User Streak count or reset
+    Route::get('streak/counter', [StreakController::class, 'updateStreak'])->name('streak.update');
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);
