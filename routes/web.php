@@ -111,9 +111,9 @@ Route::middleware('admin')->group(function () {
     Route::resource('category', CategoryController::class);
     //Prayer Section subcategory
     Route::resource('subcategory', SubCategoryController::class);
-    //Prayer Request 
     //Prayer Section category
     Route::resource('reqcategory', RequestCategoryController::class);
+    //Prayer Request 
     Route::resource('prayrequest', PrayerRequestController::class);
     Route::get('prayrstatus/{id}', [PrayerRequestController::class, 'updateStatus'])->name('prayrstatus.updateStatus');
 });

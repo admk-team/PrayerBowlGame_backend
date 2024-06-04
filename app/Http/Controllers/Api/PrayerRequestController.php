@@ -29,4 +29,15 @@ class PrayerRequestController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed']);
         }
     }
+
+    public function myprayer()
+    {
+        $data = PrayerRequest::where("user_id" ,auth()->user()->id)->get();
+        return response()->json(['myprayer' => $data]);
+    }
+    public function approvedprayer()
+    {
+        $data = PrayerRequest::where("request_type" ,"public")->where("status","approved")->get();
+        return response()->json(['approvedprayer' => $data]);
+    }
 }

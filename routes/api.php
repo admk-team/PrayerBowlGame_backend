@@ -96,6 +96,10 @@ Route::middleware('auth:sanctum')->group(function () {
     //Prayer request with user and category
     Route::get('prayer/request/categories', [PrayerRequestController::class, 'index']);
     Route::post('prayer/request', [PrayerRequestController::class, 'store']);
+    //Prayer request user itself
+    Route::get('my/prayer/request', [PrayerRequestController::class, 'myprayer']);
+    //Public And Approved Prayer request 
+    Route::get('approved/prayer/request', [PrayerRequestController::class, 'approvedprayer']);
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);
