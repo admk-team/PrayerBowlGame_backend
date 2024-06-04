@@ -80,6 +80,12 @@
                 </a>
               </li>
               <li>
+                <a href="/reqcategory" aria-expanded="false">
+                    <i class="icon icon-page  fa fa-file"></i>
+                    <span class="nav-text">Prayer Request Category</span>
+                </a>
+              </li>
+              <li>
                 <a href="/prayrequest" aria-expanded="false">
                     <i class="icon icon-page  fa fa-file"></i>
                     <span class="nav-text">Prayer Request</span>

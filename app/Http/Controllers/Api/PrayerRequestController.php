@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\PrayerRequest;
+use App\Models\RequestCategory;
 use Illuminate\Http\Request;
 
 class PrayerRequestController extends Controller
 {
+    public function index()
+    {
+        $data = RequestCategory::all();
+        return response()->json(['req_category' => $data]);
+    }
     public function store(Request $request)
     {
         $validated = $request->validate([

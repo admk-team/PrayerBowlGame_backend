@@ -17,6 +17,7 @@ use App\Http\Controllers\MinistryPartnerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PrayerRequestController;
+use App\Http\Controllers\RequestCategoryController;
 use App\Http\Controllers\StripeSubscriptionController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
@@ -110,10 +111,11 @@ Route::middleware('admin')->group(function () {
     Route::resource('category', CategoryController::class);
     //Prayer Section subcategory
     Route::resource('subcategory', SubCategoryController::class);
-     //Prayer Request 
-     Route::resource('prayrequest', PrayerRequestController::class);
-     Route::get('prayrstatus/{id}', [PrayerRequestController::class, 'updateStatus'])->name('prayrstatus.updateStatus');
-
+    //Prayer Request 
+    //Prayer Section category
+    Route::resource('reqcategory', RequestCategoryController::class);
+    Route::resource('prayrequest', PrayerRequestController::class);
+    Route::get('prayrstatus/{id}', [PrayerRequestController::class, 'updateStatus'])->name('prayrstatus.updateStatus');
 });
 
 Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');

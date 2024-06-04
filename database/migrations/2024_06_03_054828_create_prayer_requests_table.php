@@ -20,8 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('cat_id')->references('id')->on('categories');
-          
+            $table->foreign('cat_id')->references('id')->on('request_categories');
         });
     }
 

@@ -37,7 +37,7 @@
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
                                                     <td>{{ $item->user->name }}</td>
-                                                    <td>{{ $item->category->title }}</td>
+                                                    <td>{{ $item->requestcategory->title }}</td>
                                                     <td>{{ $item->request_type ? 'Private' : 'Public' }}</td>
                                                     <td>{!! Str::limit(strip_tags($item->message), 100, '...') !!}</td>
                                                     <td>
@@ -187,7 +187,7 @@
                                 <tr>
                                     <td>${supporter.id}</td>
                                     <td>${supporter.user.name}</td>
-                                    <td>${supporter.category.title}</td>
+                                    <td>${supporter.requestcategory.title}</td>
                                     <td>${supporter.request_type ? 'Private' : 'Public'}</td>
                                     <td>${supporter.message}</td>
                                     <td>${statusHtml}</td>

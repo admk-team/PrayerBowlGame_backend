@@ -94,6 +94,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Show Prayer Section with subcategories
     Route::get('/show/category/{id}', [PrayerSectionController::class, 'show']);
     //Prayer request with user and category
+    Route::get('prayer/request/categories', [PrayerRequestController::class, 'index']);
     Route::post('prayer/request', [PrayerRequestController::class, 'store']);
 });
 //page

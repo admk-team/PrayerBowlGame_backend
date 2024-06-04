@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class RequestCategory extends Model
 {
     use HasFactory;
     protected $fillable = [
         'title',
         'image'
     ];
-    public function subCategories()
+    public function prayerRequests()
     {
-        return $this->hasMany(SubCategory::class, 'cat_id');
+        return $this->hasMany(PrayerRequest::class, 'cat_id');
     }
 }

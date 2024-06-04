@@ -20,8 +20,8 @@ class PrayerRequest extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function category()
+    public function requestcategory()
     {
-        return $this->belongsTo(Category::class, 'cat_id');
+        return $this->belongsTo(RequestCategory::class, 'cat_id');
     }
 }
