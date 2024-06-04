@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\PrayerRequestController;
 use App\Http\Controllers\Api\PrayerSectionController;
+use App\Http\Controllers\Api\ReminderNotificationController;
 use App\Http\Controllers\Api\StreakController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
@@ -103,6 +104,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('approved/prayer/request', [PrayerRequestController::class, 'approvedprayer']);
     //User Streak count or reset
     Route::get('streak/counter', [StreakController::class, 'updateStreak'])->name('streak.update');
+    //ReminderNotification
+    Route::apiResource('reminder', ReminderNotificationController::class);
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);
