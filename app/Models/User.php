@@ -27,6 +27,7 @@ class User extends Authenticatable implements HasLocalePreference
         'language',
         'password',
         'sub_id',
+        'account_type',
     ];
 
     /**

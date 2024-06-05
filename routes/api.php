@@ -94,7 +94,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Prayer Section
     Route::get('all/categories', [PrayerSectionController::class, 'index']);
     //Show Prayer Section with subcategories
-    Route::get('/show/category/{id}', [PrayerSectionController::class, 'show']);
+    Route::get('show/category/{id}', [PrayerSectionController::class, 'show']);
     //Prayer request with user and category
     Route::get('prayer/request/categories', [PrayerRequestController::class, 'index']);
     Route::post('prayer/request', [PrayerRequestController::class, 'store']);
@@ -102,10 +102,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('my/prayer/request', [PrayerRequestController::class, 'myprayer']);
     //Public And Approved Prayer request 
     Route::get('approved/prayer/request', [PrayerRequestController::class, 'approvedprayer']);
+     //Prayer on someone pray request
+     Route::get('prayer/{id}', [PrayerRequestController::class, 'prayer']);
     //User Streak count or reset
     Route::get('streak/counter', [StreakController::class, 'updateStreak'])->name('streak.update');
     //ReminderNotification
     Route::apiResource('reminder', ReminderNotificationController::class);
+    //import user from contact for random user pray
+    Route::post('import/contact', [AddedUserController::class, 'import']);
+
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);

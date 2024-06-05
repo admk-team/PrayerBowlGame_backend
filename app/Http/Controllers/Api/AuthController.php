@@ -22,10 +22,11 @@ class AuthController extends Controller
             'country' => 'nullable',
             'language' => 'nullable',
             'password' => 'required|confirmed',
-            'sub_id' => 'nullable'
+            'sub_id' => 'nullable',
+            'account_type' => 'nullable',
         ]);
 
-        $data = User::create($request->only(['name', 'email', 'password', 'country', 'language' , 'sub_id']));
+        $data = User::create($request->only(['name', 'email', 'password', 'country', 'language' , 'sub_id', 'account_type']));
 
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
@@ -37,6 +38,7 @@ class AuthController extends Controller
                 'country' => $data->country,
                 'language' => $data->language,
                 'sub_id' => $data->sub_id,
+                'account_type' => $data->account_type,
             ];
             return response()->json(['success' => true, 'token' => $token, 'data' => $data]);
         } else {

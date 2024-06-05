@@ -23,7 +23,12 @@ class ReminderNotificationController extends Controller
             'duration' => 'required',
         ]);
         $validated['user_id'] = Auth::id();
-        $reminder=ReminderNotification::create($validated);
+        $reminder=ReminderNotification::where('user_id',Auth::id())->first();
+        if($reminder){
+            $reminder->update($validated);
+        }else{
+            $reminder=ReminderNotification::create($validated);
+        }
         if ($reminder) {
             return response()->json(['success' => true, 'reminder' => $reminder]);
         }else {

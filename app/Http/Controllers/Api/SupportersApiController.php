@@ -38,7 +38,7 @@ class SupportersApiController extends Controller
     public function topwarriors(Request $request)
     {
         $time = $request->duration;
-        // dd($time);
+        
         $data = TopWarrior::when($time === 'monthly', function ($q) {
             $from = Carbon::now()->startOfMonth();
             $to = Carbon::now()->endOfMonth();
@@ -50,8 +50,14 @@ class SupportersApiController extends Controller
             $to = Carbon::now()->endOfWeek();
             $q->whereBetween('updated_at', [$from, $to]);
         })
-            ->orderBy('count', 'desc')->with('user')->take(25)->get();
-
+        ->whereHas('user', function ($q) {
+            $q->where('account_type', 'public');
+        })
+        ->orderBy('count', 'desc')
+        ->with('user')
+        ->take(25)
+        ->get();
+    
         return TopWarriorResource::collection($data);
     }
 }
