@@ -24,7 +24,7 @@ class PrayerRequestController extends Controller
             'cat_id' => 'required',
         ]);
         $validated['user_id'] = auth()->user()->id;
-        $data=PrayerRequest::create($validated);
+        $data = PrayerRequest::create($validated);
         if ($data) {
             return response()->json(['success' => true, 'message' => 'Prayer Request Sent successfully.']);
         } else {
@@ -34,39 +34,42 @@ class PrayerRequestController extends Controller
 
     public function myprayer()
     {
-        $data = PrayerRequest::where("user_id" ,auth()->user()->id)->get();
+        $data = PrayerRequest::where("user_id", auth()->user()->id)->get();
         return response()->json(['myprayer' => $data]);
     }
     public function approvedprayer()
     {
-        $data = PrayerRequest::where("request_type" ,"public")->where("status","approved")->get();
+        $data = PrayerRequest::where("request_type", "public")->where("status", "approved")->get();
         return response()->json(['approvedprayer' => $data]);
     }
     public function prayer($id)
     {
-    
-        $data = Prayer::where("user_id" ,auth()->user()->id)->where("req_id",$id)->first();
-        if($data){
+
+        $prayer = Prayer::where("user_id", auth()->user()->id)->where("req_id", $id)->first();
+        if ($prayer) {
             return response()->json(['success' => false, 'message' => 'You have already prayed']);
-        }
-        else{
+        } else {
             $data = PrayerRequest::with("user")->whereId($id)->first();
-            if($data){
+            if ($data) {
                 if ($data->user->sub_id) {
                     $userIds = [$data->user->sub_id];
                 } else {
                     $userIds = [];
                 }
                 App::setLocale($data->user->language);
-                    $message = __('Your prayer request has been answered. Someone is praying for you.');
+                $message = __('Your prayer request has been answered. Someone is praying for you.');
                 if (!empty($message) && !empty($userIds)) {
                     $result = $this->onesignal($message, $userIds);
                 }
-            }
-            else{
+                $data->increment('count');
+                $data->save();
+                $prayer['user_id']=auth()->user()->id;
+                $prayer['req_id']=$id;
+                Prayer::create($prayer);
+                return response()->json(['success' => true, 'message' => 'Prayed successfully', 'data' => $data]);
+            } else {
                 return response()->json(['success' => false, 'message' => 'Prayer request not exist']);
             }
         }
-        return response()->json(['approvedprayer' => $data]);
     }
 }

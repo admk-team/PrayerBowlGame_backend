@@ -59,38 +59,6 @@ class AddedUserController extends Controller
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function import(Request $request)
-    {
-        // Decode the JSON array from the request body
-        $userContacts = json_decode($request->getContent(), true);
-    
-        // Check if JSON decoding was successful
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return response()->json(['message' => 'Invalid JSON format'], 400);
-        }
-    
-        // Iterate over each contact and save it to the database
-        foreach ($userContacts as $contact) {
-            // Ensure required fields are present
-            // dd($contact['first_name']);
-            if (isset($contact['first_name'], $contact['last_name'], $contact['email'])) {
-                $user = new AddUser();
-                $user->user_id = $request->user()->id;
-                $user->first_name = $contact['first_name'];
-                $user->last_name = $contact['last_name'];
-                $user->email = $contact['email'];
-                $user->registered_user = $request->user()->name;
-                $user->save();
-            }
-        }
-    
-        // Return a success response
-        return response()->json(['message' => 'Contacts imported successfully'], 201);
-    }
     
     /**
      * Show the form for editing the specified resource.
@@ -172,5 +140,37 @@ class AddedUserController extends Controller
         $users = AddUser::where('user_id', $request->user()->id)->get();
 
         return response()->json(['success' => true, 'data' => $users, 'message' => 'User deleted successfully.']);
+    }
+
+    //import contact list
+    public function import(Request $request)
+    {
+        // Decode the JSON array from the request body
+        $userContacts = json_decode($request->getContent(), true);
+    
+        // Check if JSON decoding was successful
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return response()->json(['message' => 'Invalid JSON format'], 400);
+        }
+    
+        // Iterate over each contact and save it to the database
+        foreach ($userContacts as $contact) {
+            // Ensure required fields are present
+            if (isset($contact['first_name'], $contact['last_name'], $contact['email'])) {
+                // Check if the email already exists in the AddUser table
+                if (!AddUser::where('email', $contact['email'])->exists()) {
+                    $user = new AddUser();
+                    $user->user_id = $request->user()->id;
+                    $user->first_name = $contact['first_name'];
+                    $user->last_name = $contact['last_name'];
+                    $user->email = $contact['email'];
+                    $user->registered_user = $request->user()->name;
+                    $user->save();
+                }
+            }
+        }
+    
+        // Return a success response
+        return response()->json(['message' => 'Contacts imported successfully'], 201);
     }
 }
