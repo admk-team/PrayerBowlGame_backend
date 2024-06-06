@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('cat_id')->nullable();
-            $table->integer('count')->nullable();
+            $table->integer('count')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('cat_id')->references('id')->on('request_categories');
