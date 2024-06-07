@@ -9,6 +9,7 @@ use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasLocalePreference
@@ -90,5 +91,29 @@ class User extends Authenticatable implements HasLocalePreference
     public function prayerRequests()
     {
         return $this->hasMany(PrayerRequest::class);
+    }
+
+    //friends system
+    public function sentFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+
+    public function receivedFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+    }
+
+    public function friends(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
+    }
+
+    /**
+     * The users that have added this user as a friend.
+     */
+    public function friendOf(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'friends', 'friend_id', 'user_id');
     }
 }

@@ -156,9 +156,10 @@ class AddedUserController extends Controller
         // Iterate over each contact and save it to the database
         foreach ($userContacts as $contact) {
             // Ensure required fields are present
+      
             if (isset($contact['first_name'], $contact['last_name'], $contact['email'])) {
                 // Check if the email already exists in the AddUser table
-                if (!AddUser::where('email', $contact['email'])->exists()) {
+                if (!AddUser::where('user_id', $request->user()->id)->where('email', $contact['email'])->exists()) {
                     $user = new AddUser();
                     $user->user_id = $request->user()->id;
                     $user->first_name = $contact['first_name'];

@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\SupportersApiController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\FriendController;
 use App\Http\Controllers\Api\PrayerRequestController;
 use App\Http\Controllers\Api\PrayerSectionController;
 use App\Http\Controllers\Api\ReminderNotificationController;
@@ -115,6 +116,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('all/badges', [UserBadgeController::class, 'index']);
     Route::get('user/badges', [UserBadgeController::class, 'userBadge']);
     Route::get('badge-detail/{id}', [UserBadgeController::class, 'badgeDetail']);
+    //all public user account for friends
+    Route::get('public-users', [FriendController::class, 'getPublicUsers']);
+    Route::get('incoming-requests', [FriendController::class, 'incomingRequests']);
+    Route::post('send-request', [FriendController::class, 'sendFriendRequest']);
+    Route::post('friend-request/{id}/accept', [FriendController::class, 'acceptFriendRequest']);
+    Route::post('friend-request/{id}/reject', [FriendController::class, 'rejectFriendRequest']);
+    Route::get('friends', [FriendController::class, 'getFriends']);
+
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);
