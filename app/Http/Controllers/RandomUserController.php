@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use App\Helpers\TranslateTextHelper;
+use App\Models\Badge;
+use App\Models\UserBadge;
+use Carbon\Carbon;
+
 class RandomUserController extends Controller
 {
     /**
@@ -134,7 +138,7 @@ class RandomUserController extends Controller
                     'content' => __('I hope this message finds you in good spirits. We wanted to reach out and share that') . __('is keeping you in their prayers at this very moment.', ['senderName' => $request->user()->name]),
                     'user_id' => $checkuser->id,
                 ]);
-                $message=$notification->content;
+                $message = $notification->content;
                 if (!empty($message) && !empty($userIds)) {
                     $result = $this->onesignal($message, $userIds);
                 }
@@ -159,17 +163,50 @@ class RandomUserController extends Controller
                     App::setLocale($usermailsend->language ? $usermailsend->language : 'en');
                     $emailSettings = EmailSetting::first();
                     if (!empty($emailSettings->message)) {
-                        TranslateTextHelper::setSource('en')->setTarget($usermailsend->language );
+                        TranslateTextHelper::setSource('en')->setTarget($usermailsend->language);
                         $footertext = TranslateTextHelper::translate($emailSettings->message);
                     }
                 }
-              
-                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content?? null, $bannerUrl ?? null,$footertext ?? null));
+
+                Mail::to($user->email)->send(new PrayerUserMail($request->user()->name, $user->first_name . ' ' . $user->last_name, $randomBanner->banner ?? null, $randomBanner->content ?? null, $bannerUrl ?? null, $footertext ?? null));
             } catch (\Exception $e) {
             }
+            $adminBadge = Badge::where('type', 'prayer')->first();
 
-
-
+            if ($adminBadge) {
+                $userBadge = UserBadge::firstOrCreate(
+                    [
+                        'user_id' => $request->user()->id,
+                        'badge_id' => $adminBadge->id,
+                    ]
+                );
+            
+                if ($userBadge) {
+                    $userBadge->increment('achievement');
+            
+                    // Determine which milestone has been reached and set completed_at accordingly
+                    if ($userBadge->achievement == $adminBadge->milestone_1) {
+                        $userBadge->completed_at1 = Carbon::now()->format('Y-m-d H:i:s');
+                    } elseif ($userBadge->achievement == $adminBadge->milestone_2) {
+                        $userBadge->completed_at2 = Carbon::now()->format('Y-m-d H:i:s');
+                    } elseif ($userBadge->achievement == $adminBadge->milestone_3) {
+                        $userBadge->completed_at3 = Carbon::now()->format('Y-m-d H:i:s');
+                    }
+            
+                    // Determine the current milestone
+                    if ($userBadge->achievement <= $adminBadge->milestone_1) {
+                        $userBadge->milestone = 'milestone_1';
+                    } elseif ($userBadge->achievement <= $adminBadge->milestone_2) {
+                        $userBadge->milestone = 'milestone_2';
+                    } elseif ($userBadge->achievement <= $adminBadge->milestone_3) {
+                        $userBadge->milestone = 'milestone_3';
+                    } else {
+                        $userBadge->milestone = 'milestone_3'; // Assuming milestone_3 is the final milestone
+                    }
+            
+                    $userBadge->save();
+                }
+            }
             return response()->json(['success' => true, 'data' => $user]);
         }
 

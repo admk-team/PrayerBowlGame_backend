@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\AddedUserController;
 use App\Http\Controllers\Api\DonationController;
+use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\RandomUserController;
 use App\Http\Controllers\SupportersController;
 use App\Http\Controllers\BannerController;
@@ -116,6 +117,8 @@ Route::middleware('admin')->group(function () {
     //Prayer Request 
     Route::resource('prayrequest', PrayerRequestController::class);
     Route::get('prayrstatus/{id}', [PrayerRequestController::class, 'updateStatus'])->name('prayrstatus.updateStatus');
+    //Badges
+    Route::resource('badges', BadgeController::class);
 });
 
 Route::get('/stripepayment', [DonationController::class, 'success'])->name('donations.success');

@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\PrayerRequestController;
 use App\Http\Controllers\Api\PrayerSectionController;
 use App\Http\Controllers\Api\ReminderNotificationController;
 use App\Http\Controllers\Api\StreakController;
+use App\Http\Controllers\Api\UserBadgeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TestimonialController;
@@ -110,7 +111,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('reminder', ReminderNotificationController::class);
     //import user from contact for random user pray
     Route::post('import/contact', [AddedUserController::class, 'import']);
-
+      //All badge
+    Route::get('all/badges', [UserBadgeController::class, 'index']);
+    Route::get('user/badges', [UserBadgeController::class, 'userBadge']);
+    Route::get('badge-detail/{id}', [UserBadgeController::class, 'badgeDetail']);
 });
 //page
 Route::get('/pages', [PageController::class, 'pages']);

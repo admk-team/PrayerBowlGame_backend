@@ -69,26 +69,32 @@
               </li>
               <li>
                 <a href="/testimonials" aria-expanded="false">
-                    <i class="icon icon-page  fa fa-file"></i>
+                    <i class="icon icon-page fa fa-quote-left"></i>
                     <span class="nav-text">Testimonial</span>
                 </a>
               </li>
               <li>
                 <a href="/category" aria-expanded="false">
-                    <i class="icon icon-page  fa fa-file"></i>
+                    <i class="icon icon-page fa fa-pray"></i>
                     <span class="nav-text">Prayer Section</span>
                 </a>
               </li>
               <li>
                 <a href="/reqcategory" aria-expanded="false">
-                    <i class="icon icon-page  fa fa-file"></i>
+                    <i class="icon icon-page fa fa-folder"></i> 
                     <span class="nav-text">Prayer Request Category</span>
                 </a>
               </li>
               <li>
                 <a href="/prayrequest" aria-expanded="false">
-                    <i class="icon icon-page  fa fa-file"></i>
+                    <i class="icon icon-page fa fa-hands"></i>
                     <span class="nav-text">Prayer Request</span>
+                </a>
+              </li>
+              <li>
+                <a href="/badges" aria-expanded="false">
+                    <i class="icon icon-page fa fa-medal"></i>
+                    <span class="nav-text">Badges</span>
                 </a>
               </li>
           </ul>

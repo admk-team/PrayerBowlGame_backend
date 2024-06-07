@@ -22,7 +22,9 @@ use App\Mail\AdminDonationEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use App\Models\Badge;
 use App\Models\EmailSetting;
+use App\Models\UserBadge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -177,7 +179,42 @@ class DonationController extends Controller
             $test2 =  Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $doner_data ?? null, $doner_data->donation_amount ?? null));
         } catch (\Exception $e) {
         }
-
+        //for badge achivement
+        $adminBadge = Badge::where('type', 'donation')->first();
+        if ($adminBadge) {
+            $userBadge = UserBadge::firstOrCreate(
+                [
+                    'user_id' => auth()->user()->id,
+                    'badge_id' => $adminBadge->id,
+                ]
+            );
+        
+            if ($userBadge) {
+                $userBadge->increment('achievement');
+        
+                // Determine which milestone has been reached and set completed_at accordingly
+                if ($userBadge->achievement == $adminBadge->milestone_1) {
+                    $userBadge->completed_at1 = Carbon::now()->format('Y-m-d H:i:s');
+                } elseif ($userBadge->achievement == $adminBadge->milestone_2) {
+                    $userBadge->completed_at2 = Carbon::now()->format('Y-m-d H:i:s');
+                } elseif ($userBadge->achievement == $adminBadge->milestone_3) {
+                    $userBadge->completed_at3 = Carbon::now()->format('Y-m-d H:i:s');
+                }
+        
+                // Determine the current milestone
+                if ($userBadge->achievement <= $adminBadge->milestone_1) {
+                    $userBadge->milestone = 'milestone_1';
+                } elseif ($userBadge->achievement <= $adminBadge->milestone_2) {
+                    $userBadge->milestone = 'milestone_2';
+                } elseif ($userBadge->achievement <= $adminBadge->milestone_3) {
+                    $userBadge->milestone = 'milestone_3';
+                } else {
+                    $userBadge->milestone = 'milestone_3'; // Assuming milestone_3 is the final milestone
+                }
+        
+                $userBadge->save();
+            }
+        }
         return response()->json(['success' => 'true']);
     }
 
@@ -263,6 +300,42 @@ class DonationController extends Controller
             Mail::to($admin_email)->send(new AdminDonationEmail($admindata ?? null, $donarData ?? null, $donarData->donation_amount ?? null));
         } catch (\Exception $e) {
         }
+         //for badge achivement
+         $adminBadge = Badge::where('type', 'donation')->first();
+         if ($adminBadge) {
+             $userBadge = UserBadge::firstOrCreate(
+                 [
+                     'user_id' => auth()->user()->id,
+                     'badge_id' => $adminBadge->id,
+                 ]
+             );
+         
+             if ($userBadge) {
+                 $userBadge->increment('achievement');
+         
+                 // Determine which milestone has been reached and set completed_at accordingly
+                 if ($userBadge->achievement == $adminBadge->milestone_1) {
+                     $userBadge->completed_at1 = Carbon::now()->format('Y-m-d H:i:s');
+                 } elseif ($userBadge->achievement == $adminBadge->milestone_2) {
+                     $userBadge->completed_at2 = Carbon::now()->format('Y-m-d H:i:s');
+                 } elseif ($userBadge->achievement == $adminBadge->milestone_3) {
+                     $userBadge->completed_at3 = Carbon::now()->format('Y-m-d H:i:s');
+                 }
+         
+                 // Determine the current milestone
+                 if ($userBadge->achievement <= $adminBadge->milestone_1) {
+                     $userBadge->milestone = 'milestone_1';
+                 } elseif ($userBadge->achievement <= $adminBadge->milestone_2) {
+                     $userBadge->milestone = 'milestone_2';
+                 } elseif ($userBadge->achievement <= $adminBadge->milestone_3) {
+                     $userBadge->milestone = 'milestone_3';
+                 } else {
+                     $userBadge->milestone = 'milestone_3'; // Assuming milestone_3 is the final milestone
+                 }
+         
+                 $userBadge->save();
+             }
+         }
         return view('payment.success');
     }
 
