@@ -54,4 +54,19 @@ class UserBadgeController extends Controller
             ], 200);
         }
     }
+    public function adminbadgeDetail($id)
+    {
+        $data = Badge::findOrFail($id);
+        if ($data) {
+            return response()->json([
+                'status' => true,
+                'admin_badge_deatils' => $data,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => "Not data found",
+            ], 200);
+        }
+    }
 }

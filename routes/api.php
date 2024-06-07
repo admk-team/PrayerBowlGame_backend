@@ -114,6 +114,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('import/contact', [AddedUserController::class, 'import']);
       //All badge
     Route::get('all/badges', [UserBadgeController::class, 'index']);
+    //show admin badge details
+    Route::get('admin-badge/{id}', [UserBadgeController::class, 'adminbadgeDetail']);
     Route::get('user/badges', [UserBadgeController::class, 'userBadge']);
     Route::get('badge-detail/{id}', [UserBadgeController::class, 'badgeDetail']);
     //all public user account for friends
