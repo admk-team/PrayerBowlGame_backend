@@ -96,6 +96,10 @@ return [
         'pt' => 'Portuguese',
         'ru' => 'Russian',
         'zh' => 'Chinese',
+        'hy' => 'Armenian',
+        'it' => 'Italian',
+        'ko' => 'Korean',
+        'tl' => 'Tagalog',
     ],
 
     /*
