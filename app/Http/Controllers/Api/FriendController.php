@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\TranslateTextHelper;
 use App\Http\Controllers\Controller;
 use App\Models\AddUser;
 use App\Models\FriendRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class FriendController extends Controller
@@ -46,12 +48,15 @@ class FriendController extends Controller
     public function sendFriendRequest(Request $request)
     {
         $senderId = Auth::id();
+        
         $receiverId = $request->input('receiver_id');
 
         // Validate receiver_id
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
         ]);
+        
+        $reciever=User::findOrFail($receiverId);
 
         // Check if a pending request already exists
         $existingRequest = FriendRequest::where('sender_id', $senderId)
@@ -75,6 +80,19 @@ class FriendController extends Controller
         if ($rejectedRequest) {
             // Update the rejected request to pending
             $rejectedRequest->update(['status' => 'pending']);
+            if ($reciever->sub_id) {
+                $userIds = [$reciever->sub_id];
+            } else {
+                $userIds = [];
+            }
+            // App::setLocale($reciever->language);
+            $message = "You have a new friend request!";
+            $targetLanguage = $reciever->language ?? 'en';
+            TranslateTextHelper::setSource('en')->setTarget($targetLanguage);
+            $message = TranslateTextHelper::translate($message);
+            if (!empty($message) && !empty($userIds)) {
+                $result = $this->onesignal($message, $userIds);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'Friend request sent successfully!',
@@ -87,7 +105,18 @@ class FriendController extends Controller
             'receiver_id' => $receiverId,
             'status' => 'pending',
         ]);
-
+        if ($reciever->sub_id) {
+            $userIds = [$reciever->sub_id];
+        } else {
+            $userIds = [];
+        }
+        $message = "You have a new friend request!";
+        $targetLanguage = $reciever->language ?? 'en';
+        TranslateTextHelper::setSource('en')->setTarget($targetLanguage);
+        $message = TranslateTextHelper::translate($message);
+        if (!empty($message) && !empty($userIds)) {
+            $result = $this->onesignal($message, $userIds);
+        }
         return response()->json([
             'status' => true,
             'message' => 'Friend request sent successfully!',
