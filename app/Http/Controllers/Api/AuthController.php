@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddUser;
+use App\Models\FriendRequest;
 use App\Models\Notification;
+use App\Models\Prayer;
+use App\Models\PrayerRequest;
 use App\Models\Testimonial;
 use App\Models\TopWarrior;
 use App\Models\User;
+use App\Models\UserBadge;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -159,6 +164,15 @@ class AuthController extends Controller
         //         $notiuser->delete();
         //     }
         // }
+         // Delete friend requests where the user is either the sender or receiver
+        FriendRequest::where('sender_id', $user->id)->orWhere('receiver_id', $user->id)->delete();
+        DB::table('friends')->where('user_id', $user->id)->orWhere('friend_id', $user->id)->delete();
+           // Delete related records in the 'prayers' table
+        Prayer::where('user_id', $user->id)->delete();
+        PrayerRequest::where('user_id', $user->id)->delete();
+        Testimonial::where('user_id', $user->id)->delete();
+        TopWarrior::where('user_id', $user->id)->delete();
+        UserBadge::where('user_id', $user->id)->delete();
         $user->prayerRequests()->delete();
         $user->delete();
         return [
