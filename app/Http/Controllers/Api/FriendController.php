@@ -15,7 +15,7 @@ class FriendController extends Controller
 {
     public function getPublicUsers()
     {
-        $users = User::where('id', '!=', Auth::id())->where('account_type', 'public')->get();
+        $users = User::where('id', '!=', Auth::id())->where('account_type', 'public')->where('role', '0')->get();
         if ($users) {
             return response()->json([
                 'status' => true,

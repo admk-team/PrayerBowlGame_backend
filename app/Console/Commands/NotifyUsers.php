@@ -26,8 +26,6 @@ class NotifyUsers extends Command
 
         // Fetch reminders where the type is enabled
         $reminderdata = ReminderNotification::where('type', 'enabled')->get();
-        Log::info('Reminder Notification Data:', ['reminders' => $reminderdata, 'currentDateTime' => $currentDateTime]);
-
         foreach ($reminderdata as $remind) {
             if ($this->shouldSendNotification($remind, $currentDateTime)) {
                 $checkuser = User::where('id', $remind->user_id)->whereNotNull('sub_id')->first();
@@ -38,7 +36,6 @@ class NotifyUsers extends Command
 
                     if (!empty($message) && !empty($userIds)) {
                         $result = $this->onesignal($message, $userIds);
-                        Log::info('Reminder Notification sent to user ' . $checkuser->id);
                     }
                 }
             }
@@ -70,7 +67,6 @@ class NotifyUsers extends Command
 
                     if (!empty($message) && !empty($userIds)) {
                         $result = $this->onesignal($message, $userIds);
-                        Log::info('You are in the top 3 Warriors ' . $top->user->id);
                     }
                 }
             }
