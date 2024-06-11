@@ -177,4 +177,16 @@ class AuthController extends Controller
             return response()->json(['error' => 'User Not Logged in']);
         }
     }
+    public function subId(Request $request)
+    {
+        $receiverId = $request->input('sub_id');
+        if (auth()->user()) {
+            $user = User::findOrFail(auth()->user()->id);
+            $user->update(['sub_id' =>$receiverId]);
+            return response()->json(['success' => 'Subscription Id save successfully']);
+        } else {
+            return response()->json(['error' => 'User Not Logged in']);
+        }
+    }
+
 }

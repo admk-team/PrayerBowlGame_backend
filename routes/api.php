@@ -125,6 +125,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('friend-request/{id}/accept', [FriendController::class, 'acceptFriendRequest']);
     Route::post('friend-request/{id}/reject', [FriendController::class, 'rejectFriendRequest']);
     Route::get('friends', [FriendController::class, 'getFriends']);
+    //save subscription id 
+    Route::post('sub-id', [AuthController::class, 'subId']);
 
 });
 //page
