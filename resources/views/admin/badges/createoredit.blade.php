@@ -56,21 +56,33 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="milestone_1">Milestone 1</label>
+                                        <label for="milestone_1">Milestone 1
+                                            @if(isset($badge))
+                                            <span style="color: red;">(Do not enter value less than {{$badge->milestone_1}})</span>
+                                            @endif
+                                        </label>
                                         <input type="number" class="form-control" id="milestone_1" name="milestone_1" value="{{ old('milestone_1', isset($badge) ? $badge->milestone_1 : '') }}" required>
                                         @error('milestone_1')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="milestone_2">Milestone 2</label>
+                                        <label for="milestone_2">Milestone 2
+                                            @if(isset($badge))
+                                            <span style="color: red;">(Do not enter value less than {{$badge->milestone_2}})</span>
+                                            @endif
+                                        </label>
                                         <input type="number" class="form-control" id="milestone_2" name="milestone_2" value="{{ old('milestone_2', isset($badge) ? $badge->milestone_2 : '') }}" required>
                                         @error('milestone_2')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="milestone_3">Milestone 3</label>
+                                        <label for="milestone_3">Milestone 3 
+                                            @if(isset($badge))
+                                            <span style="color: red;">(Do not enter value less than {{$badge->milestone_3}})</span>
+                                            @endif
+                                        </label>
                                         <input type="number" class="form-control" id="milestone_3" name="milestone_3" value="{{ old('milestone_3', isset($badge) ? $badge->milestone_3 : '') }}" required>
                                         @error('milestone_3')
                                             <div class="text-danger">{{ $message }}</div>

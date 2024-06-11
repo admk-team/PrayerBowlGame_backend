@@ -197,7 +197,7 @@ class AuthController extends Controller
         if (auth()->user()) {
             $user = User::findOrFail(auth()->user()->id);
             $user->update(['sub_id' =>$receiverId]);
-            return response()->json(['success' => 'Subscription Id save successfully']);
+            return response()->json(['success' => 'Subscription Id saved successfully']);
         } else {
             return response()->json(['error' => 'User Not Logged in']);
         }

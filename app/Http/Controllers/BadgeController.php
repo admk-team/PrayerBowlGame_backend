@@ -9,7 +9,7 @@ class BadgeController extends Controller
 {
     public function index()
     {
-        $badges = Badge::all();
+        $badges = Badge::latest()->get();
         return view('admin.badges.index', compact('badges'));
     }
 
@@ -28,7 +28,7 @@ class BadgeController extends Controller
             'milestone_2' => 'required|integer',
             'milestone_3' => 'required|integer',
         ]);
-    
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
@@ -38,9 +38,9 @@ class BadgeController extends Controller
         } else {
             $validated['image'] = null;
         }
-    
+
         Badge::create($validated);
-    
+
         return redirect()->route('badges.index')->with('success', 'Badge created successfully!');
     }
 
@@ -65,42 +65,40 @@ class BadgeController extends Controller
             'milestone_3' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
+
         $badge = Badge::findOrFail($id);
-    
+
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($badge->image && file_exists(public_path($badge->image))) {
                 unlink(public_path($badge->image));
             }
-    
+
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('admin_assets/badges'), $imageName);
             $imageName = 'admin_assets/badges/' . $imageName;
             $validated['image'] = $imageName;
         }
-    
+
         $badge->update($validated);
-    
+
         return redirect()->route('badges.index')->with('success', 'Badge updated successfully!');
     }
-    
+
 
     public function destroy($id)
     {
         $badge = Badge::findOrFail($id);
-        
+
         // Delete badge image if it exists
         if ($badge->image && file_exists(public_path($badge->image))) {
             unlink(public_path($badge->image));
         }
-        
+
         // Delete the badge
         $badge->delete();
-        
+
         return redirect()->route('badges.index')->with('success', 'Badge and its related data deleted successfully!');
     }
-    
 }
-
