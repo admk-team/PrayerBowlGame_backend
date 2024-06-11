@@ -89,6 +89,7 @@ class AuthController extends Controller
             'email' => $user->email,
             'language' => $user->language,
             'sub_id' => $user->sub_id,
+            'account_type' =>  $user->account_type,
         ];
         return [
             'status' => true,
@@ -113,7 +114,9 @@ class AuthController extends Controller
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
+            'account_type' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
+
         ];
 
         if ($request->filled('current_password') || $request->filled('password') || $request->filled('password_confirmation')) {
@@ -138,6 +141,7 @@ class AuthController extends Controller
         $user->update([
             'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
             'email' => $request->input('email'),
+            'account_type' => $request->input('account_type'),
         ]);
 
         if ($request->filled('password')) {

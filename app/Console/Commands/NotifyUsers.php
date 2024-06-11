@@ -26,6 +26,7 @@ class NotifyUsers extends Command
 
         // Fetch reminders where the type is enabled
         $reminderdata = ReminderNotification::where('type', 'enabled')->get();
+
         foreach ($reminderdata as $remind) {
             if ($this->shouldSendNotification($remind, $currentDateTime)) {
                 $checkuser = User::where('id', $remind->user_id)->whereNotNull('sub_id')->first();
