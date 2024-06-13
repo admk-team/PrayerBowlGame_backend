@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Badge;
+use App\Models\UserBadge;
 use Illuminate\Http\Request;
 
 class BadgeController extends Controller
@@ -95,7 +96,7 @@ class BadgeController extends Controller
         if ($badge->image && file_exists(public_path($badge->image))) {
             unlink(public_path($badge->image));
         }
-
+        UserBadge::where('badge_id', $id)->delete();
         // Delete the badge
         $badge->delete();
 

@@ -39,7 +39,8 @@ class PrayerRequestController extends Controller
     }
     public function approvedprayer()
     {
-        $data = PrayerRequest::where("request_type", "public")->where("status", "approved")->get();
+        $oneMonthAgo = now()->subMonth();
+        $data = PrayerRequest::where('request_type', 'public')->where('status', 'approved')->where('updated_at', '>=', $oneMonthAgo)->get();
         return response()->json(['approvedprayer' => $data]);
     }
     public function prayer($id)
@@ -47,7 +48,7 @@ class PrayerRequestController extends Controller
 
         $prayer = Prayer::where("user_id", auth()->user()->id)->where("req_id", $id)->first();
         if ($prayer) {
-            return response()->json(['success' => false, 'message' => 'You have already prayed']);
+            return response()->json(['success' => false, 'message' => 'You are already praying for this person']);
         } else {
             $data = PrayerRequest::with("user")->whereId($id)->first();
             if ($data) {

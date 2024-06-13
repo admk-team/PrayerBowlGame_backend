@@ -90,13 +90,9 @@ class NotifyUsers extends Command
 
         switch ($duration) {
             case 'day':
-                return $currentDateTime->equalTo($start);
+                return $currentDateTime->format('H:i') === $start->format('H:i');
             case 'week':
-                return $currentDateTime->diffInDays($start) < 7 && $currentDateTime->format('H:i') === $start->format('H:i');
-            case 'month':
-                return $currentDateTime->diffInDays($start) < 30 && $currentDateTime->format('H:i') === $start->format('H:i');
-            case 'year':
-                return $currentDateTime->diffInDays($start) < 365 && $currentDateTime->format('H:i') === $start->format('H:i');
+                return $currentDateTime->isSameDayOfWeek($start) && $currentDateTime->format('H:i') === $start->format('H:i');
             default:
                 return false;
         }
