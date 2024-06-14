@@ -67,7 +67,7 @@ class PrayerRequestController extends Controller
                 $prayer['user_id']=auth()->user()->id;
                 $prayer['req_id']=$id;
                 Prayer::create($prayer);
-                return response()->json(['success' => true, 'message' => 'Prayed successfully', 'data' => $data]);
+                return response()->json(['success' => true, 'message' => 'Thank you for your prayers. The individual will be informed that you are praying for them.', 'data' => $data]);
             } else {
                 return response()->json(['success' => false, 'message' => 'Prayer request not exist']);
             }
