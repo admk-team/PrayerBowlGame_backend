@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prayer;
 use App\Models\PrayerRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class PrayerRequestController extends Controller
     public function destroy($id)
     {
         $data = PrayerRequest::findOrFail($id);
+        Prayer::where('req_id', $data->id)->delete();
         $data->delete();
         return back()->with('success', 'Prayer Request deleted successfully!');
     }
