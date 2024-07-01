@@ -31,8 +31,8 @@ class AuthController extends Controller
             'account_type' => 'nullable',
         ]);
 
-        $data = User::create($request->only(['name', 'email', 'password', 'country', 'language' , 'sub_id', 'account_type']));
-
+        $user = User::create($request->only(['name', 'email', 'password', 'country', 'language' , 'sub_id', 'account_type']));
+        $data=User::findOrFail($user->id);
         if ($data) {
             $token = $data->createToken('MyApp')->plainTextToken;
             $token = explode('|', $token)[1] ?? '';
