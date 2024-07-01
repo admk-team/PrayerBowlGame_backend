@@ -162,7 +162,8 @@ class AddedUserController extends Controller
                 if (!AddUser::where('user_id', $request->user()->id)->where('email', $contact['email'])->exists()) {
                     $user = new AddUser();
                     $user->user_id = $request->user()->id;
-                    $user->first_name = $contact['first_name'];
+                    $user->first_name = $contact['first_name']?? null;
+                    $user->last_name = $contact['last_name'] ?? null;
                     $user->email = $contact['email'];
                     $user->registered_user = $request->user()->name;
                     $user->save();
