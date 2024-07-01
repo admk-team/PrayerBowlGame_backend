@@ -28,7 +28,7 @@
 @if ($banner)
 
 <a href="{{$bannerUrl}}" target="_blank">
-<img src="{{ asset('admin_assets/banner_ad/' . $banner) }}" alt="Banner" style="width: 1200px; height: 150px;">
+<img src="{{ asset('admin_assets/banner_ad/' . $banner) }}" alt="Banner">
 </a>
 
 @endif

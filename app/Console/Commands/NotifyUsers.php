@@ -32,7 +32,7 @@ class NotifyUsers extends Command
                 $checkuser = User::where('id', $remind->user_id)->whereNotNull('sub_id')->first();
 
                 if ($checkuser && $checkuser->sub_id) {
-                    $message = __('This time to pray. Pause and reflect.');
+                    $message = __('It is time to pray');
                     $userIds = [$checkuser->sub_id];
 
                     if (!empty($message) && !empty($userIds)) {
