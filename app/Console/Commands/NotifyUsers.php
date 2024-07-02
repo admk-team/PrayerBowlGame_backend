@@ -9,6 +9,7 @@ use App\Models\PreviousTopWarrior;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class NotifyUsers extends Command
 {
@@ -30,7 +31,7 @@ class NotifyUsers extends Command
         foreach ($reminderdata as $remind) {
             if ($this->shouldSendNotification($remind, $currentDateTime)) {
                 $checkuser = User::where('id', $remind->user_id)->whereNotNull('sub_id')->first();
-
+                App::setLocale($checkuser->language);
                 if ($checkuser && $checkuser->sub_id) {
                     $message = __('It is time to pray');
                     $userIds = [$checkuser->sub_id];
@@ -61,6 +62,7 @@ class NotifyUsers extends Command
         // Check if the top 3 warriors have changed in order or if it's the first run
         if ($this->hasTopWarriorsChanged($currentTopWarriors, $previousTopWarriors)) {
             foreach ($topWarriors as $top) {
+                App::setLocale($top->user->language);
                 if ($top->user && $top->user->sub_id) {
                     $message = __('You are in the top 3 prayer warriors today. Keep it up!');
                   
