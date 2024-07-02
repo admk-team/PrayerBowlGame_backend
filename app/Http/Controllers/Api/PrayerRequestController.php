@@ -34,13 +34,13 @@ class PrayerRequestController extends Controller
 
     public function myprayer()
     {
-        $data = PrayerRequest::where("user_id", auth()->user()->id)->get();
+        $data = PrayerRequest::where("user_id", auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return response()->json(['myprayer' => $data]);
     }
     public function approvedprayer()
     {
         $oneMonthAgo = now()->subMonth();
-        $data = PrayerRequest::where('request_type', 'public')->where('status', 'approved')->where('updated_at', '>=', $oneMonthAgo)->get();
+        $data = PrayerRequest::where('request_type', 'public')->where('status', 'approved')->where('updated_at', '>=', $oneMonthAgo)->orderBy('updated_at', 'desc')->get();
         return response()->json(['approvedprayer' => $data]);
     }
     public function prayer($id)
