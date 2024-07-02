@@ -40,7 +40,7 @@ class PrayerRequestController extends Controller
     public function approvedprayer()
     {
         $oneMonthAgo = now()->subMonth();
-        $data = PrayerRequest::where('request_type', 'public')->where('status', 'approved')->where('updated_at', '>=', $oneMonthAgo)->orderBy('updated_at', 'desc')->get();
+        $data = PrayerRequest::where('request_type', 'public')->where('status', 'approved')->where('created_at', '>=', $oneMonthAgo)->orderBy('updated_at', 'desc')->get();
         return response()->json(['approvedprayer' => $data]);
     }
     public function prayer($id)
